@@ -1,0 +1,18 @@
+[
+  {
+    "modid": "7DTM-Integrations",
+    "name": "DTM Integrations",
+    "description": "Overhauls and integrates 7DTM to work with and amongst other mods seamlessly to expand the user experience of 7DTM",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "",
+    "updateUrl": "",
+    "authorList": [
+      "X_Niter"
+    ],
+    "credits": "",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": []
+  }
+]
