@@ -1,18 +1,21 @@
 [
   {
-    "modid": "7DTM-Integrations",
-    "name": "DTM Integrations",
+    "modid": "${mod_id}",
+    "name": "${mod_name}",
     "description": "Overhauls and integrates 7DTM to work with and amongst other mods seamlessly to expand the user experience of 7DTM",
-    "version": "${version}",
-    "mcversion": "${mcversion}",
+    "version": "${mod_version}",
+    "mcversion": "${mc_version}",
     "url": "",
     "updateUrl": "",
     "authorList": [
       "X_Niter"
     ],
-    "credits": "",
-    "logoFile": "",
+    "credits": "sevendaystomine",
+    "logoFile": "/assets/dtmintegrations/logo.png",
     "screenshots": [],
-    "dependencies": []
+    "dependencies": [
+      "sevendaystomine",
+      "mixinbooter"
+    ]
   }
 ]
