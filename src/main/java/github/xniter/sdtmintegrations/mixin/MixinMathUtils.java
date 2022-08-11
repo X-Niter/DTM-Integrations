@@ -2,30 +2,53 @@ package github.xniter.sdtmintegrations.mixin;
 
 import nuparu.sevendaystomine.util.MathUtils;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.Shadow;
 import zone.rong.mixinbooter.ILateMixinLoader;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Mixin({MathUtils.class})
 public class MixinMathUtils implements ILateMixinLoader {
 
+    @Shadow
+    private static Random r = new Random();
+
     /**
      * @author X_Niter
-     * @reason Fixes city generation crash when using other mods like lost cities.
+     * @reason Math
      */
-    @Redirect(method = "getIntInRange(Ljava/util/Random;II)I", at = @At(value = "RETURN"), remap = false)
-    protected static void DTMIntegrations_getIntInRange(Random rand, int min, int max, CallbackInfoReturnable<Integer> cir)
-    {
-        if (min + rand.nextInt(max - min) <= 0)
-        {
-            cir.setReturnValue(1);
+    @Overwrite
+    public static int getIntInRange(Random rand, int min, int max) {
+        int bound = max - min;
+        if (bound == 0){
+            bound = 8;
         }
+        return min + rand.nextInt(bound) >= 1 ? min + rand.nextInt(bound) : 8;
     }
+
+    /**
+     * @author X_Niter
+     * @reason Math
+     */
+    @Overwrite
+    public static float getFloatInRange(float min, float max) {
+
+        return min + r.nextFloat() * (max - min) >= 1 ? min + r.nextFloat() * (max - min) : min + r.nextFloat();
+    }
+
+    /**
+     * @author X_Niter
+     * @reason Math
+     */
+    @Overwrite
+    public static double getDoubleInRange(double min, double max) {
+        return min + r.nextDouble() * (max - min) >= 1 ? min + r.nextDouble() * (max - min) : min + r.nextDouble();
+    }
+
 
     @Override
     public List<String> getMixinConfigs() {
