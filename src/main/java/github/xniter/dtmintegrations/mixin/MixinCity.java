@@ -21,7 +21,7 @@ public class MixinCity implements ILateMixinLoader {
 
     @Redirect(method = "<init>(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnuparu/sevendaystomine/world/gen/city/EnumCityType;Ljava/util/Random;)V", at = @At(value = "INVOKE", target = "Ljava/lang/Math;round(F)I"))
     public int roadsLimit(float v) {
-        return v >= 1 ? (int)v : 8;
+        return v >= 1 ? (int)v : 4;
     }
 
 

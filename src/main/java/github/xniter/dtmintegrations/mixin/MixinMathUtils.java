@@ -24,9 +24,9 @@ public class MixinMathUtils implements ILateMixinLoader {
     public static int getIntInRange(Random rand, int min, int max) {
         int bound = max - min;
         if (bound == 0){
-            bound = 8;
+            bound = max - min + 16 / 4 + max - min;
         }
-        return min + rand.nextInt(bound) >= 1 ? min + rand.nextInt(bound) : 8;
+        return min + rand.nextInt(bound) >= 1 ? min + rand.nextInt(bound) : 4;
     }
 
     /**
