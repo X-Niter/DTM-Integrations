@@ -21,7 +21,7 @@ apply plugin: 'org.spongepowered.mixin'
 
 
 group = 'github.xniter'
-version = '1.0.0'
+version = project.mod_version
 archivesBaseName = 'DTMIntegrations'
 
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
@@ -96,45 +96,17 @@ repositories {
 
 dependencies {
 
-    // Mixins
-    //implementation 'org.spongepowered:mixin:0.8.+'
-    //annotationProcessor 'org.spongepowered:mixin:0.8.+:processor'
-//    compile("org.spongepowered:mixin:0.8.5") {
-//        exclude module: "asm-commons"
-//        exclude module: "asm-tree"
-//        exclude module: "launchwrapper"
-//        exclude module: "guava"
-//        exclude module: "log4j-core"
-//        exclude module: "gson"
-//        exclude module: "commons-io"
-//    }
-
     deobfCompile "zone.rong:mixinbooter:5.0"
     deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}"
 
-    //implementation files('Libs')
-
-    // Real mod deobf dependency examples - these get remapped to your current mappings
-    //compileOnly fg.deobf("mezz.jei:jei_${mc_version}:${jei_version}:api") // Adds JEI API as a compile dependency
-    //runtimeOnly fg.deobf("mezz.jei:jei_${mc_version}:${jei_version}") // Adds the full JEI mod as a runtime dependency
-    // implementation fg.deobf("com.tterrag.registrate:Registrate:MC${mc_version}-${registrate_version}") // Adds registrate as a dependency
-
-    // Examples using mod jars from ./libs
-    // implementation fg.deobf("blank:coolmod-${mc_version}:${coolmod_version}")
-
-    //compile files("Libs/sevendaystomine-1.12.2-1.0.2.10.jar")
     deobfCompile "curse.maven:days-to-mine-222025:3506869"
 
-    //compile files("Libs/lostcities-1.12-2.0.22.jar")
     deobfCompile "curse.maven:the-lost-cities-269024:2861574"
 
-    //compile files("Libs/SRParasites-1.12.2-1.9.5.jar")
     deobfCompile "curse.maven:scape-and-run-parasites-348025:3755305"
 
+    deobfCompile "curse.maven:baubles-lts-655747:3916343"
 
-    // For more info...
-    // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
-    // http://www.gradle.org/docs/current/userguide/dependency_management.html
 }
 
 task devJar(type: Jar) {

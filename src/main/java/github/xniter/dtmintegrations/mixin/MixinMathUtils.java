@@ -1,4 +1,4 @@
-package github.xniter.sdtmintegrations.mixin;
+package github.xniter.dtmintegrations.mixin;
 
 import nuparu.sevendaystomine.util.MathUtils;
 import org.spongepowered.asm.mixin.Mixin;
@@ -9,7 +9,6 @@ import zone.rong.mixinbooter.ILateMixinLoader;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 @Mixin({MathUtils.class})
 public class MixinMathUtils implements ILateMixinLoader {

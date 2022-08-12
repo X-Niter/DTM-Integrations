@@ -1,4 +1,4 @@
-package github.xniter.sdtmintegrations.mixin;
+package github.xniter.dtmintegrations.mixin;
 
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;

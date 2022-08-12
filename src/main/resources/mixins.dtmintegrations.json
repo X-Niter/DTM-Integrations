@@ -1,12 +1,13 @@
 {
   "minVersion": "0.8",
-  "package": "github.xniter.sdtmintegrations.mixin",
+  "package": "github.xniter.dtmintegrations.mixin",
   "refmap": "mixins.sdtmintegrations.refmap.json",
   "target": "@env(DEFAULT)",
   "compatibilityLevel": "JAVA_8",
   "priority": 1111,
   "mixins": [
     "MixinCity",
+    "MixinCityWorldGenerator",
     "MixinMathUtils"
   ]
 }

@@ -1,12 +1,9 @@
-package github.xniter.sdtmintegrations.features;
+package github.xniter.dtmintegrations.features;
 
-import github.xniter.sdtmintegrations.config.DTMIConfig;
+import github.xniter.dtmintegrations.config.DTMIConfig;
 import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-
-import java.util.Map;
 
 public class FMLAutoConfig {
 

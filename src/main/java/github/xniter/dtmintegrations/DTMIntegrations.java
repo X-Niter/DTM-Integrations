@@ -1,13 +1,10 @@
-package github.xniter.sdtmintegrations;
+package github.xniter.dtmintegrations;
 
-import github.xniter.sdtmintegrations.config.DTMIConfig;
-import github.xniter.sdtmintegrations.features.FMLAutoConfig;
-import net.minecraftforge.common.ForgeModContainer;
+import github.xniter.dtmintegrations.config.DTMIConfig;
+import github.xniter.dtmintegrations.features.FMLAutoConfig;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Config;
-import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.ConfigManager;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.Logger;
@@ -29,7 +26,7 @@ public class DTMIntegrations {
 
     public static final String MOD_ID = "dtmintegrations";
     public static final String MOD_NAME = "DTM Integrations";
-    public static final String VERSION = "1.0.0";
+    public static final String VERSION = "1.1.0";
 
 
     /**
