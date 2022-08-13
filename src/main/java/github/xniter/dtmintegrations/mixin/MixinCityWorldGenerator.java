@@ -5,6 +5,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.IChunkGenerator;
+import net.minecraftforge.fml.common.IWorldGenerator;
 import nuparu.sevendaystomine.world.gen.CityWorldGenerator;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -16,7 +17,7 @@ import java.util.List;
 import java.util.Random;
 
 @Mixin({CityWorldGenerator.class})
-public class MixinCityWorldGenerator implements ILateMixinLoader {
+public class MixinCityWorldGenerator implements ILateMixinLoader, IWorldGenerator {
 
 
 
