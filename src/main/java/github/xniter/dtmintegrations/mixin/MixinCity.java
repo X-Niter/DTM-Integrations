@@ -3,6 +3,8 @@ package github.xniter.dtmintegrations.mixin;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
+import nuparu.sevendaystomine.config.ModConfig;
+import nuparu.sevendaystomine.util.MathUtils;
 import nuparu.sevendaystomine.world.gen.city.City;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -19,9 +21,9 @@ public class MixinCity implements ILateMixinLoader {
 
 
 
-    @Redirect(method = "<init>(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnuparu/sevendaystomine/world/gen/city/EnumCityType;Ljava/util/Random;)V", at = @At(value = "INVOKE", target = "Ljava/lang/Math;round(F)I"))
-    public int roadsLimit(float v) {
-        return v >= 1 ? (int)v : 4;
+    @Redirect(method = "<init>(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnuparu/sevendaystomine/world/gen/city/EnumCityType;Ljava/util/Random;)V", at = @At(value = "INVOKE", target = "Lnuparu/sevendaystomine/util/MathUtils;getIntInRange(Ljava/util/Random;II)I"))
+    public int roadsLimit(Random rand, int min, int max) {
+        return MathUtils.getIntInRange(rand, 8, Math.max(9, ModConfig.worldGen.maxCitySize));
     }
 
 
