@@ -24,9 +24,9 @@ public class MixinMathUtils implements ILateMixinLoader {
     public static int getIntInRange(Random rand, int min, int max) {
         int bound = max - min;
         if (bound == 0){
-            bound = max - min + 16 / 4 + max - min;
+            bound = max - min + 1;
         }
-        return min + rand.nextInt(bound) >= 1 ? min + rand.nextInt(bound) : 4;
+        return min + rand.nextInt(bound);
     }
 
     /**
@@ -35,8 +35,12 @@ public class MixinMathUtils implements ILateMixinLoader {
      */
     @Overwrite
     public static float getFloatInRange(float min, float max) {
+        float bound = max - min;
+        if (bound == 0){
+            bound = max - min + 1;
+        }
 
-        return min + r.nextFloat() * (max - min) >= 1 ? min + r.nextFloat() * (max - min) : min + r.nextFloat();
+        return min + r.nextFloat() * (bound);
     }
 
     /**
@@ -45,7 +49,11 @@ public class MixinMathUtils implements ILateMixinLoader {
      */
     @Overwrite
     public static double getDoubleInRange(double min, double max) {
-        return min + r.nextDouble() * (max - min) >= 1 ? min + r.nextDouble() * (max - min) : min + r.nextDouble();
+        double bound = max - min;
+        if (bound == 0){
+            bound = max - min + 1;
+        }
+        return min + r.nextDouble() * (bound);
     }
 
 
