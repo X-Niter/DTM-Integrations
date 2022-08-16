@@ -1,5 +1,6 @@
 package github.xniter.dtmintegrations.mixin;
 
+import github.xniter.dtmintegrations.config.DTMIConfig;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
@@ -8,13 +9,10 @@ import nuparu.sevendaystomine.util.MathUtils;
 import nuparu.sevendaystomine.world.gen.city.City;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.*;
 import zone.rong.mixinbooter.ILateMixinLoader;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @Mixin({City.class})
 public class MixinCity implements ILateMixinLoader {
@@ -35,6 +33,24 @@ public class MixinCity implements ILateMixinLoader {
     public static City foundCity(World world, ChunkPos pos, Random rand) {
         return City.foundCity(world, new BlockPos(pos.x << 4 + 8, 0, pos.z << 4 + 8), rand);
     }
+
+
+
+    @ModifyConstant(method = "prepareStreets", constant = @Constant(intValue = 8192))
+    public int prepareStreets(int constant) {
+
+        int genConfig = DTMIConfig.dtmGeneralConfig.streetGenAttempts;
+
+        if (genConfig < 1) {
+            genConfig = 1;
+        }
+        if (genConfig > 1200) {
+            genConfig = 1200;
+        }
+
+        return genConfig;
+    }
+
 
 
     @Override
