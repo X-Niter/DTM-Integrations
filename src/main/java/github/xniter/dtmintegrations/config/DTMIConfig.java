@@ -11,7 +11,7 @@ import static net.minecraftforge.common.config.Config.*;
 public final class DTMIConfig {
 
     public static forgeAutoConfig forgeConfig = new forgeAutoConfig();
-    public static dtmEvents dtmEventsConfig = new dtmEvents();
+    public static dtmGeneral dtmGeneralConfig = new dtmGeneral();
 
     public static class forgeAutoConfig {
         @Name("forgeAutoConfigGameOptimization")
@@ -20,11 +20,16 @@ public final class DTMIConfig {
         public boolean forgeAutoConfigGameOptimization = true;
     }
 
-    public static class dtmEvents {
+    public static class dtmGeneral {
         @Name("hordeSleeping")
         @LangKey("dtmintegrations.Config.hordeSleeping")
         @RequiresMcRestart
         public boolean hordeSleeping = false;
+
+        @Name("streetGenAttempts")
+        @LangKey("dtmintegrations.Config.streetGenAttempts")
+        @RequiresMcRestart
+        public int streetGenAttempts = 100;
     }
 
     @SubscribeEvent
