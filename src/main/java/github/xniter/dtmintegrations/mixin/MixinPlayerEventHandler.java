@@ -38,8 +38,8 @@ public class MixinPlayerEventHandler implements ILateMixinLoader {
      * @author X_Niter
      * @reason Only IF immersiveBlockBreaking is true will be bother to go through the code, if it's false, then just don't change anything as vanilla handles it
      */
-    @Overwrite(remap = false)
     @SubscribeEvent
+    @Overwrite(remap = false)
     public void onPlayerBreakSpeed(PlayerEvent.BreakSpeed event) {
         if (ModConfig.players.immersiveBlockBreaking) {
             float speed = event.getOriginalSpeed() / (event.getState().getMaterial() != Material.CIRCUITS && event.getState().getMaterial() != Material.WEB ? ModConfig.players.immersiveBlockBreakingModifier : 1.0F);
@@ -61,11 +61,11 @@ public class MixinPlayerEventHandler implements ILateMixinLoader {
      * @author X_Niter
      * @reason Additional config to allow players to sleep through horde or not
      */
-    @Overwrite(remap = false)
     @SubscribeEvent
+    @Overwrite(remap = false)
     public void onPlayerSleepInBed(PlayerSleepInBedEvent event) {
         World world = event.getEntityPlayer().world;
-        if (!DTMIConfig.dtmEventsConfig.hordeSleeping && Utils.isBloodmoon(world)) {
+        if (!DTMIConfig.dtmGeneralConfig.hordeSleeping && Utils.isBloodmoon(world)) {
             event.setResult(EntityPlayer.SleepResult.OTHER_PROBLEM);
         }
 
