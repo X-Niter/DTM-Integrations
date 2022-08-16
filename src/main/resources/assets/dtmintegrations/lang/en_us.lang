@@ -1,1 +1,2 @@
-dtmintegrations.fAutoConfig.forgeAutoConfigGameOptimization=Enable/Disable Automatic Forge config configuring by DTMI
+dtmintegrations.Config.forgeAutoConfigGameOptimization=Enable/Disable Automatic Forge config configuring by DTMI
+dtmintegrations.Config.hordeSleeping=Can players sleep through horde night?

@@ -30,15 +30,19 @@ public class MixinCityWorldGenerator implements ILateMixinLoader, IWorldGenerato
         int blockX = chunkX * 16;
         int blockZ = chunkZ * 16;
         if (world.provider.getDimension() == 0) {
-            this.generateOverworld(world, random, chunkX, chunkZ);
+            this.generateOverworld(world, random, blockX, blockZ);
         }
 
     }
 
-    @Shadow
+    /**
+     * @author X_Niter
+     * @reason f
+     */
+    @Overwrite(remap = false)
     private void generateOverworld(World world, Random rand, int chunkX, int chunkZ) {
         if (world.getWorldType() != WorldType.FLAT) {
-            if (chunkX % 64 == 0 && chunkZ % 64 == 0) {
+            if (chunkX % 16 == 0 && chunkZ % 16 == 0) {
                 int blockX = chunkX * 16;
                 int blockZ = chunkZ * 16;
                 BlockPos pos = new BlockPos(blockX, 64, blockZ);

@@ -11,12 +11,20 @@ import static net.minecraftforge.common.config.Config.*;
 public final class DTMIConfig {
 
     public static forgeAutoConfig forgeConfig = new forgeAutoConfig();
+    public static dtmEvents dtmEventsConfig = new dtmEvents();
 
     public static class forgeAutoConfig {
         @Name("forgeAutoConfigGameOptimization")
-        @LangKey("dtmintegrations.fAutoConfig.forgeAutoConfigGameOptimization")
+        @LangKey("dtmintegrations.Config.forgeAutoConfigGameOptimization")
         @RequiresMcRestart
         public boolean forgeAutoConfigGameOptimization = true;
+    }
+
+    public static class dtmEvents {
+        @Name("hordeSleeping")
+        @LangKey("dtmintegrations.Config.hordeSleeping")
+        @RequiresMcRestart
+        public boolean hordeSleeping = false;
     }
 
     @SubscribeEvent

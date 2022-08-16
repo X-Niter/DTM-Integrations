@@ -23,11 +23,6 @@ public class FMLAutoConfig {
             if (!forgeConfig.get("logCascadingWorldGeneration").getBoolean()) {
                 ForgeModContainer.logCascadingWorldGeneration = false;
             }
-
-
-
         }
     }
-
-
 }
