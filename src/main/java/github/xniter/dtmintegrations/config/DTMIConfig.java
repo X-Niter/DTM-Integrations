@@ -1,5 +1,6 @@
 package github.xniter.dtmintegrations.config;
 
+import jdk.jfr.BooleanFlag;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
@@ -22,14 +23,23 @@ public final class DTMIConfig {
 
     public static class dtmGeneral {
         @Name("hordeSleeping")
+        @Comment("Can players sleep through horde night?")
         @LangKey("dtmintegrations.Config.hordeSleeping")
         @RequiresMcRestart
         public boolean hordeSleeping = false;
 
         @Name("streetGenAttempts")
+        @Comment("How many attempts will be made to generate a street")
         @LangKey("dtmintegrations.Config.streetGenAttempts")
+        @RangeInt(min = 1, max = 100)
         @RequiresMcRestart
-        public int streetGenAttempts = 100;
+        public int streetGenAttempts = 5;
+
+        @Name("changeTorches")
+        @Comment("Allow 7DTM to change torches, set to false if another mod changes torches already.")
+        @LangKey("dtmintegrations.Config.changeTorches")
+        @RequiresMcRestart
+        public boolean changeTorches = true;
     }
 
     @SubscribeEvent

@@ -1,2 +1,4 @@
 dtmintegrations.Config.forgeAutoConfigGameOptimization=Enable/Disable Automatic Forge config configuring by DTMI
 dtmintegrations.Config.hordeSleeping=Can players sleep through horde night?
+dtmintegrations.Config.streetGenAttempts=How many attempts will be made to generate a street
+dtmintegrations.Config.changeTorches=Allow 7DTM to change torches, set to false if another mod changes torches already.

@@ -9,6 +9,7 @@
     "MixinCity",
     "MixinCityWorldGenerator",
     "MixinMathUtils",
-    "MixinPlayerEventHandler"
+    "MixinPlayerEventHandler",
+    "MixinWorldEventHandler"
   ]
 }
