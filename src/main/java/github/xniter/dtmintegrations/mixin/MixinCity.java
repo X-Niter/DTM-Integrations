@@ -19,24 +19,23 @@ public class MixinCity implements ILateMixinLoader {
 
 
 
-    @Redirect(method = "<init>(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnuparu/sevendaystomine/world/gen/city/EnumCityType;Ljava/util/Random;)V", at = @At(value = "INVOKE", target = "Lnuparu/sevendaystomine/util/MathUtils;getIntInRange(Ljava/util/Random;II)I"))
-    public int roadsLimit(Random rand, int min, int max) {
-        return MathUtils.getIntInRange(rand, 8, Math.max(9, ModConfig.worldGen.maxCitySize));
-    }
+//    @Redirect(method = "<init>(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnuparu/sevendaystomine/world/gen/city/EnumCityType;Ljava/util/Random;)V", at = @At(value = "INVOKE", target = "Lnuparu/sevendaystomine/util/MathUtils;getIntInRange(Ljava/util/Random;II)I"))
+//    public int roadsLimit(Random rand, int min, int max) {
+//        return MathUtils.getIntInRange(rand, 8, Math.max(9, ModConfig.worldGen.maxCitySize));
+//    }
+//
+//
+//    /**
+//     * @author X_Niter
+//     * @reason Gen Fix
+//     */
+//    @Overwrite(remap = false)
+//    public static City foundCity(World world, ChunkPos pos, Random rand) {
+//        return City.foundCity(world, new BlockPos(pos.x * 16 + 8, 0, pos.z * 16 + 8), rand);
+//    }
 
 
-    /**
-     * @author X_Niter
-     * @reason Gen Fix
-     */
-    @Overwrite(remap = false)
-    public static City foundCity(World world, ChunkPos pos, Random rand) {
-        return City.foundCity(world, new BlockPos(pos.x << 4 + 8, 0, pos.z << 4 + 8), rand);
-    }
-
-
-
-    @ModifyConstant(method = "prepareStreets", constant = @Constant(intValue = 8192))
+    @ModifyConstant(method = "prepareStreets", constant = @Constant(intValue = 8192), remap = false)
     public int prepareStreets(int constant) {
 
         int genConfig = DTMIConfig.dtmGeneralConfig.streetGenAttempts;
@@ -44,8 +43,23 @@ public class MixinCity implements ILateMixinLoader {
         if (genConfig < 1) {
             genConfig = 1;
         }
-        if (genConfig > 1200) {
-            genConfig = 1200;
+        if (genConfig > 100) {
+            genConfig = 100;
+        }
+
+        return genConfig;
+    }
+
+    @ModifyConstant(method = "addIteration", constant = @Constant(intValue = 16), remap = false)
+    public int addIteration(int constant) {
+
+        int genConfig = DTMIConfig.dtmGeneralConfig.streetGenAttempts;
+
+        if (genConfig < 1) {
+            genConfig = 1;
+        }
+        if (genConfig > 100) {
+            genConfig = 100;
         }
 
         return genConfig;
