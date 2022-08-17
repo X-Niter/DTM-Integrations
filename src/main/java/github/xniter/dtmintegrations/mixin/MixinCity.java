@@ -1,18 +1,14 @@
 package github.xniter.dtmintegrations.mixin;
 
 import github.xniter.dtmintegrations.config.DTMIConfig;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.world.World;
-import nuparu.sevendaystomine.config.ModConfig;
-import nuparu.sevendaystomine.util.MathUtils;
 import nuparu.sevendaystomine.world.gen.city.City;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.Constant;
+import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import zone.rong.mixinbooter.ILateMixinLoader;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
 
 @Mixin({City.class})
 public class MixinCity implements ILateMixinLoader {

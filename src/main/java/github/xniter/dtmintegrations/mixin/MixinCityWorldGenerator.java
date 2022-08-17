@@ -1,24 +1,18 @@
 package github.xniter.dtmintegrations.mixin;
 
-import com.dhanantry.scapeandrunparasites.world.gen.structure.WorldGenStructure;
 import github.xniter.dtmintegrations.config.DTMIConfig;
-import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldType;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.IChunkGenerator;
-import net.minecraft.world.gen.feature.WorldGenerator;
-import net.minecraftforge.fml.common.IWorldGenerator;
 import nuparu.sevendaystomine.world.gen.CityWorldGenerator;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.Inject;
 import zone.rong.mixinbooter.ILateMixinLoader;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
 @Mixin({CityWorldGenerator.class})
 public class MixinCityWorldGenerator implements ILateMixinLoader {

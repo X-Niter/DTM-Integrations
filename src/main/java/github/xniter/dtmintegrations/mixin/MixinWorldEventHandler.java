@@ -13,7 +13,6 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import nuparu.sevendaystomine.events.WorldEventHandler;
 import nuparu.sevendaystomine.init.ModBlocks;
-import nuparu.sevendaystomine.world.gen.city.City;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import zone.rong.mixinbooter.ILateMixinLoader;

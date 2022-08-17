@@ -3,19 +3,14 @@ package github.xniter.dtmintegrations;
 import github.xniter.dtmintegrations.config.DTMIConfig;
 import github.xniter.dtmintegrations.features.FMLAutoConfig;
 import github.xniter.dtmintegrations.integration.IntegrationHelper;
-import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.registries.IForgeRegistry;
 import nuparu.sevendaystomine.SevenDaysToMine;
-import nuparu.sevendaystomine.init.ModBlocks;
 import nuparu.sevendaystomine.util.Utils;
 import org.apache.logging.log4j.Logger;
 
@@ -23,15 +18,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import static noobanidus.mods.lootr.config.ConfigManager.ADDITIONAL_CHESTS;
-import static noobanidus.mods.lootr.config.ConfigManager.LOOTABLE_TE_BLACKLIST;
 
 @Mod(
         modid = DTMIntegrations.MOD_ID,

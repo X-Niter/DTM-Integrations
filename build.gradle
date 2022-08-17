@@ -96,16 +96,26 @@ repositories {
 
 dependencies {
 
+    // MixinBooter
     deobfCompile "zone.rong:mixinbooter:5.0"
+
+    // JEI
     deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}"
 
+    // Seven Days To Mine
     deobfCompile "curse.maven:days-to-mine-222025:3506869"
 
+    // Lost Cities
     deobfCompile "curse.maven:the-lost-cities-269024:2861574"
 
+    // SRParasites
     deobfCompile "curse.maven:scape-and-run-parasites-348025:3755305"
 
+    // Baubles-LTS
     deobfCompile "curse.maven:baubles-lts-655747:3916343"
+
+    // Lootr
+    deobfCompile "curse.maven:lootr-361276:3907817"
 
 }
 
