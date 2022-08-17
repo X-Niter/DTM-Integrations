@@ -1,6 +1,7 @@
 package github.xniter.dtmintegrations.mixin;
 
 import com.dhanantry.scapeandrunparasites.world.gen.structure.WorldGenStructure;
+import github.xniter.dtmintegrations.config.DTMIConfig;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -23,28 +24,35 @@ import java.util.*;
 public class MixinCityWorldGenerator implements ILateMixinLoader {
 
 
+    // TODO: Make all Generating use the Generating config!!!
 
     /**
      * @author X_Niter
-     * @reason f
+     * @reason Config control for what world to allow generating in.
      */
     @Overwrite(remap = false)
     public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
-        if (world.provider.getDimension() == 0) {
-            this.generateOverworld(world, random, chunkX, chunkZ);
-        }
+        int worldProviders = world.provider.getDimension();
+
+        DTMIConfig.getAllowedDimsForGen().forEach(dimToGen -> {
+            if (worldProviders == dimToGen) {
+                this.generateOverworld(world, random, chunkX, chunkZ);
+            }
+        });
     }
 
-    @Shadow
+    /**
+     * @author X_Niter
+     * @reason Remove world type filter as modpack developers may allow a flat type world dimension for generation.
+     */
+    @Overwrite(remap = false)
     private void generateOverworld(World world, Random rand, int chunkX, int chunkZ) {
-        if (world.getWorldType() != WorldType.FLAT) {
-            if (chunkX % 64 == 0 && chunkZ % 64 == 0) {
-                int blockX = chunkX * 16;
-                int blockZ = chunkZ * 16;
-                BlockPos pos = new BlockPos(blockX, 64, blockZ);
-                world.getBiomeForCoordsBody(pos);
-                world.getChunk(pos);
-            }
+        if (chunkX % 64 == 0 && chunkZ % 64 == 0) {
+            int blockX = chunkX * 16;
+            int blockZ = chunkZ * 16;
+            BlockPos pos = new BlockPos(blockX, 64, blockZ);
+            world.getBiomeForCoordsBody(pos);
+            world.getChunk(pos);
         }
     }
 
