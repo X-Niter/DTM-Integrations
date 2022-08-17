@@ -1,5 +1,7 @@
 package github.xniter.dtmintegrations.config;
 
+import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
+import it.unimi.dsi.fastutil.ints.IntSet;
 import jdk.jfr.BooleanFlag;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
@@ -16,7 +18,6 @@ public final class DTMIConfig {
 
     public static class forgeAutoConfig {
         @Name("forgeAutoConfigGameOptimization")
-        @LangKey("dtmintegrations.Config.forgeAutoConfigGameOptimization")
         @RequiresMcRestart
         public boolean forgeAutoConfigGameOptimization = true;
     }
@@ -24,22 +25,34 @@ public final class DTMIConfig {
     public static class dtmGeneral {
         @Name("hordeSleeping")
         @Comment("Can players sleep through horde night?")
-        @LangKey("dtmintegrations.Config.hordeSleeping")
         @RequiresMcRestart
         public boolean hordeSleeping = false;
 
         @Name("streetGenAttempts")
-        @Comment("How many attempts will be made to generate a street")
-        @LangKey("dtmintegrations.Config.streetGenAttempts")
+        @Comment("How many attempts will be made to generate a street [Bigger numbers will yield major performance loss]")
         @RangeInt(min = 1, max = 100)
         @RequiresMcRestart
         public int streetGenAttempts = 5;
 
         @Name("changeTorches")
         @Comment("Allow 7DTM to change torches, set to false if another mod changes torches already.")
-        @LangKey("dtmintegrations.Config.changeTorches")
         @RequiresMcRestart
         public boolean changeTorches = true;
+
+        @Name("allowedDimGen")
+        @Comment("[Default 0 meaning Overworld] What Dimensions should generation be allowed in? [WARNING: Added for pack developers, These structures were not meant for all worlds, USE AT YOUR OWN RISK]")
+        @RequiresMcRestart
+        public int[] allowedDimGen = new int[]{0};
+    }
+
+    private static IntSet DIM_GEN_LIST = null;
+
+    public static IntSet getAllowedDimsForGen() {
+        if (DIM_GEN_LIST == null) {
+            DIM_GEN_LIST = new IntOpenHashSet(dtmGeneralConfig.allowedDimGen);
+        }
+
+        return DIM_GEN_LIST;
     }
 
     @SubscribeEvent
