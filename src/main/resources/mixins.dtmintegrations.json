@@ -12,6 +12,7 @@
     "MixinPlayerEventHandler",
     "MixinStructureGenerator",
     "MixinTickHandler",
+    "MixinUtils",
     "MixinWorldEventHandler"
   ]
 }
