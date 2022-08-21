@@ -68,7 +68,7 @@ public class DTMIntegrations {
         }
 
         if (configOutdated) {
-            File configFile = new File("DTMIntegrations", "DTMIntegrations.cfg");
+            File configFile = new File(modDir, "DTMIntegrations.cfg");
             if (configFile.exists()) {
                 log.info("Regenerating outdated config");
                 configFile.delete();
