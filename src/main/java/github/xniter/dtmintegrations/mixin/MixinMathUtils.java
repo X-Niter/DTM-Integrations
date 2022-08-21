@@ -20,7 +20,7 @@ public class MixinMathUtils implements ILateMixinLoader {
      * @author X_Niter
      * @reason Math
      */
-    @Overwrite
+    @Overwrite(remap = false)
     public static int getIntInRange(Random rand, int min, int max) {
         int bound = max - min;
         if (bound == 0){
@@ -33,7 +33,7 @@ public class MixinMathUtils implements ILateMixinLoader {
      * @author X_Niter
      * @reason Math
      */
-    @Overwrite
+    @Overwrite(remap = false)
     public static float getFloatInRange(float min, float max) {
         float bound = max - min;
         if (bound == 0){
@@ -47,7 +47,7 @@ public class MixinMathUtils implements ILateMixinLoader {
      * @author X_Niter
      * @reason Math
      */
-    @Overwrite
+    @Overwrite(remap = false)
     public static double getDoubleInRange(double min, double max) {
         double bound = max - min;
         if (bound == 0){
