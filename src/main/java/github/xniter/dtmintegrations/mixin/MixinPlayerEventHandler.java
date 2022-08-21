@@ -1,6 +1,7 @@
 package github.xniter.dtmintegrations.mixin;
 
-import github.xniter.dtmintegrations.config.DTMIConfig;
+import github.xniter.dtmintegrations.handlers.config.ConfigGetter;
+import github.xniter.dtmintegrations.handlers.config.ConfigHandler;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -55,7 +56,7 @@ public class MixinPlayerEventHandler implements ILateMixinLoader {
     @Overwrite(remap = false)
     public void onPlayerSleepInBed(PlayerSleepInBedEvent event) {
         World world = event.getEntityPlayer().world;
-        if (!DTMIConfig.dtmGeneralConfig.hordeSleeping && Utils.isBloodmoon(world)) {
+        if (!ConfigGetter.getBMSleeping() && Utils.isBloodmoon(world)) {
             event.setResult(EntityPlayer.SleepResult.OTHER_PROBLEM);
         }
 
