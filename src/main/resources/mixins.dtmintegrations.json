@@ -8,6 +8,8 @@
   "mixins": [
     "MixinCity",
     "MixinCityWorldGenerator",
+    "MixinCommandAirdrop",
+    "MixinEntityAirdrop",
     "MixinMathUtils",
     "MixinPlayerEventHandler",
     "MixinStructureGenerator",
