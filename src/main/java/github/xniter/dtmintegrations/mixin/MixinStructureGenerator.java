@@ -1,6 +1,7 @@
 package github.xniter.dtmintegrations.mixin;
 
-import github.xniter.dtmintegrations.config.DTMIConfig;
+import github.xniter.dtmintegrations.handlers.config.ConfigGetter;
+import github.xniter.dtmintegrations.handlers.config.ConfigHandler;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -34,7 +35,7 @@ public class MixinStructureGenerator implements ILateMixinLoader, IWorldGenerato
     public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
         int worldProviders = world.provider.getDimension();
 
-        DTMIConfig.getAllowedDimsForGen().forEach(dimToGen -> {
+        ConfigGetter.getAllowedDimGen().forEach(dimToGen -> {
             if (worldProviders == dimToGen) {
                 this.generateOverworld(world, random, chunkX, chunkZ);
             }

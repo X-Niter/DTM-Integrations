@@ -1,6 +1,7 @@
 package github.xniter.dtmintegrations.mixin;
 
-import github.xniter.dtmintegrations.config.DTMIConfig;
+import github.xniter.dtmintegrations.handlers.config.ConfigGetter;
+import github.xniter.dtmintegrations.handlers.config.ConfigHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockTorch;
 import net.minecraft.block.state.IBlockState;
@@ -30,7 +31,7 @@ public class MixinWorldEventHandler implements ILateMixinLoader {
     @SubscribeEvent(priority = EventPriority.NORMAL, receiveCanceled = true)
     @Overwrite(remap = false)
     public void replaceTorchs(PopulateChunkEvent.Post event) {
-        if (DTMIConfig.dtmGeneralConfig.changeTorches) {
+        if (ConfigGetter.getChangeTorches()) {
             World world = event.getWorld();
             Chunk chunk = world.getChunk(event.getChunkX(), event.getChunkZ());
             Block fromBlock = Blocks.TORCH;
@@ -53,17 +54,6 @@ public class MixinWorldEventHandler implements ILateMixinLoader {
             }
         }
     }
-
-
-
-
-
-
-
-
-
-
-
 
     @Override
     public List<String> getMixinConfigs()
