@@ -28,11 +28,11 @@ import java.util.Scanner;
         dependencies = "required-after:sevendaystomine;required-after:mixinbooter"
 )
 public class DTMIntegrations {
-    private static final int CONFIG_VERSION = 1;
+    private static final int CONFIG_VERSION = 2;
 
     public static final String MOD_ID = "dtmintegrations";
     public static final String MOD_NAME = "DTM Integrations";
-    public static final String VERSION = "1.2.1";
+    public static final String VERSION = "1.3.0";
 
     /**
      * This is the instance of your mod as created by Forge. It will never be null.
@@ -68,7 +68,7 @@ public class DTMIntegrations {
         }
 
         if (configOutdated) {
-            File configFile = new File(event.getModConfigurationDirectory(), "DTMIntegrations.cfg");
+            File configFile = new File("DTMIntegrations", "DTMIntegrations.cfg");
             if (configFile.exists()) {
                 log.info("Regenerating outdated config");
                 configFile.delete();
