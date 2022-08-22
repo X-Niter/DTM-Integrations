@@ -1,10 +1,10 @@
 [
   {
-    "modid": "${mod_id}",
-    "name": "${mod_name}",
+    "modid": "dtmintegrations",
+    "name": "DTMIntegrations",
     "description": "Overhauls and integrates 7DTM to work with and amongst other mods seamlessly to expand the user experience of 7DTM",
-    "version": "${mod_version}",
-    "mcversion": "${mc_version}",
+    "version": "${version}",
+    "mcversion": "1.12.2",
     "url": "",
     "updateUrl": "",
     "authorList": [
