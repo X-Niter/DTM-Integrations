@@ -1,8 +1,8 @@
 package github.xniter.dtmintegrations;
 
-import github.xniter.dtmintegrations.handlers.config.ConfigHandler;
-import github.xniter.dtmintegrations.handlers.FMLEvents;
 import github.xniter.dtmintegrations.features.FMLAutoConfig;
+import github.xniter.dtmintegrations.handlers.FMLEvents;
+import github.xniter.dtmintegrations.handlers.config.ConfigHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;

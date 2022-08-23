@@ -1,7 +1,6 @@
 package github.xniter.dtmintegrations.features;
 
 import github.xniter.dtmintegrations.handlers.config.ConfigGetter;
-import github.xniter.dtmintegrations.handlers.config.ConfigHandler;
 import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
