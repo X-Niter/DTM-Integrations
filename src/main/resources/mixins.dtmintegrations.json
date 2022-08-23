@@ -1,20 +1,20 @@
 {
   "minVersion": "0.8",
   "package": "github.xniter.dtmintegrations.mixin",
+  "required": true,
   "refmap": "mixins.sdtmintegrations.refmap.json",
   "target": "@env(DEFAULT)",
   "compatibilityLevel": "JAVA_8",
-  "priority": 1111,
   "mixins": [
-    "MixinCity",
-    "MixinCityWorldGenerator",
-    "MixinCommandAirdrop",
-    "MixinEntityAirdrop",
-    "MixinMathUtils",
-    "MixinPlayerEventHandler",
-    "MixinStructureGenerator",
-    "MixinTickHandler",
-    "MixinUtils",
-    "MixinWorldEventHandler"
+    "sevendaystomine.MixinEntityAirdrop",
+    "sevendaystomine.MixinCity",
+    "sevendaystomine.MixinCityWorldGenerator",
+    "sevendaystomine.MixinCommandAirdrop",
+    "sevendaystomine.MixinMathUtils",
+    "sevendaystomine.MixinPlayerEventHandler",
+    "sevendaystomine.MixinStructureGenerator",
+    "sevendaystomine.MixinTickHandler",
+    "sevendaystomine.MixinUtils",
+    "sevendaystomine.MixinWorldEventHandler"
   ]
 }
