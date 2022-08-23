@@ -1,9 +1,10 @@
-package github.xniter.dtmintegrations.integration;
+package github.xniter.dtmintegrations.handlers;
 
 import net.minecraftforge.fml.common.Loader;
 
-public class IntegrationHelper {
-    public IntegrationHelper() {
+public class ModGetter {
+
+    public ModGetter() {
     }
 
     public static boolean isJEILoaded() {
