@@ -1,5 +1,6 @@
-package github.xniter.dtmintegrations.mixin;
+package github.xniter.dtmintegrations.mixin.sevendaystomine;
 
+import github.xniter.dtmintegrations.handlers.config.ConfigGetter;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.NumberInvalidException;
@@ -9,21 +10,14 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import nuparu.sevendaystomine.command.CommandAirdrop;
 import nuparu.sevendaystomine.entity.EntityAirdrop;
-import nuparu.sevendaystomine.util.MathUtils;
 import nuparu.sevendaystomine.util.Utils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import zone.rong.mixinbooter.ILateMixinLoader;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Random;
 
 @Mixin({CommandAirdrop.class})
-public class MixinCommandAirdrop implements ILateMixinLoader {
+public class MixinCommandAirdrop{
 
     /**
      * @author X_Niter
@@ -47,27 +41,10 @@ public class MixinCommandAirdrop implements ILateMixinLoader {
                 world.spawnEntity(e);
                 e.setPosition(pos.getX(), pos.getY(), pos.getZ());
                 Random rand = new Random();
-                sender.sendMessage(new TextComponentTranslation("airdrop.message", world.getWorldInfo().getWorldName(), pos.getX() + rand.nextInt(32) - rand.nextInt(32), pos.getZ() + rand.nextInt(32) - rand.nextInt(32)));
+
+                sender.sendMessage(new TextComponentTranslation("airdrop.message", world.getWorldInfo().getWorldName(), pos.getX() + rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation()) - rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation()), pos.getZ() + rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation()) - rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation())));
             }
 
         }
-    }
-
-    @Override
-    public List<String> getMixinConfigs()
-    {
-        return Collections.singletonList("mixins.dtmintegrations.json");
-    }
-
-    @Override
-    public boolean shouldMixinConfigQueue(String mixinConfig)
-    {
-        return ILateMixinLoader.super.shouldMixinConfigQueue(mixinConfig);
-    }
-
-    @Override
-    public void onMixinConfigQueued(String mixinConfig)
-    {
-        ILateMixinLoader.super.onMixinConfigQueued(mixinConfig);
     }
 }

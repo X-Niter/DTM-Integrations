@@ -1,7 +1,6 @@
-package github.xniter.dtmintegrations.mixin;
+package github.xniter.dtmintegrations.mixin.sevendaystomine;
 
 import github.xniter.dtmintegrations.handlers.config.ConfigGetter;
-import github.xniter.dtmintegrations.handlers.config.ConfigHandler;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
@@ -9,14 +8,11 @@ import net.minecraft.world.gen.IChunkGenerator;
 import nuparu.sevendaystomine.world.gen.CityWorldGenerator;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
-import zone.rong.mixinbooter.ILateMixinLoader;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Random;
 
 @Mixin({CityWorldGenerator.class})
-public class MixinCityWorldGenerator implements ILateMixinLoader {
+public class MixinCityWorldGenerator {
 
 
     // TODO: Make all Generating use the Generating config!!!
@@ -49,23 +45,5 @@ public class MixinCityWorldGenerator implements ILateMixinLoader {
             world.getBiomeForCoordsBody(pos);
             world.getChunk(pos);
         }
-    }
-
-    @Override
-    public List<String> getMixinConfigs()
-    {
-        return Collections.singletonList("mixins.dtmintegrations.json");
-    }
-
-    @Override
-    public boolean shouldMixinConfigQueue(String mixinConfig)
-    {
-        return ILateMixinLoader.super.shouldMixinConfigQueue(mixinConfig);
-    }
-
-    @Override
-    public void onMixinConfigQueued(String mixinConfig)
-    {
-        ILateMixinLoader.super.onMixinConfigQueued(mixinConfig);
     }
 }

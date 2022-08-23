@@ -1,17 +1,14 @@
-package github.xniter.dtmintegrations.mixin;
+package github.xniter.dtmintegrations.mixin.sevendaystomine;
 
 import nuparu.sevendaystomine.util.MathUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
-import zone.rong.mixinbooter.ILateMixinLoader;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Random;
 
 @Mixin({MathUtils.class})
-public class MixinMathUtils implements ILateMixinLoader {
+public class MixinMathUtils {
 
     @Shadow
     private static Random r = new Random();
@@ -54,21 +51,5 @@ public class MixinMathUtils implements ILateMixinLoader {
             bound = max - min + 1;
         }
         return min + r.nextDouble() * (bound);
-    }
-
-
-    @Override
-    public List<String> getMixinConfigs() {
-        return Collections.singletonList("mixins.dtmintegrations.json");
-    }
-
-    @Override
-    public boolean shouldMixinConfigQueue(String mixinConfig) {
-        return ILateMixinLoader.super.shouldMixinConfigQueue(mixinConfig);
-    }
-
-    @Override
-    public void onMixinConfigQueued(String mixinConfig) {
-        ILateMixinLoader.super.onMixinConfigQueued(mixinConfig);
     }
 }

@@ -1,7 +1,6 @@
-package github.xniter.dtmintegrations.mixin;
+package github.xniter.dtmintegrations.mixin.sevendaystomine;
 
 import github.xniter.dtmintegrations.handlers.config.ConfigGetter;
-import github.xniter.dtmintegrations.handlers.config.ConfigHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
@@ -39,16 +38,13 @@ import nuparu.sevendaystomine.world.horde.ZombieWolfHorde;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
-import zone.rong.mixinbooter.ILateMixinLoader;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Random;
 
 import static nuparu.sevendaystomine.events.TickHandler.handleExtendedPlayer;
 
 @Mixin({TickHandler.class})
-public class MixinTickHandler implements ILateMixinLoader {
+public class MixinTickHandler {
 
     @Shadow
     private long nextTorchCheck = 0L;
@@ -77,11 +73,20 @@ public class MixinTickHandler implements ILateMixinLoader {
                             if (time >= 6000L && miscData.getLastAirdrop() != Utils.getDay(world) && Utils.getDay(world) % ModConfig.world.airdropFrequency == 0) {
                                 miscData.setLastAirdrop(Utils.getDay(world));
                                 BlockPos pos = Utils.getAirdropPos(world);
-                                EntityAirdrop airDrop = new EntityAirdrop(world, world.getSpawnPoint().up(255));
+                                EntityAirdrop airDrop = new EntityAirdrop(world, world.getSpawnPoint().up(ConfigGetter.getAirdropMaxHeight()));
                                 world.spawnEntity(airDrop);
-                                airDrop.setPosition(pos.getX(), pos.getY(), pos.getZ());
+
                                 Random rand = new Random();
-                                server.getPlayerList().sendMessage(new TextComponentTranslation("airdrop.message", airDrop.getEntityWorld().getWorldInfo().getWorldName(), pos.getX() + rand.nextInt(32) - rand.nextInt(32), pos.getZ() + rand.nextInt(32) - rand.nextInt(32)));
+
+                                airDrop.setPosition(pos.getX() + rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation()), pos.getY(), pos.getZ() + rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation()));
+
+                                if (ConfigGetter.getAirdropChatMessageEnabled()) {
+                                    if (ConfigGetter.getAirdropChatMessageExactLocation()) {
+                                        server.getPlayerList().sendMessage(new TextComponentTranslation("airdrop.message", airDrop.getEntityWorld().getWorldInfo().getWorldName(), pos.getX(), pos.getZ()));
+                                    } else {
+                                        server.getPlayerList().sendMessage(new TextComponentTranslation("airdrop.message", airDrop.getEntityWorld().getWorldInfo().getWorldName(), pos.getX() + rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation()) - rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation()), pos.getZ() + rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation()) - rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation())));
+                                    }
+                                }
                             }
                         }
                     }
@@ -187,23 +192,5 @@ public class MixinTickHandler implements ILateMixinLoader {
             }
         }
 
-    }
-
-    @Override
-    public List<String> getMixinConfigs()
-    {
-        return Collections.singletonList("mixins.dtmintegrations.json");
-    }
-
-    @Override
-    public boolean shouldMixinConfigQueue(String mixinConfig)
-    {
-        return ILateMixinLoader.super.shouldMixinConfigQueue(mixinConfig);
-    }
-
-    @Override
-    public void onMixinConfigQueued(String mixinConfig)
-    {
-        ILateMixinLoader.super.onMixinConfigQueued(mixinConfig);
     }
 }

@@ -1,7 +1,6 @@
-package github.xniter.dtmintegrations.mixin;
+package github.xniter.dtmintegrations.mixin.sevendaystomine;
 
 import github.xniter.dtmintegrations.handlers.config.ConfigGetter;
-import github.xniter.dtmintegrations.handlers.config.ConfigHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockTorch;
 import net.minecraft.block.state.IBlockState;
@@ -16,13 +15,9 @@ import nuparu.sevendaystomine.events.WorldEventHandler;
 import nuparu.sevendaystomine.init.ModBlocks;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
-import zone.rong.mixinbooter.ILateMixinLoader;
-
-import java.util.Collections;
-import java.util.List;
 
 @Mixin({WorldEventHandler.class})
-public class MixinWorldEventHandler implements ILateMixinLoader {
+public class MixinWorldEventHandler{
 
     /**
      * @author X_Niter
@@ -53,22 +48,5 @@ public class MixinWorldEventHandler implements ILateMixinLoader {
                 }
             }
         }
-    }
-
-    @Override
-    public List<String> getMixinConfigs()
-    {
-        return Collections.singletonList("mixins.dtmintegrations.json");
-    }
-
-    @Override
-    public boolean shouldMixinConfigQueue(String mixinConfig) {
-        return ILateMixinLoader.super.shouldMixinConfigQueue(mixinConfig);
-    }
-
-    @Override
-    public void onMixinConfigQueued(String mixinConfig)
-    {
-        ILateMixinLoader.super.onMixinConfigQueued(mixinConfig);
     }
 }

@@ -1,7 +1,6 @@
-package github.xniter.dtmintegrations.mixin;
+package github.xniter.dtmintegrations.mixin.sevendaystomine;
 
 import github.xniter.dtmintegrations.handlers.config.ConfigGetter;
-import github.xniter.dtmintegrations.handlers.config.ConfigHandler;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -18,12 +17,11 @@ import nuparu.sevendaystomine.world.gen.city.building.Building;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
-import zone.rong.mixinbooter.ILateMixinLoader;
 
 import java.util.*;
 
 @Mixin({StructureGenerator.class})
-public class MixinStructureGenerator implements ILateMixinLoader, IWorldGenerator {
+public class MixinStructureGenerator implements IWorldGenerator {
 
     @Shadow public static List<Building> buildings = new ArrayList<>();
 
@@ -113,23 +111,5 @@ public class MixinStructureGenerator implements ILateMixinLoader, IWorldGenerato
             }
         }
         return false;
-    }
-
-    @Override
-    public List<String> getMixinConfigs()
-    {
-        return Collections.singletonList("mixins.dtmintegrations.json");
-    }
-
-    @Override
-    public boolean shouldMixinConfigQueue(String mixinConfig)
-    {
-        return ILateMixinLoader.super.shouldMixinConfigQueue(mixinConfig);
-    }
-
-    @Override
-    public void onMixinConfigQueued(String mixinConfig)
-    {
-        ILateMixinLoader.super.onMixinConfigQueued(mixinConfig);
     }
 }
