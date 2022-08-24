@@ -1,6 +1,8 @@
 package github.xniter.dtmintegrations.mixin.sevendaystomine;
 
+import github.xniter.dtmintegrations.features.AirdropEventSound;
 import github.xniter.dtmintegrations.handlers.config.ConfigGetter;
+import net.minecraft.client.Minecraft;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.NumberInvalidException;
@@ -40,8 +42,11 @@ public class MixinCommandAirdrop{
                 EntityAirdrop e = new EntityAirdrop(world, world.getSpawnPoint().up(255));
                 world.spawnEntity(e);
                 e.setPosition(pos.getX(), pos.getY(), pos.getZ());
-                Random rand = new Random();
 
+                // TODO Airplane sound affect (This attempt broke)
+                Minecraft.getMinecraft().getSoundHandler().playSound(new AirdropEventSound(e));
+
+                Random rand = new Random();
                 sender.sendMessage(new TextComponentTranslation("airdrop.message", world.getWorldInfo().getWorldName(), pos.getX() + rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation()) - rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation()), pos.getZ() + rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation()) - rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation())));
             }
 
