@@ -1,0 +1,9 @@
+{  
+   "airdrop.event":{
+      "category":"ambient",
+      "subtitle":"subtitle.airdrop.event",
+      "sounds":[  
+         "dtmintegrations:dtmi.airdrop.event"
+      ]
+   }
+}
