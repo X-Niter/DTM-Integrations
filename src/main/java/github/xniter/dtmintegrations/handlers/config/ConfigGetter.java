@@ -70,4 +70,12 @@ public class ConfigGetter extends ConfigHandler{
     public static boolean getAirdropRealisticFalling(){
         return AIRDROP_REALISTIC_FALLING;
     }
+
+    public static boolean getAirdropSoundFXEnabled(){
+        return AIRDROP_SOUND_FX;
+    }
+
+    public static boolean getAirdropGlowingEnabled(){
+        return AIRDROP_GLOWING;
+    }
 }

@@ -52,12 +52,13 @@ public class ConfigHandler {
 
     protected static boolean AIRDROP_REALISTIC_FALLING = false;
 
+    protected static boolean AIRDROP_SOUND_FX = true;
+
+    protected static boolean AIRDROP_GLOWING = true;
+
     public static void init(File file){
         config = new Configuration(file);
         String category;
-
-        category = "Days To Mine Integration Config Introduction";
-        config.addCustomCategoryComment(category, "Days To Mine Integration focuses on applying changes, extra features, optimizations, and much more to the 7 Days To Mine Mod.\nIf I have done my job right, this config is capable of becoming very large, therefore, I'll try my best to name categories by the mod that it changes, or integrates into, etc.\nFor example, if I change something in forge, I'll have a Forge or FML category; For 7DTM, it will be 7DTM or the full name, etc, etc");
 
         category = "Forge";
         config.addCustomCategoryComment(category, "The settings below are specific to Forge or FML, be it fancy tools to do things for you instead of you doing it, down to optimizations or more.");
@@ -85,7 +86,8 @@ public class ConfigHandler {
         AIRDROP_FALL_SPEED = config.getInt("Fall speed", category, 1, 0, 50, "[DEFAULT: 1]\n[0 is Seven Days To Mine Default VERY SLOW falling]\nHow fast the Airdrop falls, higher number is faster falling.");
         AIRDROP_SMOKE_TIME = config.getInt("Smoke Time", category, 60, 1, 36000, "[DEFAULT 60 seconds]\n[MAX is 10 Hours aka 36000 seconds]\nHow many seconds will the Airdrop shoot smoke out the top of the box");
         AIRDROP_REALISTIC_FALLING = config.getBoolean("Realistic Falling", category, false, "[DEFAULT: FALSE]\nEnable/Disable realistic ANGLE falling Airdrop");
-
+        AIRDROP_SOUND_FX = config.getBoolean("Sound Fx", category, true, "[DEFAULT: TRUE]\nEnable/Disable the plane sound affect from the original 7DTD game when the Airdrop is dropped");
+        AIRDROP_GLOWING = config.getBoolean("Glwoing Airdrop", category, true, "[DEFAULT TRUE]\nEnable/Disable the Airdrops glowing");
 
         category = "Language";
         config.addCustomCategoryComment(category, "Message Configurations, I'm not a big fan of lang files, so here you go, you can have your very own set of lang.\nLang File PR's are still welcomed and accepted if that is your preference!");
