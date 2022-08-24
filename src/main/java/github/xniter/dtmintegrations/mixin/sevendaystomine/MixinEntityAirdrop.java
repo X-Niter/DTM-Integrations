@@ -1,34 +1,29 @@
 package github.xniter.dtmintegrations.mixin.sevendaystomine;
 
 import github.xniter.dtmintegrations.handlers.config.ConfigGetter;
-import net.minecraft.block.BlockEventData;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.Particle;
+import net.minecraft.client.particle.ParticleSmokeLarge;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.ItemStackHandler;
 import nuparu.sevendaystomine.entity.EntityAirdrop;
-import nuparu.sevendaystomine.entity.EntityBandit;
 import nuparu.sevendaystomine.inventory.itemhandler.AirdropInventoryHandler;
 import nuparu.sevendaystomine.util.MathUtils;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Constant;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyConstant;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import java.text.ChoiceFormat;
-import java.util.ArrayList;
-import java.util.List;
 
 @Mixin(value = EntityAirdrop.class, remap = false)
 public abstract class MixinEntityAirdrop extends Entity {
@@ -55,6 +50,10 @@ public abstract class MixinEntityAirdrop extends Entity {
         super(worldIn);
     }
 
+    private static EntityAirdrop airDrop;
+
+    private static boolean isSolidBlock = false;
+
     /**
      * @author X_Niter
      * @reason Airdrop Modifications
@@ -63,6 +62,14 @@ public abstract class MixinEntityAirdrop extends Entity {
     public void onUpdate() {
         super.onUpdate();
         ++this.age;
+        this.ignoreFrustumCheck = true;
+        BlockPos bP1 = this.getPosition().down(1);
+        this.onGround = !this.world.isAirBlock(bP1);
+
+        if (!this.getServer().getEntityWorld().getChunk(this.chunkCoordX, this.chunkCoordZ).isLoaded()) {
+            this.getServer().getEntityWorld().getChunk(this.chunkCoordX, this.chunkCoordZ).markLoaded(true);
+        }
+
         if (this.age >= 48000L) {
             this.setDead();
 
@@ -79,72 +86,89 @@ public abstract class MixinEntityAirdrop extends Entity {
 
         if (this.getLanded() && this.getSmokeTime() > 0) {
             for(int i = 0; i < this.world.rand.nextInt(4) + 1; ++i) {
-                this.world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, this.posX, this.posY + (double)this.height, this.posZ, (double)MathUtils.getFloatInRange(-0.1F, 0.1F), (double)MathUtils.getFloatInRange(0.2F, 0.5F), (double)MathUtils.getFloatInRange(-0.1F, 0.1F), new int[0]);
-                this.world.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, this.posX, this.posY + (double)this.height, this.posZ, (double)MathUtils.getFloatInRange(-0.1F, 0.1F), (double)MathUtils.getFloatInRange(0.2F, 0.5F), (double)MathUtils.getFloatInRange(-0.1F, 0.1F), new int[0]);
+                this.world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, this.posX, this.posY + (double)this.height, this.posZ, (double)MathUtils.getFloatInRange(-0.1F, 0.1F), (double)MathUtils.getFloatInRange(0.2F, 0.5F), (double)MathUtils.getFloatInRange(-0.1F, 0.1F));
+                this.world.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, this.posX, this.posY + (double)this.height, this.posZ, (double)MathUtils.getFloatInRange(-0.1F, 0.1F), (double)MathUtils.getFloatInRange(0.2F, 0.5F), (double)MathUtils.getFloatInRange(-0.1F, 0.1F));
             }
 
             this.setSmokeTime(this.getSmokeTime() - 1);
         }
 
         if (!this.world.isRemote) {
-
-
-            // If it's not on ground
             if (!this.onGround) {
-
-                // If it's not landed
                 if (!this.getLanded()) {
-                    // Not landed so fall
-                    this.motionY = -ConfigGetter.getAirdropFallingSpeed();
-
-                    if (ConfigGetter.getAirdropRealisticFalling()) {
-                        double max = 1.5;
-                        double min = -1.5;
-                        double range = max - min;
-                        double scaled = rand.nextDouble() * range;
-
-                        final double motionZX = scaled + min == 0 ? 0.5 + rand.nextDouble() - rand.nextDouble() : scaled + min;
-
-                        this.motionX = motionZX;
-                        this.motionZ = motionZX;
-                    }
+                    this.motionY = -ConfigGetter.getAirdropFallingSpeed() / 1.5;
 
                 } else {
-                    // It's not on ground, but might have landed on itself or somewhere odd
-                    this.motionY = -ConfigGetter.getAirdropFallingSpeed();
+                    this.motionY = -ConfigGetter.getAirdropFallingSpeed() / 2;
 
-                    // Not on ground, but landed on something it should not, so we drop it to get an actual ground drop
-                    this.setPosition(this.posX + rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation()) - rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation()), ConfigGetter.getAirdropMaxHeight(), this.posZ + rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation()) - rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation()));
                 }
 
-                this.markVelocityChanged();
-
             } else {
-
-                this.motionX = 0.0;
                 this.motionY = 0.0;
-                this.motionZ = 0.0;
-                this.markVelocityChanged();
 
-                if (!this.getLanded() && this.motionY == 0) {
-                    this.motionY = -0.06;
-                    this.markVelocityChanged();
-                    this.setSmokeTime(ConfigGetter.getAirdropSmokeTime() * 20);
+                if (!this.getLanded()) {
+                    this.setSmokeTime(1200);
                     this.setLanded(true);
+                }
+
+            }
+
+            BlockPos bP16 = this.getPosition().down(16);
+
+            if (!this.world.isAirBlock(bP16)) {
+                this.markVelocityChanged();
+                this.onEntityUpdate();
+                this.motionY = -0.06;
+                isSolidBlock = true;
+            }
+
+            if (isSolidBlock) {
+                this.motionY = -0.06;
+            }
+
+            if (this.onGround) {
+                this.setPositionAndUpdate(this.getPosition().getX(), this.getPosition().getY(), this.getPosition().getZ());
+                isSolidBlock = false;
+            }
+
+            for (int i = 0; i < (int)(10000/age); i++) {
+                this.markVelocityChanged();
+                this.onEntityUpdate();
+                if (ConfigGetter.getAirdropGlowingEnabled()) {
+                    this.glowing = true;
                 }
             }
 
+            if (this.addedToChunk || this.isAirBorne || this.isAddedToWorld()) {
+                if (this.serverPosX != this.posX && this.serverPosZ != this.posZ) {
 
-            // END REWRITE
+                    this.serverPosZ = (long) this.posZ;
+                    this.serverPosX = (long) this.posX;
+                }
+                this.getServer().getEntityWorld().updateEntity(this);
+            }
+
 
             this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
         }
+    }
 
-        if (this.isAirBorne || !this.isDead || this.isAddedToWorld()) {
-            if (!Minecraft.getMinecraft().world.getChunk(this.getPosition().up()).isLoaded()) {
-                Minecraft.getMinecraft().world.getChunk(this.getPosition().up()).markLoaded(true);
-            }
+    /**
+     * @author X_Niter
+     * @reason Render Changes
+     */
+    @Overwrite(remap = false)
+    @SideOnly(Side.CLIENT)
+    public boolean isInRangeToRenderDist(double distance) {
+        double d0 = this.getEntityBoundingBox().getAverageEdgeLength() * 4.0D;
+
+        if (Double.isNaN(d0))
+        {
+            d0 = 4.0D;
         }
+
+        d0 = d0 * 64.0 * (double)(this.getLanded() ? 1 : 6);
+        return distance < d0 * d0;
     }
 
     @Shadow public boolean getLanded() {
@@ -163,56 +187,6 @@ public abstract class MixinEntityAirdrop extends Entity {
         return (Integer)this.dataManager.get(SMOKE_TIME);
     }
 
-//    @Inject(method = "onUpdate", at = @At(value = "INVOKE", target = "Lnuparu/sevendaystomine/entity/EntityAirdrop;setDead()V", shift = At.Shift.AFTER))
-//    public void DTMI_onUpdate_AirDropRemoved(CallbackInfo ci) {
-//
-//        MinecraftServer server = Minecraft.getMinecraft().world.getMinecraftServer();
-//        World world = Minecraft.getMinecraft().world;
-//        List<EntityAirdrop> airDrop = world.entit
-//
-//        if (this.age >= 48000L && server != null && server.getPlayerList().getCurrentPlayerCount() != 0) {
-//
-//            if (ConfigGetter.getUseLangConfig()) {
-//
-//                server.getPlayerList().sendMessage(new TextComponentTranslation(ConfigGetter.getAirdropDespawnMessage(), world.getWorldInfo().getWorldName(), this.getPosition().getX(), this.getPosition().getZ()));
-//            } else {
-//                server.getPlayerList().sendMessage(new TextComponentTranslation("airdrop.removed.message", world.getWorldInfo().getWorldName(), this.getPosition().getX(), this.getPosition().getZ()));
-//            }
-//        }
-//
-//    }
-
-//    @ModifyConstant(method = "onUpdate", constant = @Constant(doubleValue = -0.0625))
-//    public double DTMI_onUpdate_FallSpeed_Top(double constant) {
-//
-//        double CONFIG_FALL_SPEED = ConfigGetter.getAirdropFallingSpeed();
-//        double CFSX2 = CONFIG_FALL_SPEED * 2;
-//        double fallSpeed = CONFIG_FALL_SPEED - CFSX2;
-//
-//        return ConfigGetter.getAirdropFallingSpeed() == 0 ? -0.1 : -CONFIG_FALL_SPEED;
-//    }
-//
-//    @ModifyConstant(method = "onUpdate", constant = @Constant(doubleValue = -0.1911))
-//    public double DTMI_onUpdate_FallSpeed_Bottom(double constant) {
-//
-//        double CONFIG_FALL_SPEED = ConfigGetter.getAirdropFallingSpeed();
-//        double CFSX2 = CONFIG_FALL_SPEED * 2;
-//        double fallSpeed = CONFIG_FALL_SPEED - CFSX2;
-//
-//        return ConfigGetter.getAirdropFallingSpeed() == 0 ? -0.1 : -CONFIG_FALL_SPEED;
-//    }
-
-//    @Inject(method = "onUpdate", at = @At(value = "TAIL"))
-//    public void DTMI_onUpdate_AirDropChunkLoading(CallbackInfo ci) {
-//        if ((Entity)this.age > 1 || !this.isDead || this.isAddedToWorld()) {
-//            if (!Minecraft.getMinecraft().world.getChunk(this.getPosition().up()).isLoaded()) {
-//                Minecraft.getMinecraft().world.getChunk(this.getPosition().up()).markLoaded(true);
-//            }
-//        }
-//
-//    }
-
-
     /**
      * @author X_Niter
      * @reason When the Airdrop is emptied of the loot, then delete the airdrop
@@ -226,6 +200,9 @@ public abstract class MixinEntityAirdrop extends Entity {
             } else {
                 if (this.onGround && this.getLanded()) {
                     this.setDead();
+                    this.setAir(1);
+                    this.getServer().getEntityWorld().removeEntity(this);
+                    this.world.spawnParticle(EnumParticleTypes.EXPLOSION_HUGE, this.posX, this.posY, this.posZ, 1, 1, 1, 1);
                 }
             }
         }
