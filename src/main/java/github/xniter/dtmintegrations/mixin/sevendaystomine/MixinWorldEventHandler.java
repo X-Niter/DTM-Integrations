@@ -21,7 +21,7 @@ public class MixinWorldEventHandler{
 
     /**
      * @author X_Niter
-     * @reason Config option change torches as some mods might already do this so being able to turn this off will help with mod compatibility.
+     * @reason Config Wrapper to allow torches to be Vanilla, if this is enabled, I suggest using something like CraftTweaker to give this torch the same OreDict as Vanilla torches. (May work on giving these torches the same oreDict as vanilla soon:TM)
      */
     @SubscribeEvent(priority = EventPriority.NORMAL, receiveCanceled = true)
     @Overwrite(remap = false)
