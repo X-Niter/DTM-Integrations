@@ -1,7 +1,7 @@
 package github.xniter.dtmintegrations;
 
 import github.xniter.dtmintegrations.features.FMLAutoConfig;
-import github.xniter.dtmintegrations.handlers.FMLEvents;
+import github.xniter.dtmintegrations.handlers.GameEvents;
 import github.xniter.dtmintegrations.handlers.SoundHandler;
 import github.xniter.dtmintegrations.handlers.config.ConfigHandler;
 import net.minecraftforge.common.MinecraftForge;
@@ -41,7 +41,7 @@ public class DTMIntegrations {
         // Register event listeners
         MinecraftForge.EVENT_BUS.register(ConfigHandler.class);
         MinecraftForge.EVENT_BUS.register(FMLAutoConfig.class);
-        MinecraftForge.EVENT_BUS.register(FMLEvents.class);
+        MinecraftForge.EVENT_BUS.register(GameEvents.class);
         MinecraftForge.EVENT_BUS.register(new SoundHandler.SoundRegisterListener());
 
 
