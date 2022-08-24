@@ -8,7 +8,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import nuparu.sevendaystomine.entity.EntityZombieBase;
 import nuparu.sevendaystomine.util.Utils;
 
-public class FMLEvents {
+public class GameEvents {
 
 
     @SubscribeEvent
