@@ -68,6 +68,7 @@ public abstract class MixinEntityAirdrop extends Entity {
      */
     @Overwrite(remap = false)
     public void onUpdate() {
+        ignoreFrustumCheck = true;
         super.onUpdate();
 
         boolean dropped = this.isDropped();
@@ -76,6 +77,8 @@ public abstract class MixinEntityAirdrop extends Entity {
 
         BlockPos bP1 = this.getPosition().down(1);
         this.onGround = !this.world.isAirBlock(bP1);
+
+
 
         if (!this.onGround && !this.getLanded() && !dropped && intAge >= 0) {
             this.Dropped();
@@ -86,34 +89,33 @@ public abstract class MixinEntityAirdrop extends Entity {
         }
 
         if (dropped) {
-            ++this.age;
             int dropTime = getDropTime();
-            float startPos = this.getStartPos();
-            //this.motionY = -ConfigGetter.getAirdropFallingSpeed();
 
-            // Math.pow(getDropTime(), 2) / 2
+            float startPos = this.getStartPos();
+
             this.motionY = -ConfigGetter.getAirdropFallingSpeed();
 
-            this.setPosition(this.getPosition().getX(), startPos - Math.pow(getDropTime(), 1) / 6, this.getPosition().getZ());
+            this.setPosition(this.posX, startPos - Math.pow(getDropTime(), 1) / 6, this.posZ);
 
-            this.markVelocityChanged();
             this.setDropTime(dropTime + 1);
         }
 
         if (this.onGround) {
-
             this.age = 0;
+
             ++this.age;
 
             this.motionY = 0.0;
+
             this.setPosition(this.getPosition().getX(), this.getPosition().getY(), this.getPosition().getZ());
+
 
             if (age >= 48000L || this.posY < 1 || this.posY > 256 || intAge >= 48000) {
                 this.setDead();
 
                 MinecraftServer server = Minecraft.getMinecraft().world.getMinecraftServer();
-                if (server != null && server.getPlayerList().getCurrentPlayerCount() != 0) {
 
+                if (server != null && server.getPlayerList().getCurrentPlayerCount() != 0) {
                     if (ConfigGetter.getUseLangConfig()) {
                         server.getPlayerList().sendMessage(new TextComponentTranslation(ConfigGetter.getAirdropDespawnMessage(), world.getWorldInfo().getWorldName(), this.getPosition().getX(), this.getPosition().getZ()));
                     } else {
@@ -188,6 +190,7 @@ public abstract class MixinEntityAirdrop extends Entity {
     }
 
     public void Dropped(){
+        ignoreFrustumCheck = true;
         this.setDropped(true);
         this.isAirBorne = true;
         this.setStartPos((float)this.posY);
@@ -210,7 +213,6 @@ public abstract class MixinEntityAirdrop extends Entity {
     }
 
     @Override
-    @ParametersAreNonnullByDefault
     protected void updateFallState(double y, boolean onGroundIn, IBlockState state, BlockPos pos){}
 
     @Shadow
@@ -220,7 +222,7 @@ public abstract class MixinEntityAirdrop extends Entity {
 
     @Shadow
     public boolean getLanded() {
-        return (Boolean)this.dataManager.get(LANDED);
+        return this.dataManager.get(LANDED);
     }
 
     @Shadow
@@ -230,7 +232,7 @@ public abstract class MixinEntityAirdrop extends Entity {
 
     @Shadow
     public int getSmokeTime() {
-        return (Integer)this.dataManager.get(SMOKE_TIME);
+        return this.dataManager.get(SMOKE_TIME);
     }
 
     /**
