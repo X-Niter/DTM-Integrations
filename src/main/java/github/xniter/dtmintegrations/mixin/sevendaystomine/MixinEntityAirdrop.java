@@ -1,11 +1,14 @@
 package github.xniter.dtmintegrations.mixin.sevendaystomine;
 
 import github.xniter.dtmintegrations.handlers.config.ConfigGetter;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.MoverType;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
@@ -22,6 +25,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
 @Mixin(value = EntityAirdrop.class, remap = false)
 public abstract class MixinEntityAirdrop extends Entity {
 
@@ -30,6 +35,14 @@ public abstract class MixinEntityAirdrop extends Entity {
 
     @Shadow
     public long age;
+
+    private static final DataParameter<Integer> intAge = EntityDataManager.<Integer>createKey(EntityAirdrop.class, DataSerializers.VARINT);
+
+    private static final DataParameter<Boolean> DROPPED = EntityDataManager.<Boolean>createKey(EntityAirdrop.class, DataSerializers.BOOLEAN);
+
+    private static final DataParameter<Integer> DROP_TIME = EntityDataManager.<Integer>createKey(EntityAirdrop.class, DataSerializers.VARINT);
+
+    private static final DataParameter<Float> START_POS = EntityDataManager.<Float>createKey(EntityAirdrop.class, DataSerializers.FLOAT);
 
     @Shadow
     @Final
@@ -43,13 +56,11 @@ public abstract class MixinEntityAirdrop extends Entity {
     @Final
     private static DataParameter<Integer> HEALTH;
 
+    private static EntityAirdrop airDrop;
+
     public MixinEntityAirdrop(World worldIn) {
         super(worldIn);
     }
-
-    private static EntityAirdrop airDrop;
-
-    private static boolean isSolidBlock = false;
 
     /**
      * @author X_Niter
@@ -58,96 +69,212 @@ public abstract class MixinEntityAirdrop extends Entity {
     @Overwrite(remap = false)
     public void onUpdate() {
         super.onUpdate();
-        ++this.age;
-        this.ignoreFrustumCheck = true;
+
+        boolean dropped = this.isDropped();
+
+        int intAge = this.getAge();
+
         BlockPos bP1 = this.getPosition().down(1);
         this.onGround = !this.world.isAirBlock(bP1);
 
-        if (!this.getServer().getEntityWorld().getChunk(this.chunkCoordX, this.chunkCoordZ).isLoaded()) {
-            this.getServer().getEntityWorld().getChunk(this.chunkCoordX, this.chunkCoordZ).markLoaded(true);
+        if (!this.onGround && !this.getLanded() && !dropped && intAge >= 0) {
+            this.Dropped();
         }
 
-        if (this.age >= 48000L) {
-            this.setDead();
+        if (ConfigGetter.getAirdropGlowingEnabled()) {
+            this.glowing = true;
+        }
 
-            MinecraftServer server = Minecraft.getMinecraft().world.getMinecraftServer();
-            if (server != null && server.getPlayerList().getCurrentPlayerCount() != 0) {
+        if (dropped) {
+            ++this.age;
+            int dropTime = getDropTime();
+            float startPos = this.getStartPos();
+            //this.motionY = -ConfigGetter.getAirdropFallingSpeed();
 
-                if (ConfigGetter.getUseLangConfig()) {
-                    server.getPlayerList().sendMessage(new TextComponentTranslation(ConfigGetter.getAirdropDespawnMessage(), world.getWorldInfo().getWorldName(), this.getPosition().getX(), this.getPosition().getZ()));
-                } else {
-                    server.getPlayerList().sendMessage(new TextComponentTranslation("airdrop.removed.message", world.getWorldInfo().getWorldName(), this.getPosition().getX(), this.getPosition().getZ()));
+            // Math.pow(getDropTime(), 2) / 2
+            this.motionY = -ConfigGetter.getAirdropFallingSpeed();
+
+            this.setPosition(this.getPosition().getX(), startPos - Math.pow(getDropTime(), 1) / 6, this.getPosition().getZ());
+
+            this.markVelocityChanged();
+            this.setDropTime(dropTime + 1);
+        }
+
+        if (this.onGround) {
+
+            this.age = 0;
+            ++this.age;
+
+            this.motionY = 0.0;
+            this.setPosition(this.getPosition().getX(), this.getPosition().getY(), this.getPosition().getZ());
+
+            if (age >= 48000L || this.posY < 1 || this.posY > 256 || intAge >= 48000) {
+                this.setDead();
+
+                MinecraftServer server = Minecraft.getMinecraft().world.getMinecraftServer();
+                if (server != null && server.getPlayerList().getCurrentPlayerCount() != 0) {
+
+                    if (ConfigGetter.getUseLangConfig()) {
+                        server.getPlayerList().sendMessage(new TextComponentTranslation(ConfigGetter.getAirdropDespawnMessage(), world.getWorldInfo().getWorldName(), this.getPosition().getX(), this.getPosition().getZ()));
+                    } else {
+                        server.getPlayerList().sendMessage(new TextComponentTranslation("airdrop.removed.message", world.getWorldInfo().getWorldName(), this.getPosition().getX(), this.getPosition().getZ()));
+                    }
                 }
             }
+
+            if (!this.getLanded()) {
+                this.setSmokeTime(1200);
+                this.setDropped(false);
+                this.setLanded(true);
+            }
+
+
+//            if (!this.getLanded()) {
+//                this.motionY = -ConfigGetter.getAirdropFallingSpeed() / 1.5;
+//
+//            } else {
+//                this.motionY = -ConfigGetter.getAirdropFallingSpeed() / 2;
+//
+//            }
+
         }
 
-        if (this.getLanded() && this.getSmokeTime() > 0) {
-            for(int i = 0; i < this.world.rand.nextInt(4) + 1; ++i) {
-                this.world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, this.posX, this.posY + (double)this.height, this.posZ, (double)MathUtils.getFloatInRange(-0.1F, 0.1F), (double)MathUtils.getFloatInRange(0.2F, 0.5F), (double)MathUtils.getFloatInRange(-0.1F, 0.1F));
-                this.world.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, this.posX, this.posY + (double)this.height, this.posZ, (double)MathUtils.getFloatInRange(-0.1F, 0.1F), (double)MathUtils.getFloatInRange(0.2F, 0.5F), (double)MathUtils.getFloatInRange(-0.1F, 0.1F));
+
+
+        if (this.onGround && !dropped && this.getLanded() && this.getSmokeTime() > 0) {
+            for (int i = 0; i < this.world.rand.nextInt(4) + 1; ++i) {
+                this.world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, this.posX, this.posY + (double) this.height, this.posZ, (double) MathUtils.getFloatInRange(-0.1F, 0.1F), (double) MathUtils.getFloatInRange(0.2F, 0.5F), (double) MathUtils.getFloatInRange(-0.1F, 0.1F));
+                this.world.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, this.posX, this.posY + (double) this.height, this.posZ, (double) MathUtils.getFloatInRange(-0.1F, 0.1F), (double) MathUtils.getFloatInRange(0.2F, 0.5F), (double) MathUtils.getFloatInRange(-0.1F, 0.1F));
             }
 
             this.setSmokeTime(this.getSmokeTime() - 1);
         }
 
-        if (!this.world.isRemote) {
-            if (!this.onGround) {
-                if (!this.getLanded()) {
-                    this.motionY = -ConfigGetter.getAirdropFallingSpeed() / 1.5;
 
-                } else {
-                    this.motionY = -ConfigGetter.getAirdropFallingSpeed() / 2;
+        //this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
+        this.setAge(intAge + 1);
 
-                }
+    }
 
-            } else {
-                this.motionY = 0.0;
+    /**
+     * @author X_Niter
+     * @reason Update Initialized data
+     */
+    @Overwrite(remap = false)
+    protected void entityInit() {
+        this.dataManager.register(intAge, 0);
+        this.dataManager.register(LANDED, false);
+        this.dataManager.register(SMOKE_TIME, 0);
+        this.dataManager.register(START_POS, 0.F);
+        this.dataManager.register(DROPPED, false);
+        this.dataManager.register(DROP_TIME, 0);
+        this.dataManager.register(HEALTH, 50);
+    }
 
-                if (!this.getLanded()) {
-                    this.setSmokeTime(1200);
-                    this.setLanded(true);
-                }
+    public int getDropTime(){
+        return this.dataManager.get(DROP_TIME);
+    }
 
-            }
+    public void setDropTime(Integer dropTime){
+        this.dataManager.set(DROP_TIME, dropTime);
+    }
 
-            BlockPos bP16 = this.getPosition().down(16);
+    public boolean isDropped(){
+        return this.dataManager.get(DROPPED);
+    }
 
-            if (!this.world.isAirBlock(bP16)) {
-                this.markVelocityChanged();
-                this.onEntityUpdate();
-                this.motionY = -0.06;
-                isSolidBlock = true;
-            }
+    public void setDropped(boolean dropped){
+        this.dataManager.set(DROPPED, dropped);
+    }
 
-            if (isSolidBlock) {
-                this.motionY = -0.06;
-            }
+    public void Dropped(){
+        this.setDropped(true);
+        this.isAirBorne = true;
+        this.setStartPos((float)this.posY);
+    }
 
-            if (this.onGround) {
-                this.setPositionAndUpdate(this.getPosition().getX(), this.getPosition().getY(), this.getPosition().getZ());
-                isSolidBlock = false;
-            }
+    public int getAge(){
+        return this.dataManager.get(intAge);
+    }
 
-            for (int i = 0; i < (int)(10000/age); i++) {
-                this.markVelocityChanged();
-                this.onEntityUpdate();
-                if (ConfigGetter.getAirdropGlowingEnabled()) {
-                    this.glowing = true;
-                }
-            }
+    public void setAge(Integer Age){
+        this.dataManager.set(intAge, Age);
+    }
 
-            if (this.addedToChunk || this.isAirBorne || this.isAddedToWorld()) {
-                if (this.serverPosX != this.posX && this.serverPosZ != this.posZ) {
+    public float getStartPos(){
+        return this.dataManager.get(START_POS);
+    }
 
-                    this.serverPosZ = (long) this.posZ;
-                    this.serverPosX = (long) this.posX;
-                }
-                this.getServer().getEntityWorld().updateEntity(this);
-            }
+    public void setStartPos(Float startPos){
+        this.dataManager.set(START_POS, startPos);
+    }
 
+    @Override
+    @ParametersAreNonnullByDefault
+    protected void updateFallState(double y, boolean onGroundIn, IBlockState state, BlockPos pos){}
 
-            this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
+    @Shadow
+    public void setLanded(boolean landed) {
+        this.dataManager.set(LANDED, landed);
+    }
+
+    @Shadow
+    public boolean getLanded() {
+        return (Boolean)this.dataManager.get(LANDED);
+    }
+
+    @Shadow
+    public void setSmokeTime(int ticks) {
+        this.dataManager.set(SMOKE_TIME, ticks);
+    }
+
+    @Shadow
+    public int getSmokeTime() {
+        return (Integer)this.dataManager.get(SMOKE_TIME);
+    }
+
+    /**
+     * @author X_Niter
+     * @reason Update Initialized data
+     */
+    @Overwrite(remap = false)
+    public void readEntityFromNBT(NBTTagCompound compound) {
+        this.inventory.deserializeNBT(compound.getCompoundTag("inventory"));
+
+        this.setLanded(compound.getBoolean("landed"));
+
+        this.setSmokeTime(compound.getInteger("smoke_time"));
+
+        this.setAge(compound.getInteger("intage"));
+
+        this.age = compound.getLong("age");
+
+        this.setStartPos(compound.getFloat("StartPos"));
+
+        this.setDropped(compound.getBoolean("Dropped"));
+
+        this.setDropTime(compound.getInteger("DropTime"));
+
+    }
+
+    /**
+     * @author X_Niter
+     * @reason Update Initialized data
+     */
+    @Overwrite(remap = false)
+    @ParametersAreNonnullByDefault
+    public void writeEntityToNBT(NBTTagCompound compound) {
+        if (this.inventory != null) {
+            compound.setTag("inventory", this.inventory.serializeNBT());
         }
+
+        compound.setBoolean("landed", this.getLanded());
+        compound.setInteger("smoke_time", this.getSmokeTime());
+        compound.setInteger("intage", this.getAge());
+        compound.setLong("age", this.age);
+        compound.setFloat("StartPos", this.getStartPos());
+        compound.setBoolean("Dropped", this.isDropped());
+        compound.setInteger("DropTime", this.getDropTime());
     }
 
     /**
@@ -157,31 +284,7 @@ public abstract class MixinEntityAirdrop extends Entity {
     @Overwrite(remap = false)
     @SideOnly(Side.CLIENT)
     public boolean isInRangeToRenderDist(double distance) {
-        double d0 = this.getEntityBoundingBox().getAverageEdgeLength() * 4.0D;
-
-        if (Double.isNaN(d0))
-        {
-            d0 = 4.0D;
-        }
-
-        d0 = d0 * 64.0 * (double)(this.getLanded() ? 1 : 6);
-        return distance < d0 * d0;
-    }
-
-    @Shadow public boolean getLanded() {
-        return (Boolean)this.dataManager.get(LANDED);
-    }
-
-    @Shadow public void setSmokeTime(int ticks) {
-        this.dataManager.set(SMOKE_TIME, ticks);
-    }
-
-    @Shadow public void setLanded(boolean landed) {
-        this.dataManager.set(LANDED, landed);
-    }
-
-    @Shadow public int getSmokeTime() {
-        return (Integer)this.dataManager.get(SMOKE_TIME);
+        return super.isInRangeToRenderDist(distance);
     }
 
     /**
@@ -196,14 +299,18 @@ public abstract class MixinEntityAirdrop extends Entity {
                 return;
             } else {
                 if (this.onGround && this.getLanded()) {
-                    this.setDead();
-                    this.setAir(1);
-                    this.getServer().getEntityWorld().removeEntity(this);
+
+                    if (this.getServer().getEntityWorld() != null) {
+                        this.getServer().getEntityWorld().removeEntity(this);
+                    } else {
+                        this.setDead();
+                    }
+
                     this.world.spawnParticle(EnumParticleTypes.EXPLOSION_HUGE, this.posX, this.posY, this.posZ, 1, 1, 1, 1);
                 }
             }
         }
 
-        this.age = MathUtils.clamp(this.age, 42000L, 48000L);
+        //age = MathUtils.clamp(age, 42000, 48000);
     }
 }

@@ -56,6 +56,18 @@ public class ConfigHandler {
 
     protected static boolean AIRDROP_GLOWING = true;
 
+    protected static boolean DISABLE_VANILLA_BLOCKS_ITEMS_USAGE = false;
+
+    protected static boolean ADD_DISABLED_TOOLTIP = true;
+
+    protected static String TOOLTIP_NOTUSABLE = "%sThis item is not usable by players!%s";
+
+    protected static String TOOLTIP_CRAFTINGONLY = "%sThis can only be used for crafting.%s";
+
+    protected static String TOOLTIP_RECIPE_DISABLED = "%sThis recipe is disabled!%s";
+
+
+
     public static void init(File file){
         config = new Configuration(file);
         String category;
@@ -74,6 +86,8 @@ public class ConfigHandler {
         FOCUSED_WOLFHORDE = config.getBoolean("Focused WolfHorde", category, true, "Attempts to block all spawns during a wolf horde that are not seven days to mine entities");
         FORCEFUL_FOCUSED_BLOODMOON = config.getBoolean("Forceful Focused BloodMoon", category, false, "During a BloodMoon, ALL mobs that are not apart of the BloodMoon event will be removed forcefully from existence until the event is over");
         FORCEFUL_FOCUSED_WOLFHORDE = config.getBoolean("Forceful Focused WolfHorde", category, false, "During a WolfHorde, ALL mobs that are not apart of the WolfHorde event will be removed forcefully from existence until the event is over");
+        DISABLE_VANILLA_BLOCKS_ITEMS_USAGE = config.getBoolean("Disable Vanilla blocks and items usage", category, false, "Allows players to craft vanilla blocks and items needed by other mods, but disables the blocks and items functionality so that the blocks and items are just crafting components.");
+        ADD_DISABLED_TOOLTIP = config.getBoolean("Show Disabled Tooltip", category, true, "[DEFAULT: TRUE;Show Disabled Tooltip]\nDisabled usage will show tooltip saying the usage is disabled.\n7DTM Disabled Recipes will show a tooltip saying recipe is Disabled\nEnable/Disable adding tooltip to the disabled items and blocks");
 
         category = "7 Days To Mine Airdrops";
         config.addCustomCategoryComment(category, "More in depth, fine controls over Airdrops");
@@ -93,7 +107,9 @@ public class ConfigHandler {
         config.addCustomCategoryComment(category, "Message Configurations, I'm not a big fan of lang files, so here you go, you can have your very own set of lang.\nLang File PR's are still welcomed and accepted if that is your preference!");
         USE_LANG_CONFIG = config.getBoolean("Use Language Config", category, true, "[DEFAULT: TRUE(Enabled)]\nEnable/Disable using this config for configuring messages/lang translations");
         AIRDROP_DESPAWNED_MESSAGE = config.getString("Airdrop Despawn Message", category, "Airdrop in world %1$s, around X:%2$s Y:%3$s Z:%4$s has de-spawned!", "The message sent to chat when the AirDrop de-spawns after sitting for too long.");
-
+        TOOLTIP_NOTUSABLE = config.getString("Tooltip Not Usable", category, "%sThis item is not usable by players!%s", "Tooltip shown on all disabled 7DTM items/blocks");
+        TOOLTIP_CRAFTINGONLY = config.getString("Tooltip Crafting Only", category, "%sThis can only be used for crafting.%s" , "Tooltip shown on 7DTM Item/blocks that have the usage disabled");
+        TOOLTIP_RECIPE_DISABLED = config.getString("Tooltip Recipe Disabled", category, "%sThis recipe is disabled!%s", "Tooltip shown on 7DTM Item/blocks that have the recipe disabled");
 
         config.save();
     }

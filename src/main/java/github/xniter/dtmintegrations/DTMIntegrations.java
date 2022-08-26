@@ -54,7 +54,7 @@ public class DTMIntegrations {
         Claw Hammer recipe (Recipe Book?)
         Wrench recipe (Recipe Book?)
         Pipe weapons, comes with perk in irl game
-        Airdrop (Wheres the fucking bundles bro?)
+        Airdrop (Make better, maybe even weapon/farming/tool bundles as well)
         Drinks give tough as nails thirst values
      */
 

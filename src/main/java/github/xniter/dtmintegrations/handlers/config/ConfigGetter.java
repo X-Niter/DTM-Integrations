@@ -78,4 +78,24 @@ public class ConfigGetter extends ConfigHandler{
     public static boolean getAirdropGlowingEnabled(){
         return AIRDROP_GLOWING;
     }
+
+    public static boolean getDisableVanillaBlocksAndItemsUsage(){
+        return DISABLE_VANILLA_BLOCKS_ITEMS_USAGE;
+    }
+
+    public static boolean getAddDisabledTooltip(){
+        return ADD_DISABLED_TOOLTIP;
+    }
+
+    public static String getTooltipNotUsableString(){
+        return TOOLTIP_NOTUSABLE;
+    }
+
+    public static String getTooltipCraftingOnlyString(){
+        return TOOLTIP_CRAFTINGONLY;
+    }
+
+    public static String getTooltipRecipeDisabledString(){
+        return TOOLTIP_RECIPE_DISABLED;
+    }
 }
