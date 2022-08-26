@@ -5,6 +5,7 @@ import github.xniter.dtmintegrations.utils.EnumVanillaHoes;
 import github.xniter.dtmintegrations.utils.EnumVanillaItems;
 import github.xniter.dtmintegrations.utils.EnumVanillaTools;
 import github.xniter.dtmintegrations.utils.EnumVanillaWeapons;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,7 +29,6 @@ import java.util.List;
 
 public class GameEvents {
 
-
     @SubscribeEvent
     public void entityHordeSpawnEvent(LivingSpawnEvent event) {
         EntityLiving e = (EntityLiving) event.getEntityLiving();
@@ -36,23 +36,35 @@ public class GameEvents {
 
         if (!(e instanceof EntityZombieBase)) {
 
+            if (Utils.isBloodmoon(world)) {
+                if (ConfigGetter.getFocusedBloodMoon()) {
+                    e.preventEntitySpawning = true;
+                    event.setResult(Event.Result.DENY);
+                } else {
+                    if (ConfigGetter.getForcefulFocusedBloodMoon()) {
+                        e.preventEntitySpawning = true;
+                        event.setResult(Event.Result.DENY);
+                        e.setDead();
+                        event.getEntity().getEntityWorld().removeEntity(e);
+                    }
+                }
+            }
 
-           if (ConfigGetter.getFocusedBloodMoon() && Utils.isBloodmoon(event.getWorld())) {
-               e.preventEntitySpawning = true;
-               event.setResult(Event.Result.DENY);
-           }
-
-           if (ConfigGetter.getFocusedWolfHorde() && Utils.isWolfHorde(event.getWorld())) {
-               e.preventEntitySpawning = true;
-               event.setResult(Event.Result.DENY);
-           }
-
+            if (Utils.isWolfHorde(world)) {
+                if (ConfigGetter.getFocusedWolfHorde()) {
+                    e.preventEntitySpawning = true;
+                    event.setResult(Event.Result.DENY);
+                } else {
+                    if (ConfigGetter.getForcefulFocusedWolfHorde()) {
+                        e.preventEntitySpawning = true;
+                        event.setResult(Event.Result.DENY);
+                        e.setDead();
+                        event.getEntity().getEntityWorld().removeEntity(e);
+                    }
+                }
+            }
         }
 
-
-        if (e.forceSpawn) {
-            world.removeEntity(e);
-        }
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)

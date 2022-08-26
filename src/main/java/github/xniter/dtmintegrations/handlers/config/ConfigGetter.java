@@ -31,6 +31,14 @@ public class ConfigGetter extends ConfigHandler{
     public static boolean getFocusedWolfHorde(){
         return FOCUSED_WOLFHORDE;
     }
+
+    public static boolean getForcefulFocusedBloodMoon(){
+        return FORCEFUL_FOCUSED_BLOODMOON;
+    }
+
+    public static boolean getForcefulFocusedWolfHorde(){
+        return FORCEFUL_FOCUSED_WOLFHORDE;
+    }
     public static boolean getUseLangConfig(){
         return USE_LANG_CONFIG;
     }
