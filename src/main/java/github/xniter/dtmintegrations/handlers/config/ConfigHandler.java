@@ -101,7 +101,7 @@ public class ConfigHandler {
         AIRDROP_SMOKE_TIME = config.getInt("Smoke Time", category, 60, 1, 36000, "[DEFAULT 60 seconds]\n[MAX is 10 Hours aka 36000 seconds]\nHow many seconds will the Airdrop shoot smoke out the top of the box");
         AIRDROP_REALISTIC_FALLING = config.getBoolean("Realistic Falling", category, false, "[DEFAULT: FALSE]\nEnable/Disable realistic ANGLE falling Airdrop");
         AIRDROP_SOUND_FX = config.getBoolean("Sound Fx", category, true, "[DEFAULT: TRUE]\nEnable/Disable the plane sound affect from the original 7DTD game when the Airdrop is dropped");
-        AIRDROP_GLOWING = config.getBoolean("Glwoing Airdrop", category, true, "[DEFAULT TRUE]\nEnable/Disable the Airdrops glowing");
+        AIRDROP_GLOWING = config.getBoolean("Glowing Airdrop", category, true, "[DEFAULT TRUE]\nEnable/Disable the Airdrops glowing");
 
         category = "Language";
         config.addCustomCategoryComment(category, "Message Configurations, I'm not a big fan of lang files, so here you go, you can have your very own set of lang.\nLang File PR's are still welcomed and accepted if that is your preference!");
