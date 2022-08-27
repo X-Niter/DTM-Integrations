@@ -6,15 +6,23 @@
   "target": "@env(DEFAULT)",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "sevendaystomine.MixinEntityAirdrop",
-    "sevendaystomine.MixinCity",
-    "sevendaystomine.MixinCityWorldGenerator",
-    "sevendaystomine.MixinCommandAirdrop",
-    "sevendaystomine.MixinMathUtils",
-    "sevendaystomine.MixinPlayerEventHandler",
-    "sevendaystomine.MixinStructureGenerator",
-    "sevendaystomine.MixinTickHandler",
-    "sevendaystomine.MixinUtils",
-    "sevendaystomine.MixinWorldEventHandler"
+    "sevendaystomine.command.MixinCommandAirdrop",
+    "sevendaystomine.entity.MixinEntityAirdrop",
+    "sevendaystomine.events.MixinPlayerEventHandler",
+    "sevendaystomine.events.MixinTickHandler",
+    "sevendaystomine.events.MixinWorldEventHandler",
+    "sevendaystomine.util.MixinMathUtils",
+    "sevendaystomine.util.MixinUtils",
+    "sevendaystomine.util.MixinVanillaManager",
+    "sevendaystomine.world.gen.MixinBlueberryWorldGenerator",
+    "sevendaystomine.world.gen.MixinCityWorldGenerator",
+    "sevendaystomine.world.gen.MixinCornWorldGenerator",
+    "sevendaystomine.world.gen.MixinGoldenrodWorldGenerator",
+    "sevendaystomine.world.gen.MixinOreWorldGenerator",
+    "sevendaystomine.world.gen.MixinRoadDecoratorWorldGen",
+    "sevendaystomine.world.gen.MixinRoadGenerationWorldGen",
+    "sevendaystomine.world.gen.MixinSmallFeatureWorldGenerator",
+    "sevendaystomine.world.gen.MixinStructureGenerator",
+    "sevendaystomine.world.gen.city.MixinCity"
   ]
 }
