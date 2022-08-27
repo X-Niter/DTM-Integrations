@@ -106,4 +106,131 @@ public class ConfigGetter extends ConfigHandler{
     public static String getTooltipRecipeDisabledString(){
         return TOOLTIP_RECIPE_DISABLED;
     }
+
+    public static boolean getDisableAllStructures(){
+        return DISABLE_ALL_STRUCTURES;
+    }
+
+    public static boolean getFactoryGarage() {
+        return FACTORY_GARAGE;
+    }
+
+    public static boolean getLandfill() {
+        return LANDFILL;
+    }
+
+    public static boolean getLookoutBirch() {
+        return LOOKOUT_BIRCH;
+    }
+
+    public static boolean getLookoutDarkOak() {
+        return LOOKOUT_DARK_OAK;
+    }
+
+    public static boolean getLookoutBurnt() {
+        return LOOKOUT_BURNT;
+    }
+
+    public static boolean getBurntHouse() {
+        return BURNT_HOUSE;
+    }
+
+    public static boolean getRuinedHouse() {
+        return RUINED_HOUSE;
+    }
+
+    public static boolean getShack() {
+        return SHACK;
+    }
+
+    public static boolean getRuinedHouse1() {
+        return RUINED_HOUSE_1;
+    }
+
+    public static boolean getBanditCamp() {
+        return BANDIT_CAMP;
+    }
+
+    public static boolean getRuinedHouse2() {
+        return RUINED_HOUSE_2;
+    }
+
+    public static boolean getRuinedHouseIcy2() {
+        return RUINED_HOUSE_ICY_2;
+    }
+
+    public static boolean getRuinedHouseIcy() {
+        return RUINED_HOUSE_ICY;
+    }
+
+    public static boolean getRuinedHouseDesert1() {
+        return RUINED_HOUSE_DESERT_1;
+    }
+
+    public static boolean getHelicopter() {
+        return HELICOPTER;
+    }
+
+    public static boolean getObservatory() {
+        return OBSERVATORY;
+    }
+
+    public static boolean getWindTurbine() {
+        return WIND_TURBINE;
+    }
+
+    public static boolean getWellBunker() {
+        return WELL_BUNKER;
+    }
+
+    public static boolean getSettlement() {
+        return SETTLEMENT;
+    }
+
+    public static boolean getTank01() {
+        return TANK_01;
+    }
+
+    public static boolean getYacht() {
+        return YACHT;
+    }
+
+    public static boolean getCampsite() {
+        return CAMPSITE;
+    }
+
+    public static boolean getRuins0() {
+        return RUINS_0;
+    }
+
+    public static boolean getRuins1() {
+        return RUINS_1;
+    }
+
+    public static boolean getAirport() {
+        return AIRPORT;
+    }
+    public static boolean getAbandonedSettlementFarm() {
+        return ABANDONED_SETTLEMENT_FARM;
+    }
+    public static boolean getAirplaneTailDesert() {
+        return AIRPLANE_TAIL_DESERT;
+    }
+
+    public static boolean getAirplaneTail() {
+        return AIRPLANE_TAIL;
+    }
+
+    public static boolean getCargoShip() {
+        return CARGO_SHIP;
+    }
+
+    public static boolean getLargeBanditCamp() {
+        return LARGE_BANDIT_CAMP;
+    }
+
+    public static boolean getMilitaryBase() {
+        return MILITARY_BASE;
+    }
+
 }

@@ -4,3 +4,7 @@ subtitle.airdrop.event=Airdrop Event
 tooltip.not_usable=%sThis item is not usable by players!%s
 tooltip.crafting_only=%sIt can only be used for crafting.%s
 tooltip.recipe_disabled=%sThis recipe is disabled!%s
+dtmi.language="Language"
+dtmi.aidrops="7 Days To Mine Airdrops"
+dtmi.daystomine="7 Days To Mine"
+dtmi.forge="Forge"
