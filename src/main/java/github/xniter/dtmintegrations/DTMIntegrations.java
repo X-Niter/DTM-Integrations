@@ -1,12 +1,14 @@
 package github.xniter.dtmintegrations;
 
-import github.xniter.dtmintegrations.features.FMLAutoConfig;
-import github.xniter.dtmintegrations.handlers.GameEvents;
-import github.xniter.dtmintegrations.handlers.SoundHandler;
 import github.xniter.dtmintegrations.handlers.config.ConfigHandler;
+import github.xniter.dtmintegrations.handlers.network.proxy.CommonProxy;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 
@@ -22,7 +24,15 @@ public class DTMIntegrations {
     public static final String MOD_NAME = "DTM Integrations";
     public static final String VERSION = "1.3.0";
 
+    public static final Logger LOG = LogManager.getLogger(DTMIntegrations.class.getName());
+
     public static File config;
+
+    @SidedProxy(
+            clientSide = "github.xniter.dtmintegrations.handlers.network.proxy.ClientProxy",
+            serverSide = "github.xniter.dtmintegrations.handlers.network.proxy.ServerProxy"
+    )
+    private static CommonProxy proxy;
 
     /**
      * This is the instance of your mod as created by Forge. It will never be null.
@@ -36,17 +46,18 @@ public class DTMIntegrations {
      */
     @Mod.EventHandler
     public void preinit(FMLPreInitializationEvent event) {
+        LOG.debug("PreInitializing DTMIntegrations");
         ConfigHandler.registerConfig(event);
-
-        // Register event listeners
         MinecraftForge.EVENT_BUS.register(ConfigHandler.class);
-        MinecraftForge.EVENT_BUS.register(FMLAutoConfig.class);
-        MinecraftForge.EVENT_BUS.register(GameEvents.class);
-        MinecraftForge.EVENT_BUS.register(new SoundHandler.SoundRegisterListener());
+        proxy.preInit();
+        LOG.debug("PreInitialization of DTMIntegrations is complete");
+    }
 
-
-
-
+    @Mod.EventHandler
+    public void init(FMLInitializationEvent event) {
+        LOG.debug("Initializing DTMIntegrations");
+        proxy.init();
+        LOG.debug("Initialization of DTMIntegrations is complete");
     }
 
     /* TODO
