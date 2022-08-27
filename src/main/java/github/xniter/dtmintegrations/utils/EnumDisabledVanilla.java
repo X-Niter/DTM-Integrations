@@ -6,8 +6,27 @@ import net.minecraft.util.IStringSerializable;
 
 import java.util.Locale;
 
-public enum EnumVanillaTools implements IStringSerializable {
+public enum EnumDisabledVanilla implements IStringSerializable {
 
+    // ARMOR
+    IRON_CHESTPLATE,
+    IRON_HELMET,
+    IRON_BOOTS,
+    IRON_LEGGINGS,
+    LEATHER_CHESTPLATE,
+    LEATHER_HELMET,
+    LEATHER_BOOTS,
+    LEATHER_LEGGINGS,
+    GOLDEN_CHESTPLATE,
+    GOLDEN_HELMET,
+    GOLDEN_BOOTS,
+    GOLDEN_LEGGINGS,
+    DIAMOND_CHESTPLATE,
+    DIAMOND_HELMET,
+    DIAMOND_BOOTS,
+    DIAMOND_LEGGINGS,
+
+    // TOOLS
     WOODEN_AXE,
     WOODEN_PICKAXE,
     WOODEN_SHOVEL,
@@ -27,11 +46,19 @@ public enum EnumVanillaTools implements IStringSerializable {
     DIAMOND_AXE,
     DIAMOND_PICKAXE,
     DIAMOND_SHOVEL,
-    DIAMOND_HOE;
+    DIAMOND_HOE,
+
+    // WEAPONS
+    WOODEN_SWORD,
+    STONE_SWORD,
+    IRON_SWORD,
+    GOLDEN_SWORD,
+    DIAMOND_SWORD;
+
 
     private final Item item;
 
-    EnumVanillaTools() {
+    EnumDisabledVanilla() {
         this.item = new Item();
     }
 
@@ -47,5 +74,4 @@ public enum EnumVanillaTools implements IStringSerializable {
     public String getName() {
         return name().toLowerCase(Locale.ROOT);
     }
-
 }
