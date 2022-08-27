@@ -1,4 +1,4 @@
-package github.xniter.dtmintegrations.mixin.sevendaystomine;
+package github.xniter.dtmintegrations.mixin.sevendaystomine.events;
 
 import github.xniter.dtmintegrations.handlers.config.ConfigGetter;
 import net.minecraft.entity.player.EntityPlayer;

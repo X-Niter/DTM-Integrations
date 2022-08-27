@@ -1,4 +1,4 @@
-package github.xniter.dtmintegrations.mixin.sevendaystomine;
+package github.xniter.dtmintegrations.mixin.sevendaystomine.command;
 
 import github.xniter.dtmintegrations.features.AirdropEventSound;
 import github.xniter.dtmintegrations.handlers.config.ConfigGetter;

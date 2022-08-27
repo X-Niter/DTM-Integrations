@@ -1,4 +1,4 @@
-package github.xniter.dtmintegrations.mixin.sevendaystomine;
+package github.xniter.dtmintegrations.mixin.sevendaystomine.world.gen;
 
 import github.xniter.dtmintegrations.handlers.config.ConfigGetter;
 import net.minecraft.util.math.BlockPos;

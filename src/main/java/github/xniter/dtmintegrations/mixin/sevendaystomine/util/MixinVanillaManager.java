@@ -1,4 +1,4 @@
-package github.xniter.dtmintegrations.mixin.sevendaystomine;
+package github.xniter.dtmintegrations.mixin.sevendaystomine.util;
 
 import github.xniter.dtmintegrations.handlers.config.ConfigGetter;
 import net.minecraft.init.Blocks;
@@ -55,7 +55,6 @@ public class MixinVanillaManager {
             RecipeManager.removeRecipe(Items.DIAMOND_PICKAXE);
             RecipeManager.removeRecipe(Items.DIAMOND_SHOVEL);
             RecipeManager.removeRecipe(Items.DIAMOND_HOE);
-            RecipeManager.removeRecipe(Blocks.TORCH);
             RecipeManager.removeRecipe(Items.GOLDEN_CHESTPLATE);
             RecipeManager.removeRecipe(Items.GOLDEN_HELMET);
             RecipeManager.removeRecipe(Items.GOLDEN_BOOTS);
@@ -64,6 +63,9 @@ public class MixinVanillaManager {
             RecipeManager.removeRecipe(Items.DIAMOND_HELMET);
             RecipeManager.removeRecipe(Items.DIAMOND_BOOTS);
             RecipeManager.removeRecipe(Items.DIAMOND_LEGGINGS);
+            if (ConfigGetter.getChangeTorches()) {
+                RecipeManager.removeRecipe(Blocks.TORCH);
+            }
             if (ModConfig.players.disableBlockToIngot) {
                 RecipeManager.removeRecipe(Items.IRON_INGOT);
                 RecipeManager.removeRecipe(Items.IRON_NUGGET);

@@ -1,4 +1,4 @@
-package github.xniter.dtmintegrations.mixin.sevendaystomine;
+package github.xniter.dtmintegrations.mixin.sevendaystomine.util;
 
 import nuparu.sevendaystomine.util.MathUtils;
 import org.spongepowered.asm.mixin.Mixin;

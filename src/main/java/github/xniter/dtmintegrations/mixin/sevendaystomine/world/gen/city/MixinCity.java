@@ -1,4 +1,4 @@
-package github.xniter.dtmintegrations.mixin.sevendaystomine;
+package github.xniter.dtmintegrations.mixin.sevendaystomine.world.gen.city;
 
 import github.xniter.dtmintegrations.handlers.config.ConfigGetter;
 import nuparu.sevendaystomine.world.gen.city.City;
@@ -8,8 +8,6 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
 @Mixin({City.class})
 public class MixinCity {
-
-
 
     @ModifyConstant(method = "prepareStreets", constant = @Constant(intValue = 8192), remap = false)
     public int prepareStreets(int constant) {

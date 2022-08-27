@@ -1,4 +1,4 @@
-package github.xniter.dtmintegrations.mixin.sevendaystomine;
+package github.xniter.dtmintegrations.mixin.sevendaystomine.entity;
 
 import github.xniter.dtmintegrations.handlers.config.ConfigGetter;
 import net.minecraft.block.state.IBlockState;
@@ -36,13 +36,13 @@ public abstract class MixinEntityAirdrop extends Entity {
     @Shadow
     public long age;
 
-    private static final DataParameter<Integer> intAge = EntityDataManager.<Integer>createKey(EntityAirdrop.class, DataSerializers.VARINT);
+    private static final DataParameter<Integer> intAge = EntityDataManager.createKey(EntityAirdrop.class, DataSerializers.VARINT);
 
-    private static final DataParameter<Boolean> DROPPED = EntityDataManager.<Boolean>createKey(EntityAirdrop.class, DataSerializers.BOOLEAN);
+    private static final DataParameter<Boolean> DROPPED = EntityDataManager.createKey(EntityAirdrop.class, DataSerializers.BOOLEAN);
 
-    private static final DataParameter<Integer> DROP_TIME = EntityDataManager.<Integer>createKey(EntityAirdrop.class, DataSerializers.VARINT);
+    private static final DataParameter<Integer> DROP_TIME = EntityDataManager.createKey(EntityAirdrop.class, DataSerializers.VARINT);
 
-    private static final DataParameter<Float> START_POS = EntityDataManager.<Float>createKey(EntityAirdrop.class, DataSerializers.FLOAT);
+    private static final DataParameter<Integer> START_POS = EntityDataManager.createKey(EntityAirdrop.class, DataSerializers.VARINT);
 
     @Shadow
     @Final
@@ -79,7 +79,6 @@ public abstract class MixinEntityAirdrop extends Entity {
         this.onGround = !this.world.isAirBlock(bP1);
 
 
-
         if (!this.onGround && !this.getLanded() && !dropped && intAge >= 0) {
             this.Dropped();
         }
@@ -95,7 +94,9 @@ public abstract class MixinEntityAirdrop extends Entity {
 
             this.motionY = -ConfigGetter.getAirdropFallingSpeed();
 
-            this.setPosition(this.posX, startPos - Math.pow(getDropTime(), 1) / 6, this.posZ);
+            this.setPosition(this.getPosition().getX(), startPos - (Math.pow(getDropTime(), 1) / 6 + this.motionY), this.getPosition().getZ());
+
+            this.markVelocityChanged();
 
             this.setDropTime(dropTime + 1);
         }
@@ -103,14 +104,23 @@ public abstract class MixinEntityAirdrop extends Entity {
         if (this.onGround) {
             this.age = 0;
 
-            ++this.age;
+            this.setAge(0);
+
+            ++intAge;
 
             this.motionY = 0.0;
 
             this.setPosition(this.getPosition().getX(), this.getPosition().getY(), this.getPosition().getZ());
 
+            this.markVelocityChanged();
 
-            if (age >= 48000L || this.posY < 1 || this.posY > 256 || intAge >= 48000) {
+            if (!this.getLanded()) {
+                this.setSmokeTime(ConfigGetter.getAirdropSmokeTime() * 20);
+                this.setDropped(false);
+                this.setLanded(true);
+            }
+
+            if (this.getLanded() && intAge >= 48000) {
                 this.setDead();
 
                 MinecraftServer server = Minecraft.getMinecraft().world.getMinecraftServer();
@@ -123,21 +133,6 @@ public abstract class MixinEntityAirdrop extends Entity {
                     }
                 }
             }
-
-            if (!this.getLanded()) {
-                this.setSmokeTime(1200);
-                this.setDropped(false);
-                this.setLanded(true);
-            }
-
-
-//            if (!this.getLanded()) {
-//                this.motionY = -ConfigGetter.getAirdropFallingSpeed() / 1.5;
-//
-//            } else {
-//                this.motionY = -ConfigGetter.getAirdropFallingSpeed() / 2;
-//
-//            }
 
         }
 
@@ -167,7 +162,7 @@ public abstract class MixinEntityAirdrop extends Entity {
         this.dataManager.register(intAge, 0);
         this.dataManager.register(LANDED, false);
         this.dataManager.register(SMOKE_TIME, 0);
-        this.dataManager.register(START_POS, 0.F);
+        this.dataManager.register(START_POS, 0);
         this.dataManager.register(DROPPED, false);
         this.dataManager.register(DROP_TIME, 0);
         this.dataManager.register(HEALTH, 50);
@@ -193,7 +188,7 @@ public abstract class MixinEntityAirdrop extends Entity {
         ignoreFrustumCheck = true;
         this.setDropped(true);
         this.isAirBorne = true;
-        this.setStartPos((float)this.posY);
+        this.setStartPos((int)this.posY);
     }
 
     public int getAge(){
@@ -204,11 +199,11 @@ public abstract class MixinEntityAirdrop extends Entity {
         this.dataManager.set(intAge, Age);
     }
 
-    public float getStartPos(){
+    public int getStartPos(){
         return this.dataManager.get(START_POS);
     }
 
-    public void setStartPos(Float startPos){
+    public void setStartPos(int startPos){
         this.dataManager.set(START_POS, startPos);
     }
 
@@ -251,7 +246,7 @@ public abstract class MixinEntityAirdrop extends Entity {
 
         this.age = compound.getLong("age");
 
-        this.setStartPos(compound.getFloat("StartPos"));
+        this.setStartPos(compound.getInteger("StartPos"));
 
         this.setDropped(compound.getBoolean("Dropped"));
 
@@ -274,7 +269,7 @@ public abstract class MixinEntityAirdrop extends Entity {
         compound.setInteger("smoke_time", this.getSmokeTime());
         compound.setInteger("intage", this.getAge());
         compound.setLong("age", this.age);
-        compound.setFloat("StartPos", this.getStartPos());
+        compound.setInteger("StartPos", this.getStartPos());
         compound.setBoolean("Dropped", this.isDropped());
         compound.setInteger("DropTime", this.getDropTime());
     }
@@ -286,7 +281,13 @@ public abstract class MixinEntityAirdrop extends Entity {
     @Overwrite(remap = false)
     @SideOnly(Side.CLIENT)
     public boolean isInRangeToRenderDist(double distance) {
-        return super.isInRangeToRenderDist(distance);
+        double d0 = this.getEntityBoundingBox().getAverageEdgeLength();
+        if (Double.isNaN(d0)) {
+            d0 = 1.0;
+        }
+
+        d0 = d0 * 64.0 * getRenderDistanceWeight() * (double)(this.getLanded() ? 1 : 6);
+        return distance < d0 * d0;
     }
 
     /**
@@ -301,18 +302,11 @@ public abstract class MixinEntityAirdrop extends Entity {
                 return;
             } else {
                 if (this.onGround && this.getLanded()) {
-
-                    if (this.getServer().getEntityWorld() != null) {
-                        this.getServer().getEntityWorld().removeEntity(this);
-                    } else {
-                        this.setDead();
-                    }
-
-                    this.world.spawnParticle(EnumParticleTypes.EXPLOSION_HUGE, this.posX, this.posY, this.posZ, 1, 1, 1, 1);
+                    this.setAge(48000);
                 }
             }
         }
 
-        //age = MathUtils.clamp(age, 42000, 48000);
+        age = MathUtils.clamp(age, 42000, 48000);
     }
 }
