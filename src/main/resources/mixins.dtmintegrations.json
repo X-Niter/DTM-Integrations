@@ -13,7 +13,6 @@
     "sevendaystomine.events.MixinWorldEventHandler",
     "sevendaystomine.item.MixinItemAdvancedBandage",
     "sevendaystomine.item.MixinItemBandage",
-    "sevendaystomine.item.MixinItemCoffeeDrink",
     "sevendaystomine.item.MixinItemDrink",
     "sevendaystomine.util.MixinMathUtils",
     "sevendaystomine.util.MixinUtils",
