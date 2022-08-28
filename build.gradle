@@ -117,6 +117,9 @@ dependencies {
     // Lootr
     deobfCompile "curse.maven:lootr-361276:3907817"
 
+    // Tough As Nails
+    deobfCompile "curse.maven:tough-as-nails-246391:2710969"
+
 }
 
 task devJar(type: Jar) {

@@ -131,6 +131,10 @@ public class ConfigHandler {
 
     protected static boolean MILITARY_BASE = true;
 
+    protected static int BANDAGE_USE_TIME = 5;
+
+    protected static boolean TAN_INTEGRATIONS = false;
+
 
     public static void init(File file){
         config = new Configuration(file);
@@ -141,21 +145,26 @@ public class ConfigHandler {
         config.addCustomCategoryComment(category, "The settings below are specific to Forge or FML, be it fancy tools to do things for you instead of you doing it, down to optimizations or more.");
         FORGE_OPT = config.getBoolean("Forge Optimization", category, true, "Automatically sets Forges config options too the most optimal setting for game/modpack healthiness/performance");
 
-        category = "7 Days To Mine";
+        category = "General";
         config.getCategory(category).setLanguageKey("dtmi.daystomine");
         config.addCustomCategoryComment(category, "General Config setting for Seven Days To Mine changes");
         BM_SLEEPING = config.getBoolean("BloodMoon Sleeping", category, false, "[Default: FALSE(No sleeping allowed)]\n[TRUE = Sleeping allowed during Blood Moon]\n[FALSE = Sleeping not allowed during Blood Moon]\nCan players sleep through a Blood Moon?");
         STREET_GEN_ATTEMPTS = config.getInt("Street Gen Attempts", category, 3, 1, 25, "[WARNING: Higher numbers severally decreases performance :USE CAUTION:]\n[SAFE OPTION: 1-10]\n[UNSAFE OPTION: 11+]\n7DTM Originally had this set to 8192 times, THAT'S A LOT, no wonder generation was so heavy!\nWith this option being controllable now, the generation is still heavy but it's much better when this is left at default or lower.\nYou can indeed set this to 1 to generate the roads at a lower increment, meaning the generation will happen in smaller bits but faster, where as the default 3 means that the road generation will repeat three times to potentially generate a longer road instead of a smaller incremented generation.\n\nMax attempts to generate streets?");
-        CHANGE_TORCHES = config.getBoolean("Change Torches", category, true, "Can Seven Days To Mine change torches? [Set to False if any other mods installed already make modifications to vanilla torches]");
         ALLOWED_DIM_GEN = config.get(category,"Allowed Dim Gen", ALLOWED_DIM_GEN, "Dimension ID's to allow seven days to mine generation").getIntList();
         FOCUSED_BLOODMOON = config.getBoolean("Focused BloodMoon", category, true, "Attempts to block all spawns during a blood moon that are not seven days to mine zombies");
         FOCUSED_WOLFHORDE = config.getBoolean("Focused WolfHorde", category, true, "Attempts to block all spawns during a wolf horde that are not seven days to mine entities");
         FORCEFUL_FOCUSED_BLOODMOON = config.getBoolean("Forceful Focused BloodMoon", category, false, "During a BloodMoon, ALL mobs that are not apart of the BloodMoon event will be removed forcefully from existence until the event is over");
         FORCEFUL_FOCUSED_WOLFHORDE = config.getBoolean("Forceful Focused WolfHorde", category, false, "During a WolfHorde, ALL mobs that are not apart of the WolfHorde event will be removed forcefully from existence until the event is over");
+
+        category = "Blocks & Items";
+        config.addCustomCategoryComment(category, "Configuration for blocks and items");
         DISABLE_VANILLA_BLOCKS_ITEMS_USAGE = config.getBoolean("Disable Vanilla blocks and items usage", category, false, "Allows players to craft vanilla blocks and items needed by other mods, but disables the blocks and items functionality so that the blocks and items are just crafting components.");
         ADD_DISABLED_TOOLTIP = config.getBoolean("Show Disabled Tooltip", category, true, "[DEFAULT: TRUE;Show Disabled Tooltip]\nDisabled usage will show tooltip saying the usage is disabled.\n7DTM Disabled Recipes will show a tooltip saying recipe is Disabled\nEnable/Disable adding tooltip to the disabled items and blocks");
+        BANDAGE_USE_TIME = config.getInt("Bandage use time", category, 5, 1, 128, "The time in seconds it takes to consume a Bandage");
+        CHANGE_TORCHES = config.getBoolean("Change Torches", category, true, "Can Seven Days To Mine change torches? [Set to False if any other mods installed already make modifications to vanilla torches]");
 
-        category = "7 Days To Mine Airdrops";
+
+        category = "Airdrops";
         config.getCategory(category).setLanguageKey("dtmi.aidrops");
         config.addCustomCategoryComment(category, "More in depth, fine controls over Airdrops");
         AIRDROP_MAX_HEIGHT = config.getInt("Max Drop Height", category, 256, 50, 256, "[DEFAULT: 256]\nThe max height the Airdrop can drop from");
@@ -203,6 +212,11 @@ public class ConfigHandler {
         CARGO_SHIP = config.getBoolean("Cargo Ship", category, true, "enable/disable this structure");
         LARGE_BANDIT_CAMP = config.getBoolean("Large Bandit Camp", category, true, "enable/disable this structure");
         MILITARY_BASE = config.getBoolean("Military Base", category, true, "enable/disable this structure");
+
+        category = "Integrations";
+        config.addCustomCategoryComment(category,"Mod Integrations");
+        TAN_INTEGRATIONS = config.getBoolean("TAN Integrations", category, false, "enable/disable Tough As Nails Integration\nThis enabled will turn off 7DTM thirst and stamina and use TAN's system instead");
+
 
         category = "Language";
         config.getCategory(category).setLanguageKey("dtmi.language");

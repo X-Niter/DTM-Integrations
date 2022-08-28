@@ -11,6 +11,10 @@ public class ModGetter {
         return Loader.isModLoaded("jei");
     }
 
+    public static boolean isTANLoaded() {
+        return Loader.isModLoaded("toughasnails");
+    }
+
     public static boolean isLootrLoaded() {
         return Loader.isModLoaded("lootr");
     }

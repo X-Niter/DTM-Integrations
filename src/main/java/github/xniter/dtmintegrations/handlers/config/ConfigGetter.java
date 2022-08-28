@@ -233,4 +233,12 @@ public class ConfigGetter extends ConfigHandler{
         return MILITARY_BASE;
     }
 
+    public static int getBandageUseTime() {
+        return BANDAGE_USE_TIME;
+    }
+
+    public static boolean getTanIntegration() {
+        return TAN_INTEGRATIONS;
+    }
+
 }
