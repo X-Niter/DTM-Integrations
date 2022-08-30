@@ -2,6 +2,7 @@ package github.xniter.dtmintegrations.mixin.sevendaystomine.item;
 
 import github.xniter.dtmintegrations.handlers.ModGetter;
 import github.xniter.dtmintegrations.handlers.config.ConfigGetter;
+import github.xniter.dtmintegrations.items.TANItemDrink;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
@@ -14,12 +15,9 @@ import nuparu.sevendaystomine.potions.Potions;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
-import toughasnails.api.stat.capability.IThirst;
-import toughasnails.api.thirst.IDrink;
-import toughasnails.api.thirst.ThirstHelper;
 
 @Mixin(value = ItemDrink.class, remap = false)
-public class MixinItemDrink extends ItemFood {
+public abstract class MixinItemDrink extends ItemFood {
 
     @Shadow
     private int thirst;
@@ -27,28 +25,35 @@ public class MixinItemDrink extends ItemFood {
     @Shadow
     private int stamina;
 
-    public MixinItemDrink(int amount, float saturation, boolean isWolfFood) {
-        super(amount, saturation, isWolfFood);
+    public MixinItemDrink(int amount, int thirst, int stamina) {
+        super(amount, false);
+        this.setAlwaysEdible();
+        this.thirst = thirst;
+        this.stamina = stamina;
     }
 
-    public MixinItemDrink(int amount, boolean isWolfFood) {
-        super(amount, isWolfFood);
+    public MixinItemDrink(int amount, float saturation, int thirst, int stamina) {
+        super(amount, saturation, false);
+        this.setAlwaysEdible();
+        this.thirst = thirst;
+        this.stamina = stamina;
     }
 
     /**
      * @author X_Niter
-     * @reason TAN Compatibility
+     * @reason Integrations with Tough As Nails
      */
     @Overwrite(remap = false)
     protected void onFoodEaten(ItemStack stack, World worldIn, EntityPlayer player) {
         super.onFoodEaten(stack, worldIn, player);
-        IThirst thirst = ThirstHelper.getThirstData(player);
+
+
         if (!worldIn.isRemote) {
             IExtendedPlayer extendedPlayer = CapabilityHelper.getExtendedPlayer(player);
 
             if (ConfigGetter.getTanIntegration()) {
                 if (ModGetter.isTANLoaded()) {
-                    thirst.addStats(this.thirst, this.stamina);
+                    new TANItemDrink(this.thirst, (float) this.stamina);
                 }
             } else {
                 if (ModConfig.players.thirstSystem) {

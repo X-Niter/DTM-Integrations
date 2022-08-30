@@ -12,7 +12,15 @@ public class ModGetter {
     }
 
     public static boolean isTANLoaded() {
-        return Loader.isModLoaded("toughasnails");
+        try{
+            if (Loader.isModLoaded("toughasnails")) {
+                return true;
+            }
+
+        } catch (NoClassDefFoundError error) {
+            return false;
+        }
+        return false;
     }
 
     public static boolean isLootrLoaded() {
