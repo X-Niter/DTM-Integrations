@@ -10,7 +10,6 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 import nuparu.sevendaystomine.config.ModConfig;
 import nuparu.sevendaystomine.util.MathUtils;
 import nuparu.sevendaystomine.world.gen.SmallFeatureWorldGenerator;
-import nuparu.sevendaystomine.world.gen.feature.*;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;

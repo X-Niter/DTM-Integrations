@@ -2,7 +2,6 @@ package github.xniter.dtmintegrations.mixin.sevendaystomine.item;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
@@ -13,7 +12,7 @@ import nuparu.sevendaystomine.potions.Potions;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
-@Mixin(value = ItemAdvancedBandage.class, remap = false)
+@Mixin(value = ItemAdvancedBandage.class)
 public class MixinItemAdvancedBandage extends ItemBandage {
 
     /**
