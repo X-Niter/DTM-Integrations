@@ -134,6 +134,10 @@ public class ConfigHandler {
 
     protected static boolean AIRDROP_GLOWING_IN_AIR = false;
 
+    protected static int BLEEDING_DAMAGE_CHANCE = 12;
+
+    protected static int BLEEDING_AFFECT_DAMAGE_AMOUNT = 1;
+
 
     public static void init(File file){
         config = new Configuration(file);
@@ -150,10 +154,18 @@ public class ConfigHandler {
         BM_SLEEPING = config.getBoolean("BloodMoon Sleeping", category, false, "[Default: FALSE(No sleeping allowed)]\n[TRUE = Sleeping allowed during Blood Moon]\n[FALSE = Sleeping not allowed during Blood Moon]\nCan players sleep through a Blood Moon?");
         STREET_GEN_ATTEMPTS = config.getInt("Street Gen Attempts", category, 3, 1, 25, "[WARNING: Higher numbers severally decreases performance :USE CAUTION:]\n[SAFE OPTION: 1-10]\n[UNSAFE OPTION: 11+]\n7DTM Originally had this set to 8192 times, THAT'S A LOT, no wonder generation was so heavy!\nWith this option being controllable now, the generation is still heavy but it's much better when this is left at default or lower.\nYou can indeed set this to 1 to generate the roads at a lower increment, meaning the generation will happen in smaller bits but faster, where as the default 3 means that the road generation will repeat three times to potentially generate a longer road instead of a smaller incremented generation.\n\nMax attempts to generate streets?");
         ALLOWED_DIM_GEN = config.get(category,"Allowed Dim Gen", ALLOWED_DIM_GEN, "Dimension ID's to allow seven days to mine generation").getIntList();
+        BLEEDING_DAMAGE_CHANCE = config.getInt("Bleeding Damage Chance", category, 12, 2, 500, "The chance that Bleeding affect will damage you\nHigher numbers make the chance of being damaged less likely meaning that you take damage from bleeding less often.");
+        BLEEDING_AFFECT_DAMAGE_AMOUNT = config.getInt("Bleeding Damage amount", category, 1, 1, 12, "The amount of damage taken from the Bleeding affect\nHigher numbers mean more damage!");
+
+
+
+        category = "Blood Moon & Horde control";
+        config.addCustomCategoryComment(category, "Options for Blood Moon and WolfHorde");
         FOCUSED_BLOODMOON = config.getBoolean("Focused BloodMoon", category, true, "Attempts to block all spawns during a blood moon that are not seven days to mine zombies");
         FOCUSED_WOLFHORDE = config.getBoolean("Focused WolfHorde", category, true, "Attempts to block all spawns during a wolf horde that are not seven days to mine entities");
         FORCEFUL_FOCUSED_BLOODMOON = config.getBoolean("Forceful Focused BloodMoon", category, false, "During a BloodMoon, ALL mobs that are not apart of the BloodMoon event will be removed forcefully from existence until the event is over");
         FORCEFUL_FOCUSED_WOLFHORDE = config.getBoolean("Forceful Focused WolfHorde", category, false, "During a WolfHorde, ALL mobs that are not apart of the WolfHorde event will be removed forcefully from existence until the event is over");
+
 
         category = "Blocks & Items";
         config.addCustomCategoryComment(category, "Configuration for blocks and items");

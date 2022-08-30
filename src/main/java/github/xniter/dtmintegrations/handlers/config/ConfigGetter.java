@@ -241,4 +241,12 @@ public class ConfigGetter extends ConfigHandler{
         return AIRDROP_GLOWING_ON_GROUND;
     }
 
+    public static int getBleedingDamageChance() {
+        return BLEEDING_DAMAGE_CHANCE;
+    }
+
+    public static int getBleedingAffectDamageAmount() {
+        return BLEEDING_AFFECT_DAMAGE_AMOUNT;
+    }
+
 }
