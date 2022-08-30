@@ -4,7 +4,9 @@ import github.xniter.dtmintegrations.handlers.config.ConfigGetter;
 import github.xniter.dtmintegrations.utils.EnumDisabledVanilla;
 import net.minecraft.item.ItemStack;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 public class AbstractVanillaHandler {
     private final Set<String> disabled = new HashSet<>();
