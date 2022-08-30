@@ -81,27 +81,33 @@ public abstract class MixinEntityAirdrop extends Entity {
 
         if (!this.onGround && !this.getLanded() && !dropped && intAge >= 0) {
             this.Dropped();
+            this.markVelocityChanged();
         }
 
-        if (ConfigGetter.getAirdropGlowingEnabled()) {
-            this.glowing = true;
-        }
+
 
         if (dropped) {
+            if (ConfigGetter.getAirdropGlowingInAirEnabled()) {
+                this.glowing = true;
+            }
+
             int dropTime = getDropTime();
 
             float startPos = this.getStartPos();
 
             this.motionY = -ConfigGetter.getAirdropFallingSpeed();
-
-            this.setPosition(this.getPosition().getX(), startPos - (Math.pow(getDropTime(), 1) / 6 + this.motionY), this.getPosition().getZ());
-
+            this.motionX = rand.nextDouble() - rand.nextDouble();
+            this.motionZ = rand.nextDouble() - rand.nextDouble();
             this.markVelocityChanged();
+
+            this.setPosition(this.getPosition().getX(), startPos - (Math.pow(getDropTime(), 1) / ConfigGetter.getAirdropFallingSpeed()), this.getPosition().getZ());
 
             this.setDropTime(dropTime + 1);
         }
 
         if (this.onGround) {
+            this.glowing = ConfigGetter.getAirdropGlowingOnGroundEnabled();
+
             this.age = 0;
 
             this.setAge(0);
@@ -188,7 +194,7 @@ public abstract class MixinEntityAirdrop extends Entity {
         ignoreFrustumCheck = true;
         this.setDropped(true);
         this.isAirBorne = true;
-        this.setStartPos((int)this.posY);
+        this.setStartPos((int) this.posY);
     }
 
     public int getAge(){
