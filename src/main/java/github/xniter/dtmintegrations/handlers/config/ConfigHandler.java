@@ -2,7 +2,6 @@ package github.xniter.dtmintegrations.handlers.config;
 
 import github.xniter.dtmintegrations.DTMIntegrations;
 import net.minecraftforge.common.config.Config;
-import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
@@ -47,15 +46,13 @@ public class ConfigHandler {
     protected static int AIRDROP_CHAT_MESSAGE_GENERAL_LOCATION = 32;
     protected static int AIRDROP_DISTANCE_FROM_PLAYER = 128;
 
-    protected static double AIRDROP_FALL_SPEED = 0.1;
+    protected static double AIRDROP_FALL_SPEED = 6;
 
     protected static int AIRDROP_SMOKE_TIME = 60;
 
-    protected static boolean AIRDROP_REALISTIC_FALLING = false;
-
     protected static boolean AIRDROP_SOUND_FX = true;
 
-    protected static boolean AIRDROP_GLOWING = true;
+    protected static boolean AIRDROP_GLOWING_ON_GROUND = false;
 
     protected static boolean DISABLE_VANILLA_BLOCKS_ITEMS_USAGE = false;
 
@@ -135,6 +132,8 @@ public class ConfigHandler {
 
     protected static boolean TAN_INTEGRATIONS = false;
 
+    protected static boolean AIRDROP_GLOWING_IN_AIR = false;
+
 
     public static void init(File file){
         config = new Configuration(file);
@@ -172,46 +171,47 @@ public class ConfigHandler {
         AIRDROP_CHAT_MESSAGE_EXACT_LOCATION = config.getBoolean("Notification Exact Location", category, false, "[DEFAULT: FALSE(disabled)]\nIf FALSE, then the below general location will be used\nDoes the Airdrop message in chat give the exact location of the Airdrop?");
         AIRDROP_CHAT_MESSAGE_GENERAL_LOCATION = config.getInt("Notification General Location", category, 32, 1, 256, "[DEFAULT 32 Block Range]\nThe range of the general location given in chat\nThis range controls how RANDOMLY far off the location given in chat can be, so 32 would mean that Airdrop locations given in chat is within 32 blocks of range from the actual Airdrop location\nThe equation used is [Pos x + random number between 0 and (Number you set) - random number between 0 and (Number you set)], the same equation applies to the z coords as well, x was just used for the showing of equation.");
         AIRDROP_DISTANCE_FROM_PLAYER = config.getInt("Drop Distance From Player", category, 128, 16, 256, "[DEFAULT: 128 Blocks]\nThe max range in blocks that Airdrops can be dropped around a player");
-        AIRDROP_FALL_SPEED = config.getInt("Fall speed", category, 1, 0, 50, "[DEFAULT: 1]\n[0 is Seven Days To Mine Default VERY SLOW falling]\nHow fast the Airdrop falls, higher number is faster falling.");
+        AIRDROP_FALL_SPEED = config.getInt("Fall speed", category, 6, 1, 512, "[DEFAULT: 6]\n[Higher number is slower falling]\n[WARNING: Lower then 4 can cause de-sync and cause airdrops to appear inside the top layer of the ground]\n[5 through 16 is the best range for fast but not to fast or methodically slow enough to follow and not get it lost in sight]\nHow fast the Airdrop falls, higher number is slower falling.");
         AIRDROP_SMOKE_TIME = config.getInt("Smoke Time", category, 60, 1, 36000, "[DEFAULT 60 seconds]\n[MAX is 10 Hours aka 36000 seconds]\nHow many seconds will the Airdrop shoot smoke out the top of the box");
-        AIRDROP_REALISTIC_FALLING = config.getBoolean("Realistic Falling", category, false, "[DEFAULT: FALSE]\nEnable/Disable realistic ANGLE falling Airdrop");
         AIRDROP_SOUND_FX = config.getBoolean("Sound Fx", category, true, "[DEFAULT: TRUE]\nEnable/Disable the plane sound affect from the original 7DTD game when the Airdrop is dropped");
-        AIRDROP_GLOWING = config.getBoolean("Glowing Airdrop", category, true, "[DEFAULT TRUE]\nEnable/Disable the Airdrops glowing");
+        AIRDROP_GLOWING_IN_AIR = config.getBoolean("Glowing Airdrop In Air", category, false, "[DEFAULT FALSE(Disabled)]\nEnable/Disable the Airdrops glowing in air as they fall");
+        AIRDROP_GLOWING_ON_GROUND = config.getBoolean("Glowing Airdrop On Ground", category, false, "[DEFAULT FALSE(Disabled)]\nEnable/Disable the Airdrops glowing while sitting on the ground");
+
 
         category = "Structures";
         config.addCustomCategoryComment(category,"Enable/Disable seven days to mine structures to your needs");
         DISABLE_ALL_STRUCTURES = config.getBoolean("Disable all structures", category, false, "Master kill switch to enable/disable all structures from seven days to mine");
-        FACTORY_GARAGE = config.getBoolean("Factory Garage", category, true, "enable/disable this structure");
-        LANDFILL = config.getBoolean("Landfill", category, true, "enable/disable this structure");
-        LOOKOUT_BIRCH = config.getBoolean("Lookout Birch", category, true, "enable/disable this structure");
-        LOOKOUT_DARK_OAK = config.getBoolean("Lookout Dark Oak", category, true, "enable/disable this structure");
-        LOOKOUT_BURNT = config.getBoolean("Lookout Burnt", category, true, "enable/disable this structure");
-        BURNT_HOUSE = config.getBoolean("Burnt House", category, true, "enable/disable this structure");
-        RUINED_HOUSE = config.getBoolean("Ruined House", category, true, "enable/disable this structure");
-        SHACK = config.getBoolean("Shack", category, true, "enable/disable this structure");
-        RUINED_HOUSE_1 = config.getBoolean("Ruined House 1", category, true, "enable/disable this structure");
-        BANDIT_CAMP = config.getBoolean("Bandit Camp", category, true, "enable/disable this structure");
-        RUINED_HOUSE_2 = config.getBoolean("Ruined House 2", category, true, "enable/disable this structure");
-        RUINED_HOUSE_ICY_2 = config.getBoolean("Ruined Icy House 2", category, true, "enable/disable this structure");
-        RUINED_HOUSE_ICY = config.getBoolean("Ruined Icy House", category, true, "enable/disable this structure");
-        RUINED_HOUSE_DESERT_1 = config.getBoolean("Ruined House Desert", category, true, "enable/disable this structure");
-        HELICOPTER = config.getBoolean("Helicopter", category, true, "enable/disable this structure");
-        OBSERVATORY = config.getBoolean("Observatory", category, true, "enable/disable this structure");
-        WIND_TURBINE = config.getBoolean("Wing Turbine", category, true, "enable/disable this structure");
-        WELL_BUNKER = config.getBoolean("Well Bunker", category, true, "enable/disable this structure");
-        SETTLEMENT = config.getBoolean("Settlement", category, true, "enable/disable this structure");
-        TANK_01 = config.getBoolean("Tank", category, true, "enable/disable this structure");
-        YACHT = config.getBoolean("Yacht", category, true, "enable/disable this structure");
-        CAMPSITE = config.getBoolean("Campsite", category, true, "enable/disable this structure");
-        RUINS_0 = config.getBoolean("Ruins", category, true, "enable/disable this structure");
-        RUINS_1 = config.getBoolean("Ruins 1", category, true, "enable/disable this structure");
-        AIRPORT = config.getBoolean("Airport", category, true, "enable/disable this structure");
-        ABANDONED_SETTLEMENT_FARM = config.getBoolean("Abandoned Settlement Farm", category, true, "enable/disable this structure");
-        AIRPLANE_TAIL_DESERT = config.getBoolean("Airplane Tail Desert", category, true, "enable/disable this structure");
-        AIRPLANE_TAIL = config.getBoolean("Airplane Tail", category, true, "enable/disable this structure");
-        CARGO_SHIP = config.getBoolean("Cargo Ship", category, true, "enable/disable this structure");
-        LARGE_BANDIT_CAMP = config.getBoolean("Large Bandit Camp", category, true, "enable/disable this structure");
-        MILITARY_BASE = config.getBoolean("Military Base", category, true, "enable/disable this structure");
+        FACTORY_GARAGE = config.getBoolean("Factory Garage", category, true, "[DEFAULT: TRUE(Enabled)]\nenable/disable this structure");
+        LANDFILL = config.getBoolean("Landfill", category, true, "[DEFAULT: TRUE(Enabled)]\nenable/disable this structure");
+        LOOKOUT_BIRCH = config.getBoolean("Lookout Birch", category, true, "[DEFAULT: TRUE(Enabled)]\nenable/disable this structure");
+        LOOKOUT_DARK_OAK = config.getBoolean("Lookout Dark Oak", category, true, "[DEFAULT: TRUE(Enabled)]\nenable/disable this structure");
+        LOOKOUT_BURNT = config.getBoolean("Lookout Burnt", category, true, "[DEFAULT: TRUE(Enabled)]\nenable/disable this structure");
+        BURNT_HOUSE = config.getBoolean("Burnt House", category, true, "[DEFAULT: TRUE(Enabled)]\nenable/disable this structure");
+        RUINED_HOUSE = config.getBoolean("Ruined House", category, true, "[DEFAULT: TRUE(Enabled)]\nenable/disable this structure");
+        SHACK = config.getBoolean("Shack", category, true, "[DEFAULT: TRUE(Enabled)]\nenable/disable this structure");
+        RUINED_HOUSE_1 = config.getBoolean("Ruined House 1", category, true, "[DEFAULT: TRUE(Enabled)]\nenable/disable this structure");
+        BANDIT_CAMP = config.getBoolean("Bandit Camp", category, true, "[DEFAULT: TRUE(Enabled)]\nenable/disable this structure");
+        RUINED_HOUSE_2 = config.getBoolean("Ruined House 2", category, true, "[DEFAULT: TRUE(Enabled)]\nenable/disable this structure");
+        RUINED_HOUSE_ICY_2 = config.getBoolean("Ruined Icy House 2", category, true, "[DEFAULT: TRUE(Enabled)]\nenable/disable this structure");
+        RUINED_HOUSE_ICY = config.getBoolean("Ruined Icy House", category, true, "[DEFAULT: TRUE(Enabled)]\nenable/disable this structure");
+        RUINED_HOUSE_DESERT_1 = config.getBoolean("Ruined House Desert", category, true, "[DEFAULT: TRUE(Enabled)]\nenable/disable this structure");
+        HELICOPTER = config.getBoolean("Helicopter", category, true, "[DEFAULT: TRUE(Enabled)]\nenable/disable this structure");
+        OBSERVATORY = config.getBoolean("Observatory", category, true, "[DEFAULT: TRUE(Enabled)]\nenable/disable this structure");
+        WIND_TURBINE = config.getBoolean("Wing Turbine", category, true, "[DEFAULT: TRUE(Enabled)]\nenable/disable this structure");
+        WELL_BUNKER = config.getBoolean("Well Bunker", category, true, "[DEFAULT: TRUE(Enabled)]\nenable/disable this structure");
+        SETTLEMENT = config.getBoolean("Settlement", category, true, "[DEFAULT: TRUE(Enabled)]\nenable/disable this structure");
+        TANK_01 = config.getBoolean("Tank", category, true, "[DEFAULT: TRUE(Enabled)]\nenable/disable this structure");
+        YACHT = config.getBoolean("Yacht", category, true, "[DEFAULT: TRUE(Enabled)]\nenable/disable this structure");
+        CAMPSITE = config.getBoolean("Campsite", category, true, "[DEFAULT: TRUE(Enabled)]\nenable/disable this structure");
+        RUINS_0 = config.getBoolean("Ruins", category, true, "[DEFAULT: TRUE(Enabled)]\nenable/disable this structure");
+        RUINS_1 = config.getBoolean("Ruins 1", category, true, "[DEFAULT: TRUE(Enabled)]\nenable/disable this structure");
+        AIRPORT = config.getBoolean("Airport", category, true, "[DEFAULT: TRUE(Enabled)]\nenable/disable this structure");
+        ABANDONED_SETTLEMENT_FARM = config.getBoolean("Abandoned Settlement Farm", category, true, "[DEFAULT: TRUE(Enabled)]\nenable/disable this structure");
+        AIRPLANE_TAIL_DESERT = config.getBoolean("Airplane Tail Desert", category, true, "[DEFAULT: TRUE(Enabled)]\nenable/disable this structure");
+        AIRPLANE_TAIL = config.getBoolean("Airplane Tail", category, true, "[DEFAULT: TRUE(Enabled)]\nenable/disable this structure");
+        CARGO_SHIP = config.getBoolean("Cargo Ship", category, true, "[DEFAULT: TRUE(Enabled)]\nenable/disable this structure");
+        LARGE_BANDIT_CAMP = config.getBoolean("Large Bandit Camp", category, true, "[DEFAULT: TRUE(Enabled)]\nenable/disable this structure");
+        MILITARY_BASE = config.getBoolean("Military Base", category, true, "[DEFAULT: TRUE(Enabled)]\nenable/disable this structure");
 
         category = "Integrations";
         config.addCustomCategoryComment(category,"Mod Integrations");
