@@ -40,128 +40,181 @@ public class MixinStructureGenerator implements IWorldGenerator {
         if (!ConfigGetter.getDisableAllStructures()) {
 
             if (ConfigGetter.getFactoryGarage()) {
-                buildings.add((new BuildingFactory(new ResourceLocation("sevendaystomine", "factory_garage"), 30)).setAllowedBiomes(ModBiomes.BURNT_FOREST, ModBiomes.WASTELAND, ModBiomes.WASTELAND_FOREST, ModBiomes.WASTELAND_DESERT));
+                buildings.add((new BuildingFactory(new ResourceLocation("sevendaystomine", "factory_garage"), 30)).setAllowedBiomes(new Biome[]{ModBiomes.BURNT_FOREST, ModBiomes.WASTELAND, ModBiomes.WASTELAND_FOREST, ModBiomes.WASTELAND_DESERT}));
             }
 
             if (ConfigGetter.getLandfill()) {
-                buildings.add((new BuildingLandfill(30)).setAllowedBiomes(ModBiomes.BURNT_FOREST, ModBiomes.WASTELAND, ModBiomes.WASTELAND_FOREST, ModBiomes.WASTELAND_DESERT));
+                buildings.add((new BuildingLandfill(30)).setAllowedBiomes(new Biome[]{ModBiomes.BURNT_FOREST, ModBiomes.WASTELAND, ModBiomes.WASTELAND_FOREST, ModBiomes.WASTELAND_DESERT}));
             }
 
             if (ConfigGetter.getLookoutBirch()) {
-                buildings.add((new Building(new ResourceLocation("sevendaystomine", "lookout_birch"), 280)).setAllowedBiomes(BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST).toArray(new Biome[0])).setAllowedBlocks(Blocks.GRASS));
+                buildings.add((new Building(new ResourceLocation("sevendaystomine", "lookout_birch"), 280)).setAllowedBiomes((Biome[])BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST).stream().toArray((x$0) -> {
+                    return new Biome[x$0];
+                })).setAllowedBlocks(Blocks.GRASS));
             }
 
             if (ConfigGetter.getLookoutDarkOak()) {
-                buildings.add((new Building(new ResourceLocation("sevendaystomine", "lookout_dark_oak"), 280)).setAllowedBiomes(BiomeDictionary.getBiomes(BiomeDictionary.Type.CONIFEROUS).toArray(new Biome[0])).setAllowedBlocks(Blocks.GRASS));
+                buildings.add((new Building(new ResourceLocation("sevendaystomine", "lookout_dark_oak"), 280)).setAllowedBiomes((Biome[])BiomeDictionary.getBiomes(BiomeDictionary.Type.CONIFEROUS).stream().toArray((x$0) -> {
+                    return new Biome[x$0];
+                })).setAllowedBlocks(new Block[]{Blocks.GRASS}));
             }
 
             if (ConfigGetter.getLookoutBurnt()) {
-                buildings.add((new Building(new ResourceLocation("sevendaystomine", "lookout_burnt"), 280)).setAllowedBiomes(ModBiomes.BURNT_FOREST, ModBiomes.BURNT_JUNGLE, ModBiomes.BURNT_TAIGA, ModBiomes.WASTELAND_FOREST, ModBiomes.WASTELAND).setAllowedBlocks(Blocks.GRASS));
+                buildings.add((new Building(new ResourceLocation("sevendaystomine", "lookout_burnt"), 280)).setAllowedBiomes(new Biome[]{ModBiomes.BURNT_FOREST, ModBiomes.BURNT_JUNGLE, ModBiomes.BURNT_TAIGA, ModBiomes.WASTELAND_FOREST, ModBiomes.WASTELAND}).setAllowedBlocks(new Block[]{Blocks.GRASS}));
             }
 
             if (ConfigGetter.getBurntHouse()) {
-                buildings.add((new Building(new ResourceLocation("sevendaystomine", "burnt_house"), 300, -5)).setAllowedBiomes(ModBiomes.BURNT_FOREST, ModBiomes.BURNT_JUNGLE, ModBiomes.BURNT_TAIGA, ModBiomes.WASTELAND_FOREST, ModBiomes.WASTELAND).setAllowedBlocks(Blocks.GRASS).setPedestal(Blocks.STONE.getDefaultState()));
+                buildings.add((new Building(new ResourceLocation("sevendaystomine", "burnt_house"), 300, -5)).setAllowedBiomes(new Biome[]{ModBiomes.BURNT_FOREST, ModBiomes.BURNT_JUNGLE, ModBiomes.BURNT_TAIGA, ModBiomes.WASTELAND_FOREST, ModBiomes.WASTELAND}).setAllowedBlocks(new Block[]{Blocks.GRASS}).setPedestal(Blocks.STONE.getDefaultState()));
             }
 
             if (ConfigGetter.getRuinedHouse()) {
-                buildings.add((new Building(new ResourceLocation("sevendaystomine", "ruined_house"), 300)).setAllowedBiomes((Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST),(Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS),(Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)).setAllowedBlocks(Blocks.GRASS));
+                buildings.add((new Building(new ResourceLocation("sevendaystomine", "ruined_house"), 300)).setAllowedBiomes((Biome[])Utils.combine(new Set[]{BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST), BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)}).stream().toArray((x$0) -> {
+                    return new Biome[x$0];
+                })).setAllowedBlocks(new Block[]{Blocks.GRASS}));
             }
 
             if (ConfigGetter.getShack()) {
-                buildings.add((new Building(new ResourceLocation("sevendaystomine", "shack"), 120, 0)).setAllowedBiomes((Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST),(Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS),(Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)).setAllowedBlocks(Blocks.GRASS));
+                buildings.add((new Building(new ResourceLocation("sevendaystomine", "shack"), 120, 0)).setAllowedBiomes((Biome[])Utils.combine(new Set[]{BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST), BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)}).stream().toArray((x$0) -> {
+                    return new Biome[x$0];
+                })).setAllowedBlocks(new Block[]{Blocks.GRASS}));
             }
 
             if (ConfigGetter.getRuinedHouse1()) {
-                buildings.add((new Building(new ResourceLocation("sevendaystomine", "ruined_house_1"), 300)).setAllowedBiomes((Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST),(Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS),(Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)).setAllowedBlocks(Blocks.GRASS));
+                buildings.add((new Building(new ResourceLocation("sevendaystomine", "ruined_house_1"), 300)).setAllowedBiomes((Biome[])Utils.combine(new Set[]{BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST), BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)}).stream().toArray((x$0) -> {
+                    return new Biome[x$0];
+                })).setAllowedBlocks(new Block[]{Blocks.GRASS}));
             }
 
             if (ConfigGetter.getBanditCamp()) {
-                buildings.add((new Building(new ResourceLocation("sevendaystomine", "bandit_camp"), 80, 0, Blocks.STONE.getDefaultState())).setAllowedBiomes((Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST),(Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS),(Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)).setAllowedBlocks(Blocks.GRASS));
+                buildings.add((new Building(new ResourceLocation("sevendaystomine", "bandit_camp"), 80, 0, Blocks.STONE.getDefaultState())).setAllowedBiomes((Biome[])Utils.combine(new Set[]{BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST), BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)}).stream().toArray((x$0) -> {
+                    return new Biome[x$0];
+                })).setAllowedBlocks(new Block[]{Blocks.GRASS}));
             }
 
             if (ConfigGetter.getRuinedHouse2()) {
-                buildings.add((new Building(new ResourceLocation("sevendaystomine", "ruined_house_2"), 300)).setAllowedBiomes((Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST),(Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS),(Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)).setAllowedBlocks(Blocks.GRASS));
+                buildings.add((new Building(new ResourceLocation("sevendaystomine", "ruined_house_2"), 300)).setAllowedBiomes((Biome[])Utils.combine(new Set[]{BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST), BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)}).stream().toArray((x$0) -> {
+                    return new Biome[x$0];
+                })).setAllowedBlocks(new Block[]{Blocks.GRASS}));
             }
 
             if (ConfigGetter.getRuinedHouseIcy2()) {
-                buildings.add((new Building(new ResourceLocation("sevendaystomine", "ruined_house_icy_2"), 300)).setAllowedBiomes(BiomeDictionary.getBiomes(BiomeDictionary.Type.SNOWY).toArray(new Biome[0])));
+                buildings.add((new Building(new ResourceLocation("sevendaystomine", "ruined_house_icy_2"), 300)).setAllowedBiomes((Biome[])Utils.combine(new Set[]{BiomeDictionary.getBiomes(BiomeDictionary.Type.SNOWY)}).stream().toArray((x$0) -> {
+                    return new Biome[x$0];
+                })));
             }
 
             if (ConfigGetter.getRuinedHouseIcy()) {
-                buildings.add((new Building(new ResourceLocation("sevendaystomine", "ruined_house_icy"), 300)).setAllowedBiomes(BiomeDictionary.getBiomes(BiomeDictionary.Type.SNOWY).toArray(new Biome[0])));
+                buildings.add((new Building(new ResourceLocation("sevendaystomine", "ruined_house_icy"), 300)).setAllowedBiomes((Biome[])Utils.combine(new Set[]{BiomeDictionary.getBiomes(BiomeDictionary.Type.SNOWY)}).stream().toArray((x$0) -> {
+                    return new Biome[x$0];
+                })));
             }
 
             if (ConfigGetter.getRuinedHouseDesert1()) {
-                buildings.add((new Building(new ResourceLocation("sevendaystomine", "ruined_house_desert_1"), 300)).setAllowedBiomes(BiomeDictionary.getBiomes(BiomeDictionary.Type.SANDY).toArray(new Biome[0])));
+                buildings.add((new Building(new ResourceLocation("sevendaystomine", "ruined_house_desert_1"), 300)).setAllowedBiomes((Biome[])Utils.combine(new Set[]{BiomeDictionary.getBiomes(BiomeDictionary.Type.SANDY)}).stream().toArray((x$0) -> {
+                    return new Biome[x$0];
+                })));
             }
 
             if (ConfigGetter.getHelicopter()) {
-                buildings.add((new BuildingHelicopter(new ResourceLocation("sevendaystomine", "helicopter"), 50, -3)).setHasPedestal(false).setAllowedBiomes((Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST),(Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS),(Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)));
+                buildings.add((new BuildingHelicopter(new ResourceLocation("sevendaystomine", "helicopter"), 50, -3)).setHasPedestal(false).setAllowedBiomes((Biome[])Utils.combine(new Set[]{BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST), BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)}).stream().toArray((x$0) -> {
+                    return new Biome[x$0];
+                })));
             }
 
             if (ConfigGetter.getObservatory()) {
-                buildings.add((new Building(new ResourceLocation("sevendaystomine", "observatory"), 150)).setAllowedBiomes((Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST),(Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS),(Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)).setAllowedBlocks(Blocks.GRASS));
+                buildings.add((new Building(new ResourceLocation("sevendaystomine", "observatory"), 150)).setAllowedBiomes((Biome[])Utils.combine(new Set[]{BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST), BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)}).stream().toArray((x$0) -> {
+                    return new Biome[x$0];
+                })).setAllowedBlocks(new Block[]{Blocks.GRASS}));
             }
 
             if (ConfigGetter.getWindTurbine()) {
-                buildings.add((new BuildingWindTurbine(200, 0, ModBlocks.MARBLE.getDefaultState())).setAllowedBiomes((Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST),(Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS),(Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)).setAllowedBlocks(Blocks.GRASS));
+                buildings.add((new BuildingWindTurbine(200, 0, ModBlocks.MARBLE.getDefaultState())).setAllowedBiomes((Biome[])Utils.combine(new Set[]{BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST), BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)}).stream().toArray((x$0) -> {
+                    return new Biome[x$0];
+                })).setAllowedBlocks(new Block[]{Blocks.GRASS}));
             }
 
             if (ConfigGetter.getWellBunker()) {
-                buildings.add((new Building(new ResourceLocation("sevendaystomine", "well_bunker"), 40, -23)).setHasPedestal(false).setAllowedBiomes((Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST),(Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS),(Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)));
+                buildings.add((new Building(new ResourceLocation("sevendaystomine", "well_bunker"), 40, -23)).setHasPedestal(false).setAllowedBiomes((Biome[])Utils.combine(new Set[]{BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST), BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)}).stream().toArray((x$0) -> {
+                    return new Biome[x$0];
+                })));
             }
 
             if (ConfigGetter.getSettlement()) {
-                buildings.add((new BuildingSettlement(25, -3)).setAllowedBiomes((Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST),(Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS),(Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)).setAllowedBlocks(Blocks.GRASS));
+                buildings.add((new BuildingSettlement(25, -3)).setAllowedBiomes((Biome[])Utils.combine(new Set[]{BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST), BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)}).stream().toArray((x$0) -> {
+                    return new Biome[x$0];
+                })).setAllowedBlocks(new Block[]{Blocks.GRASS}));
             }
 
             if (ConfigGetter.getTank01()) {
-                buildings.add((new BuildingHelicopter(new ResourceLocation("sevendaystomine", "tank_01"), 300, -1)).setHasPedestal(false).setAllowedBiomes((Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST),(Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.SWAMP),(Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.SAVANNA),(Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.COLD),(Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS),(Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)));
+                buildings.add((new BuildingHelicopter(new ResourceLocation("sevendaystomine", "tank_01"), 300, -1)).setHasPedestal(false).setAllowedBiomes((Biome[])Utils.combine(new Set[]{BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST), BiomeDictionary.getBiomes(BiomeDictionary.Type.SWAMP), BiomeDictionary.getBiomes(BiomeDictionary.Type.SAVANNA), BiomeDictionary.getBiomes(BiomeDictionary.Type.COLD), BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)}).stream().toArray((x$0) -> {
+                    return new Biome[x$0];
+                })));
             }
 
             if (ConfigGetter.getYacht()) {
-                buildings.add((new Building(new ResourceLocation("sevendaystomine", "yacht"), 250, -4)).setAllowedBiomes(BiomeDictionary.getBiomes(BiomeDictionary.Type.OCEAN).toArray(new Biome[0])).setHasPedestal(false));
+                buildings.add((new Building(new ResourceLocation("sevendaystomine", "yacht"), 250, -4)).setAllowedBiomes((Biome[])Utils.combine(new Set[]{BiomeDictionary.getBiomes(BiomeDictionary.Type.OCEAN)}).stream().toArray((x$0) -> {
+                    return new Biome[x$0];
+                })).setHasPedestal(false));
             }
 
             if (ConfigGetter.getCampsite()) {
-                buildings.add((new Building(new ResourceLocation("sevendaystomine", "campsite"), 70, -3)).setPedestal(Blocks.STONE.getDefaultState()).setAllowedBiomes((Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS),(Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.SAVANNA)).setAllowedBlocks(Blocks.GRASS));
+                buildings.add((new Building(new ResourceLocation("sevendaystomine", "campsite"), 70, -3)).setPedestal(Blocks.STONE.getDefaultState()).setAllowedBiomes((Biome[])Utils.combine(new Set[]{BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomes(BiomeDictionary.Type.SAVANNA)}).stream().toArray((x$0) -> {
+                    return new Biome[x$0];
+                })).setAllowedBlocks(new Block[]{Blocks.GRASS}));
             }
 
             if (ConfigGetter.getRuins0()) {
-                buildings.add((new Building(new ResourceLocation("sevendaystomine", "ruins_0"), 150, -1)).setAllowedBiomes((Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST),(Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS),(Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)).setAllowedBlocks(Blocks.GRASS));
+                buildings.add((new Building(new ResourceLocation("sevendaystomine", "ruins_0"), 150, -1)).setAllowedBiomes((Biome[])Utils.combine(new Set[]{BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST), BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)}).stream().toArray((x$0) -> {
+                    return new Biome[x$0];
+                })).setAllowedBlocks(new Block[]{Blocks.GRASS}));
             }
 
             if (ConfigGetter.getRuins1()) {
-                buildings.add((new Building(new ResourceLocation("sevendaystomine", "ruins_1"), 200, -1)).setAllowedBiomes((Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST),(Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS),(Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)).setAllowedBlocks(Blocks.GRASS));
+                buildings.add((new Building(new ResourceLocation("sevendaystomine", "ruins_1"), 200, -1)).setAllowedBiomes((Biome[])Utils.combine(new Set[]{BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST), BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)}).stream().toArray((x$0) -> {
+                    return new Biome[x$0];
+                })).setAllowedBlocks(new Block[]{Blocks.GRASS}));
             }
 
             if (!ModConfig.worldGen.smallStructuresOnly) {
                 if (ConfigGetter.getAirport()) {
-                    buildings.add((new BuildingAirport(80)).setAllowedBiomes((Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST),(Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS),(Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)).setAllowedBlocks(Blocks.GRASS));
+                    buildings.add((new BuildingAirport(80)).setAllowedBiomes((Biome[])Utils.combine(new Set[]{BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST), BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)}).stream().toArray((x$0) -> {
+                        return new Biome[x$0];
+                    })).setAllowedBlocks(new Block[]{Blocks.GRASS}));
                 }
 
                 if (ConfigGetter.getAbandonedSettlementFarm()) {
-                    buildings.add((new BuildingSettlement(15, -3, new ResourceLocation("sevendaystomine", "abandoned_settlement_farm"), new ResourceLocation("sevendaystomine", "abandoned_settlement_houses"), new ResourceLocation("sevendaystomine", "abandoned_settlement_barracks"), new ResourceLocation("sevendaystomine", "abandoned_settlement_pub"))).setAllowedBiomes((Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST),(Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS),(Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)).setAllowedBlocks(Blocks.GRASS));
+                    buildings.add((new BuildingSettlement(15, -3, new ResourceLocation("sevendaystomine", "abandoned_settlement_farm"), new ResourceLocation("sevendaystomine", "abandoned_settlement_houses"), new ResourceLocation("sevendaystomine", "abandoned_settlement_barracks"), new ResourceLocation("sevendaystomine", "abandoned_settlement_pub"))).setAllowedBiomes((Biome[])Utils.combine(new Set[]{BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST), BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)}).stream().toArray((x$0) -> {
+                        return new Biome[x$0];
+                    })).setAllowedBlocks(new Block[]{Blocks.GRASS}));
                 }
 
                 if (ConfigGetter.getAirplaneTailDesert()) {
-                    buildings.add((new BuildingAirplane(40, -4, new ResourceLocation("sevendaystomine", "airplane_tail_desert"), new ResourceLocation("sevendaystomine", "airplane_right_wing_desert"), new ResourceLocation("sevendaystomine", "airplane_left_wing_desert"), new ResourceLocation("sevendaystomine", "airplane_front_desert"))).setAllowedBiomes(BiomeDictionary.getBiomes(BiomeDictionary.Type.DRY).toArray(new Biome[0])));
-                }
+                    buildings.add((new BuildingAirplane(40, -4, new ResourceLocation("sevendaystomine", "airplane_tail_desert"), new ResourceLocation("sevendaystomine", "airplane_right_wing_desert"), new ResourceLocation("sevendaystomine", "airplane_left_wing_desert"), new ResourceLocation("sevendaystomine", "airplane_front_desert"))).setAllowedBiomes((Biome[])Utils.combine(new Set[]{BiomeDictionary.getBiomes(BiomeDictionary.Type.DRY)}).stream().toArray((x$0) -> {
+                        return new Biome[x$0];
+                    })));                }
 
                 if (ConfigGetter.getAirplaneTail()) {
-                    buildings.add((new BuildingAirplane(40, -4, new ResourceLocation("sevendaystomine", "airplane_tail"), new ResourceLocation("sevendaystomine", "airplane_right_wing"), new ResourceLocation("sevendaystomine", "airplane_left_wing"), new ResourceLocation("sevendaystomine", "airplane_front"))).setAllowedBiomes((Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST),(Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS),(Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH),(Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.BEACH),(Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.COLD)));
+                    buildings.add((new BuildingAirplane(40, -4, new ResourceLocation("sevendaystomine", "airplane_tail"), new ResourceLocation("sevendaystomine", "airplane_right_wing"), new ResourceLocation("sevendaystomine", "airplane_left_wing"), new ResourceLocation("sevendaystomine", "airplane_front"))).setAllowedBiomes((Biome[])Utils.combine(new Set[]{BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST), BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH), BiomeDictionary.getBiomes(BiomeDictionary.Type.BEACH), BiomeDictionary.getBiomes(BiomeDictionary.Type.COLD)}).stream().toArray((x$0) -> {
+                        return new Biome[x$0];
+                    })));
                 }
 
                 if (ConfigGetter.getCargoShip()) {
-                    buildings.add((new BuildingCargoShip(60, -4)).setAllowedBiomes(BiomeDictionary.getBiomes(BiomeDictionary.Type.OCEAN).toArray(new Biome[0])));
+                    buildings.add((new BuildingCargoShip(60, -4)).setAllowedBiomes((Biome[])Utils.combine(new Set[]{BiomeDictionary.getBiomes(BiomeDictionary.Type.OCEAN)}).stream().toArray((x$0) -> {
+                        return new Biome[x$0];
+                    })));
                 }
 
                 if (ConfigGetter.getLargeBanditCamp()) {
-                    buildings.add((new BuildingLargeBanditCamp(20)).setAllowedBiomes((Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST),(Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS),(Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)).setAllowedBlocks(Blocks.GRASS));
+                    buildings.add((new BuildingLargeBanditCamp(20)).setAllowedBiomes((Biome[])Utils.combine(new Set[]{BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST), BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)}).stream().toArray((x$0) -> {
+                        return new Biome[x$0];
+                    })).setAllowedBlocks(new Block[]{Blocks.GRASS}));
                 }
 
                 if (ConfigGetter.getMilitaryBase()) {
-                    buildings.add((new BuildingMilitaryBase(20, -3)).setAllowedBiomes((Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST),(Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS),(Biome) BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)).setAllowedBlocks(Blocks.GRASS));
+                    buildings.add((new BuildingMilitaryBase(20, -3)).setAllowedBiomes((Biome[])Utils.combine(new Set[]{BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST), BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)}).stream().toArray((x$0) -> {
+                        return new Biome[x$0];
+                    })).setAllowedBlocks(new Block[]{Blocks.GRASS}));
                 }
             }
         }
