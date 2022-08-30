@@ -75,16 +75,12 @@ public class ConfigGetter extends ConfigHandler{
         return AIRDROP_SMOKE_TIME;
     }
 
-    public static boolean getAirdropRealisticFalling(){
-        return AIRDROP_REALISTIC_FALLING;
-    }
-
     public static boolean getAirdropSoundFXEnabled(){
         return AIRDROP_SOUND_FX;
     }
 
-    public static boolean getAirdropGlowingEnabled(){
-        return AIRDROP_GLOWING;
+    public static boolean getAirdropGlowingInAirEnabled(){
+        return AIRDROP_GLOWING_IN_AIR;
     }
 
     public static boolean getDisableVanillaBlocksAndItemsUsage(){
@@ -239,6 +235,10 @@ public class ConfigGetter extends ConfigHandler{
 
     public static boolean getTanIntegration() {
         return TAN_INTEGRATIONS;
+    }
+
+    public static boolean getAirdropGlowingOnGroundEnabled(){
+        return AIRDROP_GLOWING_ON_GROUND;
     }
 
 }
