@@ -1,5 +1,6 @@
 package github.xniter.dtmintegrations.mixin.sevendaystomine.item;
 
+import github.xniter.dtmintegrations.handlers.config.ConfigGetter;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
@@ -33,7 +34,9 @@ public class MixinItemAdvancedBandage extends ItemBandage {
                 }
 
                 entityplayer.removePotionEffect(Potions.bleeding);
-                entityplayer.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 200, 3));
+                if (ConfigGetter.getShouldAdvancedBandagesHeal()) {
+                    entityplayer.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, ConfigGetter.getAdvancedBandagesHealthDuration(), ConfigGetter.getAdvancedBandageHealthAmplifier()));
+                }
             }
         }
 

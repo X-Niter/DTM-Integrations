@@ -249,4 +249,28 @@ public class ConfigGetter extends ConfigHandler{
         return BLEEDING_AFFECT_DAMAGE_AMOUNT;
     }
 
+    public static boolean getShouldRegularBandagesHeal() {
+        return SHOULD_REGULAR_BANDAGES_HEAL;
+    }
+
+    public static int getRegularBandageHealthDuration() {
+        return REGULAR_BANDAGE_HEALTH_DURATION;
+    }
+
+    public static int getRegularBandageHealthAmplifier() {
+        return REGULAR_BANDAGE_HEALTH_AMPLIFIER;
+    }
+
+    public static boolean getShouldAdvancedBandagesHeal() {
+        return SHOULD_ADVANCED_BANDAGES_HEAL;
+    }
+
+    public static int getAdvancedBandagesHealthDuration() {
+        return ADVANCED_BANDAGE_HEALTH_DURATION;
+    }
+
+    public static int getAdvancedBandageHealthAmplifier() {
+        return ADVANCED_BANDAGE_HEALTH_AMPLIFIER;
+    }
+
 }

@@ -138,6 +138,18 @@ public class ConfigHandler {
 
     protected static int BLEEDING_AFFECT_DAMAGE_AMOUNT = 1;
 
+    protected static boolean SHOULD_REGULAR_BANDAGES_HEAL = false;
+
+    protected static int REGULAR_BANDAGE_HEALTH_DURATION = 100;
+
+    protected static int REGULAR_BANDAGE_HEALTH_AMPLIFIER = 1;
+
+    protected static boolean SHOULD_ADVANCED_BANDAGES_HEAL = true;
+
+    protected static int ADVANCED_BANDAGE_HEALTH_DURATION = 300;
+
+    protected static int ADVANCED_BANDAGE_HEALTH_AMPLIFIER = 3;
+
 
     public static void init(File file){
         config = new Configuration(file);
@@ -156,7 +168,12 @@ public class ConfigHandler {
         ALLOWED_DIM_GEN = config.get(category,"Allowed Dim Gen", ALLOWED_DIM_GEN, "Dimension ID's to allow seven days to mine generation").getIntList();
         BLEEDING_DAMAGE_CHANCE = config.getInt("Bleeding Damage Chance", category, 12, 2, 500, "The chance that Bleeding affect will damage you\nHigher numbers make the chance of being damaged less likely meaning that you take damage from bleeding less often.");
         BLEEDING_AFFECT_DAMAGE_AMOUNT = config.getInt("Bleeding Damage amount", category, 1, 1, 12, "The amount of damage taken from the Bleeding affect\nHigher numbers mean more damage!");
-
+        SHOULD_REGULAR_BANDAGES_HEAL = config.getBoolean("Regular Bandage heals player", category, false, "[DEFAULT: FALSE(Does not heal)]\nShould regular bandages heal a player or just remove the bleeding?");
+        REGULAR_BANDAGE_HEALTH_DURATION = config.getInt("Regular Bandage healing duration", category, 100, 1, 500, "The duration to heal the player when they use a Regular Bandage");
+        REGULAR_BANDAGE_HEALTH_AMPLIFIER = config.getInt("Regular Bandage healing amplifier", category, 1, 1, 3, "The healing effect amplifier for Regular Bandages\nThis is equivalent to Potion of Regeneration 1, 2, or 3");
+        SHOULD_ADVANCED_BANDAGES_HEAL = config.getBoolean("Advanced Bandages heal", category, true, "[DEFAULT: TRUE(Advanced Bandages do heal player)]\nShould Advanced bandages heal the player on top of removing the bleeding effect");
+        ADVANCED_BANDAGE_HEALTH_DURATION = config.getInt("Advanced Bandages healing duration", category, 300, 1, 1200, "The duration to heal the player when they use an Advanced Bandage");
+        ADVANCED_BANDAGE_HEALTH_AMPLIFIER = config.getInt("Advanced Bandages healing amplifier", category, 3, 1, 3, "The healing effect amplifier for Advanced Bandages\nThis is equivalent to Potion of Regeneration 1, 2, or 3");
 
 
         category = "Blood Moon & Horde control";
