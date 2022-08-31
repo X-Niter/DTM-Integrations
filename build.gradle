@@ -120,6 +120,9 @@ dependencies {
     // Tough As Nails
     deobfCompile "curse.maven:tough-as-nails-246391:2710969"
 
+    // Simple Difficulty
+    deobfCompile "curse.maven:simpledifficulty-360779:3613814"
+
 }
 
 task devJar(type: Jar) {

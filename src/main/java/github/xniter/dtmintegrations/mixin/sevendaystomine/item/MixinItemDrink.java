@@ -1,8 +1,9 @@
 package github.xniter.dtmintegrations.mixin.sevendaystomine.item;
 
-import github.xniter.dtmintegrations.handlers.ModGetter;
+import github.xniter.dtmintegrations.handlers.integrations.SimpleDifficulty;
+import github.xniter.dtmintegrations.utils.ModGetter;
 import github.xniter.dtmintegrations.handlers.config.ConfigGetter;
-import github.xniter.dtmintegrations.items.TANItemDrink;
+import github.xniter.dtmintegrations.handlers.integrations.ToughAsNails;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
@@ -53,17 +54,23 @@ public abstract class MixinItemDrink extends ItemFood {
 
             if (ConfigGetter.getTanIntegration()) {
                 if (ModGetter.isTANLoaded()) {
-                    new TANItemDrink(this.thirst, (float) this.stamina);
+                    new ToughAsNails(this.thirst, (float) this.stamina);
+                }
+            } else if (ConfigGetter.getSimpleDifficultyIntegration()) {
+                if (ModGetter.isSimpleDifficultyLoaded()) {
+                    new SimpleDifficulty(this.thirst, 0F, (float) this.stamina);
                 }
             } else {
                 if (ModConfig.players.thirstSystem) {
                     extendedPlayer.addThirst(this.thirst);
                 }
+
                 if (ModConfig.players.staminaSystem) {
                     extendedPlayer.addThirst(this.thirst);
                     extendedPlayer.addStamina(this.stamina);
                 }
             }
+
 
             player.removePotionEffect(Potions.thirst);
             if (this.getContainerItem() != null) {

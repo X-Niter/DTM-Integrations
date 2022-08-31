@@ -1,4 +1,4 @@
-package github.xniter.dtmintegrations.features;
+package github.xniter.dtmintegrations.handlers.events;
 
 import github.xniter.dtmintegrations.handlers.SoundHandler;
 import net.minecraft.client.audio.MovingSound;
@@ -9,13 +9,13 @@ import nuparu.sevendaystomine.entity.EntityAirdrop;
 import nuparu.sevendaystomine.util.MathUtils;
 
 @SideOnly(Side.CLIENT)
-public class AirdropEventSound extends MovingSound {
+public class AirdropSoundEvent extends MovingSound {
     private final EntityAirdrop airdrop;
     private float distance = 0.0F;
 
     public long time;
 
-    public AirdropEventSound(EntityAirdrop airdrop) {
+    public AirdropSoundEvent(EntityAirdrop airdrop) {
         super(SoundHandler.AIRDROP_EVENT, SoundCategory.AMBIENT);
         this.airdrop = airdrop;
         this.repeat = false;

@@ -1,4 +1,4 @@
-package github.xniter.dtmintegrations.items;
+package github.xniter.dtmintegrations.handlers.integrations;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -8,9 +8,9 @@ import toughasnails.api.stat.capability.IThirst;
 import toughasnails.api.thirst.ThirstHelper;
 import toughasnails.thirst.ThirstHandler;
 
-public class TANItemDrink {
+public class ToughAsNails {
 
-    public TANItemDrink(int thirst, float stamina) {
+    public ToughAsNails(int thirst, float stamina) {
         this.tanAddStats(thirst, stamina);
     }
 

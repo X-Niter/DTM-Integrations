@@ -35,13 +35,6 @@ public class ConfigGetter extends ConfigHandler{
         return FOCUSED_WOLFHORDE;
     }
 
-    public static boolean getForcefulFocusedBloodMoon(){
-        return FORCEFUL_FOCUSED_BLOODMOON;
-    }
-
-    public static boolean getForcefulFocusedWolfHorde(){
-        return FORCEFUL_FOCUSED_WOLFHORDE;
-    }
     public static boolean getUseLangConfig(){
         return USE_LANG_CONFIG;
     }
@@ -278,6 +271,10 @@ public class ConfigGetter extends ConfigHandler{
 
     public static List<String> getAllowedBloodMoonSpawnList(){
         return Arrays.asList(ALLOWED_MOBS_DURING_BLOODMOON);
+    }
+
+    public static boolean getSimpleDifficultyIntegration() {
+        return SIMPLE_DIFFICULTY_INTEGRATION;
     }
 
 }

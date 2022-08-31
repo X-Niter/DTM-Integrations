@@ -1,6 +1,6 @@
 package github.xniter.dtmintegrations.mixin.sevendaystomine.crafting.forge;
 
-import github.xniter.dtmintegrations.utils.EnumMatWrapper;
+import github.xniter.dtmintegrations.utils.modconstants.EnumMatWrapper;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;

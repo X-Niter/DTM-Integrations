@@ -1,6 +1,7 @@
 package github.xniter.dtmintegrations.handlers;
 
 import com.google.common.collect.ImmutableList;
+import github.xniter.dtmintegrations.utils.ModGetter;
 import zone.rong.mixinbooter.ILateMixinLoader;
 
 import java.util.List;

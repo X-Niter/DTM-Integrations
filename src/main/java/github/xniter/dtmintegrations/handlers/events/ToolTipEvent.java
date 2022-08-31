@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class ItemToolTipEvent extends ResourceBoolArrayHandler {
+public class ToolTipEvent extends ResourceBoolArrayHandler {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onTooltipCreation(ItemTooltipEvent event) {
 
