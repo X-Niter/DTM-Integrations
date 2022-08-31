@@ -1,4 +1,4 @@
-package github.xniter.dtmintegrations.utils;
+package github.xniter.dtmintegrations.utils.modconstants;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

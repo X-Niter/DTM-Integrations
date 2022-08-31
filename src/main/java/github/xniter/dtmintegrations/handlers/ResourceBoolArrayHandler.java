@@ -2,7 +2,7 @@ package github.xniter.dtmintegrations.handlers;
 
 import github.xniter.dtmintegrations.handlers.config.ConfigGetter;
 import github.xniter.dtmintegrations.handlers.config.ConfigHandler;
-import github.xniter.dtmintegrations.utils.EnumDisabledVanilla;
+import github.xniter.dtmintegrations.utils.modconstants.EnumDisabledVanilla;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.item.ItemStack;

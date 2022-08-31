@@ -1,4 +1,4 @@
-package github.xniter.dtmintegrations.utils;
+package github.xniter.dtmintegrations.utils.modconstants;
 
 import nuparu.sevendaystomine.item.EnumMaterial;
 

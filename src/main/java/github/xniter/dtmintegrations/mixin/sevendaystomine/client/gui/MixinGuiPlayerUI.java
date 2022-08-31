@@ -78,8 +78,8 @@ public class MixinGuiPlayerUI {
             int y = (int)(height * pos.getY()) + pos.getYOffset() + (pos.isTop() && showFuel ? 10 : 0);
             if (!player.isCreative() && !player.isSpectator() && mc.playerController.shouldDrawHUD()) {
                 IExtendedPlayer extendedPlayer = CapabilityHelper.getExtendedPlayer(player);
-                if (!ConfigGetter.getTanIntegration()) {
-                    DTMIntegrations.LOG.info("TAN Integration is disabled, utilizing 7DTM Thirst & Stamina system");
+                if (!ConfigGetter.getTanIntegration() && !ConfigGetter.getSimpleDifficultyIntegration()) {
+
                     if (ModConfig.players.thirstSystem) {
                         mc.ingameGUI.drawTexturedModalRect(x + 1, y - 9, 0, player.isPotionActive(Potions.dysentery) ? 29 : 8, (int) Math.floor((double) ((float) extendedPlayer.getThirst() / (10.0F * ((float) extendedPlayer.getMaximumThirst() / 780.0F)))), 6);
                         mc.ingameGUI.drawTexturedModalRect(x, y - 10, 0, 0, 81, 8);

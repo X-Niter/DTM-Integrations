@@ -4,13 +4,12 @@ import github.xniter.dtmintegrations.handlers.ResourceBoolArrayHandler;
 import github.xniter.dtmintegrations.handlers.config.ConfigGetter;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class HoeEvent extends ResourceBoolArrayHandler {
+public class UseHoeEvent extends ResourceBoolArrayHandler {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public void onHoeUse(UseHoeEvent event) {
+    public void onHoeUse(net.minecraftforge.event.entity.player.UseHoeEvent event) {
         EntityPlayer player = event.getEntityPlayer();
         ItemStack mainHand = player.getHeldItemMainhand();
 

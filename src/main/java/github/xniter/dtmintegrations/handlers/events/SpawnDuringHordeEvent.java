@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import nuparu.sevendaystomine.util.Utils;
 
-public class HordeSpawnEvent extends ResourceBoolArrayHandler {
+public class SpawnDuringHordeEvent extends ResourceBoolArrayHandler {
 
     @SubscribeEvent
     public void entityHordeSpawnEvent(LivingSpawnEvent event) {

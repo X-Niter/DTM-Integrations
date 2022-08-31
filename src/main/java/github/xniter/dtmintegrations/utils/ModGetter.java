@@ -1,4 +1,4 @@
-package github.xniter.dtmintegrations.handlers;
+package github.xniter.dtmintegrations.utils;
 
 import net.minecraftforge.fml.common.Loader;
 
@@ -12,15 +12,7 @@ public class ModGetter {
     }
 
     public static boolean isTANLoaded() {
-        try{
-            if (Loader.isModLoaded("toughasnails")) {
-                return true;
-            }
-
-        } catch (NoClassDefFoundError error) {
-            return false;
-        }
-        return false;
+        return Loader.isModLoaded("toughasnails");
     }
 
     public static boolean isLootrLoaded() {
@@ -37,5 +29,9 @@ public class ModGetter {
 
     public static boolean isSevenDaysToMineLoaded() {
         return Loader.isModLoaded("sevendaystomine");
+    }
+
+    public static boolean isSimpleDifficultyLoaded() {
+        return Loader.isModLoaded("simpledifficulty");
     }
 }

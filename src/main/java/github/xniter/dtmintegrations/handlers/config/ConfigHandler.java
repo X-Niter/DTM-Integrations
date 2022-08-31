@@ -192,6 +192,8 @@ public class ConfigHandler {
             "sevendaystomine:soldier"
     };
 
+    protected static boolean SIMPLE_DIFFICULTY_INTEGRATION = false;
+
 
     public static void init(File file){
         config = new Configuration(file);
@@ -286,7 +288,8 @@ public class ConfigHandler {
 
         category = "Integrations";
         config.addCustomCategoryComment(category,"Mod Integrations");
-        TAN_INTEGRATIONS = config.getBoolean("TAN Integrations", category, false, "enable/disable Tough As Nails Integration\nThis enabled will turn off 7DTM thirst and stamina and use TAN's system instead");
+        TAN_INTEGRATIONS = config.getBoolean("TAN Integrations", category, false, "enable/disable Tough As Nails Integration\nIf enabled/true it will turn off 7DTM thirst and stamina and use TAN's system instead");
+        SIMPLE_DIFFICULTY_INTEGRATION = config.getBoolean("Simple Difficulty Integrations", category, false, "enable/disable Simple Difficulty Integration\nIf enabled/true it will turn off 7DTM thirst and stamina and use Simple Difficulty's system instead");
 
 
         category = "Language";
