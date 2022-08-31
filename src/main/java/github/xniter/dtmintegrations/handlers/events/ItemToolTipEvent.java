@@ -1,6 +1,6 @@
 package github.xniter.dtmintegrations.handlers.events;
 
-import github.xniter.dtmintegrations.handlers.AbstractVanillaHandler;
+import github.xniter.dtmintegrations.handlers.ResourceBoolArrayHandler;
 import github.xniter.dtmintegrations.handlers.config.ConfigGetter;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.text.TextFormatting;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class ItemToolTipEvent extends AbstractVanillaHandler {
+public class ItemToolTipEvent extends ResourceBoolArrayHandler {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onTooltipCreation(ItemTooltipEvent event) {
 

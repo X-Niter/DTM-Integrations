@@ -3,6 +3,9 @@ package github.xniter.dtmintegrations.handlers.config;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import it.unimi.dsi.fastutil.ints.IntSet;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class ConfigGetter extends ConfigHandler{
     public static boolean getForgeOpt(){
         return FORGE_OPT;
@@ -271,6 +274,10 @@ public class ConfigGetter extends ConfigHandler{
 
     public static int getAdvancedBandageHealthAmplifier() {
         return ADVANCED_BANDAGE_HEALTH_AMPLIFIER;
+    }
+
+    public static List<String> getAllowedBloodMoonSpawnList(){
+        return Arrays.asList(ALLOWED_MOBS_DURING_BLOODMOON);
     }
 
 }

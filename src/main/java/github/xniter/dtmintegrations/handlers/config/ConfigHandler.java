@@ -29,10 +29,6 @@ public class ConfigHandler {
 
     protected static boolean FOCUSED_WOLFHORDE = true;
 
-    protected static boolean FORCEFUL_FOCUSED_BLOODMOON = false;
-
-    protected static boolean FORCEFUL_FOCUSED_WOLFHORDE = false;
-
     protected static boolean USE_LANG_CONFIG = true;
 
     protected static String AIRDROP_DESPAWNED_MESSAGE = "Airdrop in world %1$s, around X:%2$s Y:%3$s Z:%4$s has de-spawned!";
@@ -150,6 +146,52 @@ public class ConfigHandler {
 
     protected static int ADVANCED_BANDAGE_HEALTH_AMPLIFIER = 3;
 
+    public static String[] ALLOWED_MOBS_DURING_BLOODMOON = new String[]{
+            "sevendaystomine:burnt_zombie",
+            "sevendaystomine:frigid_hunter",
+            "sevendaystomine:frostbitten_worker",
+            "sevendaystomine:frozen_lumberjack",
+            "sevendaystomine:zombie_soldier",
+            "sevendaystomine:survivor",
+            "sevendaystomine:bloated_zombie",
+            "sevendaystomine:infected_survivor",
+            "sevendaystomine:spider_zombie",
+            "sevendaystomine:plagued_nurse",
+            "sevendaystomine:blind_zombie",
+            "sevendaystomine:zombie_crawler",
+            "sevendaystomine:bandit",
+            "sevendaystomine:zombie_policeman",
+            "sevendaystomine:zombie_wolf",
+            "sevendaystomine:zombie_pig",
+            "sevendaystomine:soldier",
+            "sevendaystomine:zombie_miner",
+            "sevendaystomine:feral_zombie",
+            "sevendaystomine:soldier"
+    };
+
+    public static String[] ALLOWED_MOBS_DURING_WOLFHORDE = new String[]{
+            "sevendaystomine:burnt_zombie",
+            "sevendaystomine:frigid_hunter",
+            "sevendaystomine:frostbitten_worker",
+            "sevendaystomine:frozen_lumberjack",
+            "sevendaystomine:zombie_soldier",
+            "sevendaystomine:survivor",
+            "sevendaystomine:bloated_zombie",
+            "sevendaystomine:infected_survivor",
+            "sevendaystomine:spider_zombie",
+            "sevendaystomine:plagued_nurse",
+            "sevendaystomine:blind_zombie",
+            "sevendaystomine:zombie_crawler",
+            "sevendaystomine:bandit",
+            "sevendaystomine:zombie_policeman",
+            "sevendaystomine:zombie_wolf",
+            "sevendaystomine:zombie_pig",
+            "sevendaystomine:soldier",
+            "sevendaystomine:zombie_miner",
+            "sevendaystomine:feral_zombie",
+            "sevendaystomine:soldier"
+    };
+
 
     public static void init(File file){
         config = new Configuration(file);
@@ -178,10 +220,10 @@ public class ConfigHandler {
 
         category = "Blood Moon & Horde control";
         config.addCustomCategoryComment(category, "Options for Blood Moon and WolfHorde");
-        FOCUSED_BLOODMOON = config.getBoolean("Focused BloodMoon", category, true, "Attempts to block all spawns during a blood moon that are not seven days to mine zombies");
-        FOCUSED_WOLFHORDE = config.getBoolean("Focused WolfHorde", category, true, "Attempts to block all spawns during a wolf horde that are not seven days to mine entities");
-        FORCEFUL_FOCUSED_BLOODMOON = config.getBoolean("Forceful Focused BloodMoon", category, false, "During a BloodMoon, ALL mobs that are not apart of the BloodMoon event will be removed forcefully from existence until the event is over");
-        FORCEFUL_FOCUSED_WOLFHORDE = config.getBoolean("Forceful Focused WolfHorde", category, false, "During a WolfHorde, ALL mobs that are not apart of the WolfHorde event will be removed forcefully from existence until the event is over");
+        FOCUSED_BLOODMOON = config.getBoolean("Custom BloodMoon", category, true, "Blocks all spawns during a Blood Moon that are not listed in the #Allowed Mob Spawns during Blood Moon List");
+        FOCUSED_WOLFHORDE = config.getBoolean("Custom WolfHorde", category, true, "Blocks all spawns during a Wolf Horde that are not listed in the #Allowed Mob Spawns during Wolf Horde List");
+        ALLOWED_MOBS_DURING_BLOODMOON = config.getStringList("Allowed Mob Spawns during Blood Moon", category, ALLOWED_MOBS_DURING_BLOODMOON, "[Requires "+"\"ModID:EntityName\"]\nList of allowed mobs during a Blood Moon");
+        ALLOWED_MOBS_DURING_WOLFHORDE = config.getStringList("Allowed Mob Spawns during Wolf Horde", category, ALLOWED_MOBS_DURING_WOLFHORDE, "[Requires "+"\"ModID:EntityName\"]\nList of allowed mobs during a Wolf Horde");
 
 
         category = "Blocks & Items";
