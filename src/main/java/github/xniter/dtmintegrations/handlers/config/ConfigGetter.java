@@ -3,9 +3,6 @@ package github.xniter.dtmintegrations.handlers.config;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import it.unimi.dsi.fastutil.ints.IntSet;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class ConfigGetter extends ConfigHandler{
     public static boolean getForgeOpt(){
         return FORGE_OPT;
@@ -33,6 +30,10 @@ public class ConfigGetter extends ConfigHandler{
 
     public static boolean getFocusedWolfHorde(){
         return FOCUSED_WOLFHORDE;
+    }
+
+    public static boolean getFocusedGenericHorde(){
+        return FOCUSED_GENERIC_HORDE;
     }
 
     public static boolean getUseLangConfig(){
@@ -269,12 +270,28 @@ public class ConfigGetter extends ConfigHandler{
         return ADVANCED_BANDAGE_HEALTH_AMPLIFIER;
     }
 
-    public static List<String> getAllowedBloodMoonSpawnList(){
-        return Arrays.asList(ALLOWED_MOBS_DURING_BLOODMOON);
-    }
-
     public static boolean getSimpleDifficultyIntegration() {
         return SIMPLE_DIFFICULTY_INTEGRATION;
+    }
+
+    public static boolean getAirdropChatMessageWorldLocation() {
+        return AIRDROP_CHAT_MESSAGE_WORLD_LOCATION;
+    }
+
+    public static boolean getAirdropChatMessageWorldName() {
+        return AIRDROP_CHAT_MESSAGE_WORLD_NAME;
+    }
+
+    public static boolean getAirdropChatMessageWorldID() {
+        return AIRDROP_CHAT_MESSAGE_WORLD_ID;
+    }
+
+    public static String getAirdropMessage(){
+        return AIRDROP_MESSAGE;
+    }
+
+    public static String getAirdropOldSchoolMessage(){
+        return AIRDROP_OLDSCHOOL_MESSAGE;
     }
 
 }

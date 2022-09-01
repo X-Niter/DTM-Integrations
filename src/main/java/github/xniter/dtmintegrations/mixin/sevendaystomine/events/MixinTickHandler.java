@@ -77,14 +77,55 @@ public class MixinTickHandler {
                                 world.spawnEntity(airDrop);
 
                                 Random rand = new Random();
-
+                                // server.getPlayerList().sendMessage
                                 airDrop.setPosition(pos.getX() + rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation()), pos.getY(), pos.getZ() + rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation()));
 
                                 if (ConfigGetter.getAirdropChatMessageEnabled()) {
-                                    if (ConfigGetter.getAirdropChatMessageExactLocation()) {
-                                        server.getPlayerList().sendMessage(new TextComponentTranslation("airdrop.message", airDrop.getEntityWorld().getWorldInfo().getWorldName(), pos.getX(), pos.getZ()));
+                                    if (ConfigGetter.getAirdropChatMessageWorldLocation()) {
+                                        if (ConfigGetter.getAirdropChatMessageWorldName()) {
+                                            if (ConfigGetter.getAirdropChatMessageExactLocation()) {
+                                                if (ConfigGetter.getUseLangConfig()) {
+                                                    server.getPlayerList().sendMessage(new TextComponentTranslation(ConfigGetter.getAirdropMessage(), world.getWorldInfo().getWorldName(), pos.getX(), pos.getZ()));
+                                                } else {
+                                                    server.getPlayerList().sendMessage(new TextComponentTranslation("airdrop.message", world.getWorldInfo().getWorldName(), pos.getX(), pos.getZ()));
+                                                }
+                                            } else {
+                                                if (ConfigGetter.getUseLangConfig()) {
+                                                    server.getPlayerList().sendMessage(new TextComponentTranslation(ConfigGetter.getAirdropMessage(), world.getWorldInfo().getWorldName(), pos.getX() + rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation()) - rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation()), pos.getZ() + rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation()) - rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation())));
+                                                } else {
+                                                    server.getPlayerList().sendMessage(new TextComponentTranslation("airdrop.message", world.getWorldInfo().getWorldName(), pos.getX() + rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation()) - rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation()), pos.getZ() + rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation()) - rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation())));
+                                                }
+
+                                            }
+                                        } else if (ConfigGetter.getAirdropChatMessageWorldID()) {
+                                            if (ConfigGetter.getAirdropChatMessageExactLocation()) {
+                                                if (ConfigGetter.getUseLangConfig()) {
+                                                    server.getPlayerList().sendMessage(new TextComponentTranslation(ConfigGetter.getAirdropMessage(), String.valueOf(world.provider.getDimension()), pos.getX(), pos.getZ()));
+                                                } else {
+                                                    server.getPlayerList().sendMessage(new TextComponentTranslation("airdrop.message", String.valueOf(world.provider.getDimension()), pos.getX(), pos.getZ()));
+                                                }
+                                            } else {
+                                                if (ConfigGetter.getUseLangConfig()) {
+                                                    server.getPlayerList().sendMessage(new TextComponentTranslation(ConfigGetter.getAirdropMessage(), String.valueOf(world.provider.getDimension()), pos.getX() + rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation()) - rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation()), pos.getZ() + rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation()) - rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation())));
+                                                } else {
+                                                    server.getPlayerList().sendMessage(new TextComponentTranslation("airdrop.message", String.valueOf(world.provider.getDimension()), pos.getX() + rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation()) - rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation()), pos.getZ() + rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation()) - rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation())));
+                                                }
+                                            }
+                                        }
                                     } else {
-                                        server.getPlayerList().sendMessage(new TextComponentTranslation("airdrop.message", airDrop.getEntityWorld().getWorldInfo().getWorldName(), pos.getX() + rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation()) - rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation()), pos.getZ() + rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation()) - rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation())));
+                                        if (ConfigGetter.getAirdropChatMessageExactLocation()) {
+                                            if (ConfigGetter.getUseLangConfig()) {
+                                                server.getPlayerList().sendMessage(new TextComponentTranslation(ConfigGetter.getAirdropOldSchoolMessage(), pos.getX(), pos.getZ()));
+                                            } else {
+                                                server.getPlayerList().sendMessage(new TextComponentTranslation("airdrop.message", pos.getX(), pos.getZ()));
+                                            }
+                                        } else {
+                                            if (ConfigGetter.getUseLangConfig()) {
+                                                server.getPlayerList().sendMessage(new TextComponentTranslation(ConfigGetter.getAirdropOldSchoolMessage(), pos.getX() + rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation()) - rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation()), pos.getZ() + rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation()) - rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation())));
+                                            } else {
+                                                server.getPlayerList().sendMessage(new TextComponentTranslation("airdrop.message", pos.getX() + rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation()) - rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation()), pos.getZ() + rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation()) - rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation())));
+                                            }
+                                        }
                                     }
                                 }
                             }

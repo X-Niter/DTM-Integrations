@@ -17,6 +17,8 @@ public class ResourceBoolArrayHandler {
 
     private Set<String> allowedWolfHordeMobs = new HashSet<>();
 
+    private Set<String> allowedGenericHordeMobs = new HashSet<>();
+
     public ResourceBoolArrayHandler() {
         updateFields();
     }
@@ -35,6 +37,9 @@ public class ResourceBoolArrayHandler {
 
         List<String> awhlist = Arrays.asList(ConfigHandler.ALLOWED_MOBS_DURING_WOLFHORDE);
         allowedWolfHordeMobs = awhlist.stream().filter(Objects::nonNull).collect(Collectors.toSet());
+
+        List<String> aghlist = Arrays.asList(ConfigHandler.ALLOWED_MOBS_DURING_GENERIC_HORDE);
+        allowedGenericHordeMobs = aghlist.stream().filter(Objects::nonNull).collect(Collectors.toSet());
     }
 
     protected boolean isDisabledItem(ItemStack stack) {
@@ -50,5 +55,10 @@ public class ResourceBoolArrayHandler {
     protected boolean isAllowedWolfHordeSpawn(Entity entity) {
         ResourceLocation mobResource = EntityList.getKey(entity.getClass());
         return allowedWolfHordeMobs.contains(mobResource.getNamespace().toLowerCase());
+    }
+
+    protected boolean isAllowedGenericHordeSpawn(Entity entity) {
+        ResourceLocation mobResource = EntityList.getKey(entity.getClass());
+        return allowedGenericHordeMobs.contains(mobResource.getNamespace().toLowerCase());
     }
 }

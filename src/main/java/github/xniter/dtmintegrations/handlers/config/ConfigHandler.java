@@ -29,6 +29,8 @@ public class ConfigHandler {
 
     protected static boolean FOCUSED_WOLFHORDE = true;
 
+    protected static boolean FOCUSED_GENERIC_HORDE = true;
+
     protected static boolean USE_LANG_CONFIG = true;
 
     protected static String AIRDROP_DESPAWNED_MESSAGE = "Airdrop in world %1$s, around X:%2$s Y:%3$s Z:%4$s has de-spawned!";
@@ -147,52 +149,85 @@ public class ConfigHandler {
     protected static int ADVANCED_BANDAGE_HEALTH_AMPLIFIER = 3;
 
     public static String[] ALLOWED_MOBS_DURING_BLOODMOON = new String[]{
-            "sevendaystomine:burnt_zombie-dtm",
-            "sevendaystomine:frigid_hunter-dtm",
-            "sevendaystomine:frostbitten_worker-dtm",
-            "sevendaystomine:frozen_lumberjack-dtm",
-            "sevendaystomine:zombie_soldier-dtm",
-            "sevendaystomine:survivor-dtm",
-            "sevendaystomine:bloated_zombie-dtm",
-            "sevendaystomine:infected_survivor-dtm",
-            "sevendaystomine:spider_zombie-dtm",
-            "sevendaystomine:plagued_nurse-dtm",
-            "sevendaystomine:blind_zombie-dtm",
-            "sevendaystomine:zombie_crawler-dtm",
-            "sevendaystomine:bandit-dtm",
-            "sevendaystomine:zombie_policeman-dtm",
-            "sevendaystomine:zombie_wolf-dtm",
-            "sevendaystomine:zombie_pig-dtm",
-            "sevendaystomine:soldier-dtm",
-            "sevendaystomine:zombie_miner-dtm",
-            "sevendaystomine:feral_zombie-dtm",
+            "sevendaystomine:burnt_zombie",
+            "sevendaystomine:frigid_hunter",
+            "sevendaystomine:frostbitten_worker",
+            "sevendaystomine:frozen_lumberjack",
+            "sevendaystomine:zombie_soldier",
+            "sevendaystomine:survivor",
+            "sevendaystomine:bloated_zombie",
+            "sevendaystomine:infected_survivor",
+            "sevendaystomine:spider_zombie",
+            "sevendaystomine:plagued_nurse",
+            "sevendaystomine:blind_zombie",
+            "sevendaystomine:zombie_crawler",
+            "sevendaystomine:bandit",
+            "sevendaystomine:zombie_policeman",
+            "sevendaystomine:zombie_wolf",
+            "sevendaystomine:zombie_pig",
+            "sevendaystomine:soldier",
+            "sevendaystomine:zombie_miner",
+            "sevendaystomine:feral_zombie",
             "sevendaystomine:soldier"
     };
 
     public static String[] ALLOWED_MOBS_DURING_WOLFHORDE = new String[]{
-            "sevendaystomine:burnt_zombie-dtm",
-            "sevendaystomine:frigid_hunter-dtm",
-            "sevendaystomine:frostbitten_worker-dtm",
-            "sevendaystomine:frozen_lumberjack-dtm",
-            "sevendaystomine:zombie_soldier-dtm",
-            "sevendaystomine:survivor-dtm",
-            "sevendaystomine:bloated_zombie-dtm",
-            "sevendaystomine:infected_survivor-dtm",
-            "sevendaystomine:spider_zombie-dtm",
-            "sevendaystomine:plagued_nurse-dtm",
-            "sevendaystomine:blind_zombie-dtm",
-            "sevendaystomine:zombie_crawler-dtm",
-            "sevendaystomine:bandit-dtm",
-            "sevendaystomine:zombie_policeman-dtm",
-            "sevendaystomine:zombie_wolf-dtm",
-            "sevendaystomine:zombie_pig-dtm",
-            "sevendaystomine:soldier-dtm",
-            "sevendaystomine:zombie_miner-dtm",
-            "sevendaystomine:feral_zombie-dtm",
-            "sevendaystomine:soldier-dtm"
+            "sevendaystomine:burnt_zombie",
+            "sevendaystomine:frigid_hunter",
+            "sevendaystomine:frostbitten_worker",
+            "sevendaystomine:frozen_lumberjack",
+            "sevendaystomine:zombie_soldier",
+            "sevendaystomine:survivor",
+            "sevendaystomine:bloated_zombie",
+            "sevendaystomine:infected_survivor",
+            "sevendaystomine:spider_zombie",
+            "sevendaystomine:plagued_nurse",
+            "sevendaystomine:blind_zombie",
+            "sevendaystomine:zombie_crawler",
+            "sevendaystomine:bandit",
+            "sevendaystomine:zombie_policeman",
+            "sevendaystomine:zombie_wolf",
+            "sevendaystomine:zombie_pig",
+            "sevendaystomine:soldier",
+            "sevendaystomine:zombie_miner",
+            "sevendaystomine:feral_zombie",
+            "sevendaystomine:soldier"
+    };
+
+    public static String[] ALLOWED_MOBS_DURING_GENERIC_HORDE = new String[]{
+            "sevendaystomine:burnt_zombie",
+            "sevendaystomine:frigid_hunter",
+            "sevendaystomine:frostbitten_worker",
+            "sevendaystomine:frozen_lumberjack",
+            "sevendaystomine:zombie_soldier",
+            "sevendaystomine:survivor",
+            "sevendaystomine:bloated_zombie",
+            "sevendaystomine:infected_survivor",
+            "sevendaystomine:spider_zombie",
+            "sevendaystomine:plagued_nurse",
+            "sevendaystomine:blind_zombie",
+            "sevendaystomine:zombie_crawler",
+            "sevendaystomine:bandit",
+            "sevendaystomine:zombie_policeman",
+            "sevendaystomine:zombie_wolf",
+            "sevendaystomine:zombie_pig",
+            "sevendaystomine:soldier",
+            "sevendaystomine:zombie_miner",
+            "sevendaystomine:feral_zombie",
+            "sevendaystomine:soldier"
     };
 
     protected static boolean SIMPLE_DIFFICULTY_INTEGRATION = false;
+
+    protected static boolean AIRDROP_CHAT_MESSAGE_WORLD_LOCATION = false;
+
+    protected static boolean AIRDROP_CHAT_MESSAGE_WORLD_NAME = false;
+
+    protected static boolean AIRDROP_CHAT_MESSAGE_WORLD_ID = true;
+
+    protected static String AIRDROP_MESSAGE = "Airdrop has been dropped in world: %1$s, around X:%1$s Z:%2$s.";
+
+    protected static String AIRDROP_OLDSCHOOL_MESSAGE = "Airdrop has been dropped around X:%1$s Z:%2$s.";
 
 
     public static void init(File file){
@@ -224,8 +259,10 @@ public class ConfigHandler {
         config.addCustomCategoryComment(category, "Options for Blood Moon and WolfHorde");
         FOCUSED_BLOODMOON = config.getBoolean("Custom BloodMoon", category, true, "Blocks all spawns during a Blood Moon that are not listed in the #Allowed Mob Spawns during Blood Moon List");
         FOCUSED_WOLFHORDE = config.getBoolean("Custom WolfHorde", category, true, "Blocks all spawns during a Wolf Horde that are not listed in the #Allowed Mob Spawns during Wolf Horde List");
+        FOCUSED_GENERIC_HORDE = config.getBoolean("Custom Generic Horde", category, true, "Blocks all spawns during a Generic Horde that are not listed in the #Allowed Mob Spawns during Generic Horde List");
         ALLOWED_MOBS_DURING_BLOODMOON = config.getStringList("Allowed Mob Spawns during Blood Moon", category, ALLOWED_MOBS_DURING_BLOODMOON, "[Requires "+"\"ModID:EntityName\"]\nList of allowed mobs during a Blood Moon");
         ALLOWED_MOBS_DURING_WOLFHORDE = config.getStringList("Allowed Mob Spawns during Wolf Horde", category, ALLOWED_MOBS_DURING_WOLFHORDE, "[Requires "+"\"ModID:EntityName\"]\nList of allowed mobs during a Wolf Horde");
+        ALLOWED_MOBS_DURING_GENERIC_HORDE = config.getStringList("Allowed Mob Spawns during Generic Horde", category, ALLOWED_MOBS_DURING_GENERIC_HORDE, "[Requires "+"\"ModID:EntityName\"]\nList of allowed mobs during a Generic Horde");
 
 
         category = "Blocks & Items";
@@ -241,6 +278,11 @@ public class ConfigHandler {
         config.addCustomCategoryComment(category, "More in depth, fine controls over Airdrops");
         AIRDROP_MAX_HEIGHT = config.getInt("Max Drop Height", category, 256, 50, 256, "[DEFAULT: 256]\nThe max height the Airdrop can drop from");
         AIRDROP_CHAT_MESSAGE_ENABLED = config.getBoolean("Chat Notification", category, true, "[DEFAULT: TRUE(Enabled)]\nEnable/Disable Airdrop chat notifications");
+        AIRDROP_CHAT_MESSAGE_WORLD_LOCATION = config.getBoolean("Notification world Location", category, false, "[DEFAULT: FALSE(disabled)]\nIf TRUE, world location will be added in the Airdrop chat notification");
+        AIRDROP_CHAT_MESSAGE_WORLD_NAME = config.getBoolean("Notification world Name", category, false, "[DEFAULT: FALSE(Does not use world name)]\nIf TRUE, the World Name will be used when world location is enabled");
+        AIRDROP_CHAT_MESSAGE_WORLD_ID = config.getBoolean("Notification world ID", category, true, "[DEFAULT: TRUE(Uses world ID)]\nIf TRUE, the World ID will be used when world location is enabled");
+
+
         AIRDROP_CHAT_MESSAGE_EXACT_LOCATION = config.getBoolean("Notification Exact Location", category, false, "[DEFAULT: FALSE(disabled)]\nIf FALSE, then the below general location will be used\nDoes the Airdrop message in chat give the exact location of the Airdrop?");
         AIRDROP_CHAT_MESSAGE_GENERAL_LOCATION = config.getInt("Notification General Location", category, 32, 1, 256, "[DEFAULT 32 Block Range]\nThe range of the general location given in chat\nThis range controls how RANDOMLY far off the location given in chat can be, so 32 would mean that Airdrop locations given in chat is within 32 blocks of range from the actual Airdrop location\nThe equation used is [Pos x + random number between 0 and (Number you set) - random number between 0 and (Number you set)], the same equation applies to the z coords as well, x was just used for the showing of equation.");
         AIRDROP_DISTANCE_FROM_PLAYER = config.getInt("Drop Distance From Player", category, 128, 16, 256, "[DEFAULT: 128 Blocks]\nThe max range in blocks that Airdrops can be dropped around a player");
@@ -300,6 +342,10 @@ public class ConfigHandler {
         TOOLTIP_NOTUSABLE = config.getString("Tooltip Not Usable", category, "%sThis item is not usable by players!%s", "Tooltip shown on all disabled 7DTM items/blocks");
         TOOLTIP_CRAFTINGONLY = config.getString("Tooltip Crafting Only", category, "%sThis can only be used for crafting.%s" , "Tooltip shown on 7DTM Item/blocks that have the usage disabled");
         TOOLTIP_RECIPE_DISABLED = config.getString("Tooltip Recipe Disabled", category, "%sThis recipe is disabled!%s", "Tooltip shown on 7DTM Item/blocks that have the recipe disabled");
+        AIRDROP_MESSAGE = config.getString("Airdrop Spawned/Dropped Message", category, "Airdrop has been dropped in world: %1$s, around X:%2$s Z:%4$s!", "The message sent to chat when the AirDrop spawns/dops.");
+        AIRDROP_OLDSCHOOL_MESSAGE = config.getString("Airdrop Original 7DTM Message", category, "Airdrop has been dropped around X:%2$s Z:%4$s!", "7DTM Original message sent to chat when the AirDrop spawn/drops.");
+
+
 
         config.save();
     }
