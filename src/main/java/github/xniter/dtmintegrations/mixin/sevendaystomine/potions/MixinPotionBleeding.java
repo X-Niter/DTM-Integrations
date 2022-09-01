@@ -4,6 +4,7 @@ import github.xniter.dtmintegrations.handlers.config.ConfigGetter;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.EnumDifficulty;
 import nuparu.sevendaystomine.SevenDaysToMine;
+import nuparu.sevendaystomine.potions.PotionBase;
 import nuparu.sevendaystomine.potions.PotionBleeding;
 import nuparu.sevendaystomine.util.DamageSources;
 import nuparu.sevendaystomine.util.EnumModParticleType;
@@ -12,7 +13,11 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
 @Mixin(value = PotionBleeding.class, remap = false)
-public class MixinPotionBleeding {
+public class MixinPotionBleeding extends PotionBase {
+
+    public MixinPotionBleeding(boolean badEffect, int color) {
+        super(badEffect, color);
+    }
 
     /**
      * @author X_Niter

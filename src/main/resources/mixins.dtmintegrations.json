@@ -17,6 +17,7 @@
     "sevendaystomine.item.MixinItemBandage",
     "sevendaystomine.item.MixinItemDrink",
     "sevendaystomine.potions.MixinPotionBleeding",
+    "sevendaystomine.proxy.MixinCommonProxy",
     "sevendaystomine.util.MixinMathUtils",
     "sevendaystomine.util.MixinUtils",
     "sevendaystomine.util.MixinVanillaManager",
