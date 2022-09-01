@@ -131,11 +131,19 @@ public abstract class MixinEntityAirdrop extends Entity {
 
                 MinecraftServer server = Minecraft.getMinecraft().world.getMinecraftServer();
 
-                if (server != null && server.getPlayerList().getCurrentPlayerCount() != 0) {
+                if (ConfigGetter.getAirdropChatMessageEnabled() && server != null && server.getPlayerList().getCurrentPlayerCount() != 0) {
                     if (ConfigGetter.getUseLangConfig()) {
-                        server.getPlayerList().sendMessage(new TextComponentTranslation(ConfigGetter.getAirdropDespawnMessage(), world.getWorldInfo().getWorldName(), this.getPosition().getX(), this.getPosition().getZ()));
+                        if (ConfigGetter.getAirdropChatMessageWorldName()) {
+                            server.getPlayerList().sendMessage(new TextComponentTranslation(ConfigGetter.getAirdropDespawnMessage(), world.getWorldInfo().getWorldName(), this.getPosition().getX(), this.getPosition().getZ()));
+                        } else {
+                            server.getPlayerList().sendMessage(new TextComponentTranslation(ConfigGetter.getAirdropDespawnMessage(), String.valueOf(world.provider.getDimension()), this.getPosition().getX(), this.getPosition().getZ()));
+                        }
                     } else {
-                        server.getPlayerList().sendMessage(new TextComponentTranslation("airdrop.removed.message", world.getWorldInfo().getWorldName(), this.getPosition().getX(), this.getPosition().getZ()));
+                        if (ConfigGetter.getAirdropChatMessageWorldName()) {
+                            server.getPlayerList().sendMessage(new TextComponentTranslation("airdrop.removed.message", world.getWorldInfo().getWorldName(), this.getPosition().getX(), this.getPosition().getZ()));
+                        } else {
+                            server.getPlayerList().sendMessage(new TextComponentTranslation("airdrop.removed.message", String.valueOf(world.provider.getDimension()), this.getPosition().getX(), this.getPosition().getZ()));
+                        }
                     }
                 }
             }
