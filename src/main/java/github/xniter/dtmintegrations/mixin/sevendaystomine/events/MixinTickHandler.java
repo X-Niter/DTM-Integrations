@@ -1,6 +1,7 @@
 package github.xniter.dtmintegrations.mixin.sevendaystomine.events;
 
 import github.xniter.dtmintegrations.handlers.config.ConfigGetter;
+import github.xniter.dtmintegrations.utils.IMixinUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
@@ -48,6 +49,8 @@ public class MixinTickHandler {
 
     @Shadow
     private long nextTorchCheck = 0L;
+
+    private static Utils utils;
 
     /**
      * @author X_Niter
@@ -175,19 +178,20 @@ public class MixinTickHandler {
                         horde.addTarget(playerMP);
                         horde.start();
                         iep.setWolfHorde(day);
-                    } else if (!iep.hasHorde(world)) {
+                        Utils utils = new Utils();
+                    } else if (!iep.hasHorde(world) && ((IMixinUtils) utils).isGenericHorde(world)) {
                         CitySavedData csd = CitySavedData.get(world);
                         CityData city = csd.getClosestCity(new BlockPos(player), 100.0);
-                        if (world.rand.nextDouble() < ModConfig.world.genericHordeChance * (double)(city == null ? 1.0F : 1.0F + (float)(10 * city.getZombieLevel()) / 1024.0F)) {
-                            GenericHorde horde = new GenericHorde(new BlockPos(player), world, player);
-                            if (city != null && city.getZombieLevel() > 0) {
-                                city.setZombieLevel(city.getZombieLevel() - horde.waves * horde.getZombiesInWave());
-                            }
+                        GenericHorde horde = new GenericHorde(new BlockPos(player), world, player);
 
-                            horde.addTarget(playerMP);
-                            horde.start();
-                            iep.setHorde(day);
+                        if (city != null && city.getZombieLevel() > 0) {
+                            city.setZombieLevel(city.getZombieLevel() - horde.waves * horde.getZombiesInWave());
                         }
+
+                        horde.addTarget(playerMP);
+                        horde.start();
+                        iep.setHorde(day);
+
                     }
                 }
 
@@ -232,6 +236,5 @@ public class MixinTickHandler {
                 this.nextTorchCheck = System.currentTimeMillis() + 1000L;
             }
         }
-
     }
 }
