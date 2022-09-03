@@ -229,8 +229,6 @@ public class ConfigHandler {
 
     protected static String AIRDROP_OLDSCHOOL_MESSAGE = "Airdrop has been dropped around X:%1$s Z:%2$s.";
 
-    protected static boolean GENERATE_CITIES = true;
-
 
     public static void init(File file){
         config = new Configuration(file);
@@ -329,7 +327,6 @@ public class ConfigHandler {
         CARGO_SHIP = config.getBoolean("Cargo Ship", category, true, "[DEFAULT: TRUE(Enabled)]\nenable/disable this structure");
         LARGE_BANDIT_CAMP = config.getBoolean("Large Bandit Camp", category, true, "[DEFAULT: TRUE(Enabled)]\nenable/disable this structure");
         MILITARY_BASE = config.getBoolean("Military Base", category, true, "[DEFAULT: TRUE(Enabled)]\nenable/disable this structure");
-        GENERATE_CITIES = config.getBoolean("Generate Cities", category, true, "Enable/Disable City generation");
 
         category = "Integrations";
         config.addCustomCategoryComment(category,"Mod Integrations");

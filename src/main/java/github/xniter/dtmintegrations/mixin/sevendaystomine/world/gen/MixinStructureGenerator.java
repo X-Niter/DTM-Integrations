@@ -1,7 +1,6 @@
 package github.xniter.dtmintegrations.mixin.sevendaystomine.world.gen;
 
 import github.xniter.dtmintegrations.handlers.config.ConfigGetter;
-import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
@@ -40,61 +39,61 @@ public class MixinStructureGenerator implements IWorldGenerator {
         if (!ConfigGetter.getDisableAllStructures()) {
 
             if (ConfigGetter.getFactoryGarage()) {
-                buildings.add((new BuildingFactory(new ResourceLocation("sevendaystomine", "factory_garage"), 30)).setAllowedBiomes(new Biome[]{ModBiomes.BURNT_FOREST, ModBiomes.WASTELAND, ModBiomes.WASTELAND_FOREST, ModBiomes.WASTELAND_DESERT}));
+                buildings.add((new BuildingFactory(new ResourceLocation("sevendaystomine", "factory_garage"), 30)).setAllowedBiomes(ModBiomes.BURNT_FOREST, ModBiomes.WASTELAND, ModBiomes.WASTELAND_FOREST, ModBiomes.WASTELAND_DESERT));
             }
 
             if (ConfigGetter.getLandfill()) {
-                buildings.add((new BuildingLandfill(30)).setAllowedBiomes(new Biome[]{ModBiomes.BURNT_FOREST, ModBiomes.WASTELAND, ModBiomes.WASTELAND_FOREST, ModBiomes.WASTELAND_DESERT}));
+                buildings.add((new BuildingLandfill(30)).setAllowedBiomes(ModBiomes.BURNT_FOREST, ModBiomes.WASTELAND, ModBiomes.WASTELAND_FOREST, ModBiomes.WASTELAND_DESERT));
             }
 
             if (ConfigGetter.getLookoutBirch()) {
-                buildings.add((new Building(new ResourceLocation("sevendaystomine", "lookout_birch"), 280)).setAllowedBiomes((Biome[])BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST).stream().toArray((x$0) -> {
+                buildings.add((new Building(new ResourceLocation("sevendaystomine", "lookout_birch"), 280)).setAllowedBiomes(BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST).stream().toArray((x$0) -> {
                     return new Biome[x$0];
                 })).setAllowedBlocks(Blocks.GRASS));
             }
 
             if (ConfigGetter.getLookoutDarkOak()) {
-                buildings.add((new Building(new ResourceLocation("sevendaystomine", "lookout_dark_oak"), 280)).setAllowedBiomes((Biome[])BiomeDictionary.getBiomes(BiomeDictionary.Type.CONIFEROUS).stream().toArray((x$0) -> {
+                buildings.add((new Building(new ResourceLocation("sevendaystomine", "lookout_dark_oak"), 280)).setAllowedBiomes(BiomeDictionary.getBiomes(BiomeDictionary.Type.CONIFEROUS).stream().toArray((x$0) -> {
                     return new Biome[x$0];
-                })).setAllowedBlocks(new Block[]{Blocks.GRASS}));
+                })).setAllowedBlocks(Blocks.GRASS));
             }
 
             if (ConfigGetter.getLookoutBurnt()) {
-                buildings.add((new Building(new ResourceLocation("sevendaystomine", "lookout_burnt"), 280)).setAllowedBiomes(new Biome[]{ModBiomes.BURNT_FOREST, ModBiomes.BURNT_JUNGLE, ModBiomes.BURNT_TAIGA, ModBiomes.WASTELAND_FOREST, ModBiomes.WASTELAND}).setAllowedBlocks(new Block[]{Blocks.GRASS}));
+                buildings.add((new Building(new ResourceLocation("sevendaystomine", "lookout_burnt"), 280)).setAllowedBiomes(ModBiomes.BURNT_FOREST, ModBiomes.BURNT_JUNGLE, ModBiomes.BURNT_TAIGA, ModBiomes.WASTELAND_FOREST, ModBiomes.WASTELAND).setAllowedBlocks(Blocks.GRASS));
             }
 
             if (ConfigGetter.getBurntHouse()) {
-                buildings.add((new Building(new ResourceLocation("sevendaystomine", "burnt_house"), 300, -5)).setAllowedBiomes(new Biome[]{ModBiomes.BURNT_FOREST, ModBiomes.BURNT_JUNGLE, ModBiomes.BURNT_TAIGA, ModBiomes.WASTELAND_FOREST, ModBiomes.WASTELAND}).setAllowedBlocks(new Block[]{Blocks.GRASS}).setPedestal(Blocks.STONE.getDefaultState()));
+                buildings.add((new Building(new ResourceLocation("sevendaystomine", "burnt_house"), 300, -5)).setAllowedBiomes(ModBiomes.BURNT_FOREST, ModBiomes.BURNT_JUNGLE, ModBiomes.BURNT_TAIGA, ModBiomes.WASTELAND_FOREST, ModBiomes.WASTELAND).setAllowedBlocks(Blocks.GRASS).setPedestal(Blocks.STONE.getDefaultState()));
             }
 
             if (ConfigGetter.getRuinedHouse()) {
                 buildings.add((new Building(new ResourceLocation("sevendaystomine", "ruined_house"), 300)).setAllowedBiomes((Biome[])Utils.combine(new Set[]{BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST), BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)}).stream().toArray((x$0) -> {
                     return new Biome[x$0];
-                })).setAllowedBlocks(new Block[]{Blocks.GRASS}));
+                })).setAllowedBlocks(Blocks.GRASS));
             }
 
             if (ConfigGetter.getShack()) {
                 buildings.add((new Building(new ResourceLocation("sevendaystomine", "shack"), 120, 0)).setAllowedBiomes((Biome[])Utils.combine(new Set[]{BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST), BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)}).stream().toArray((x$0) -> {
                     return new Biome[x$0];
-                })).setAllowedBlocks(new Block[]{Blocks.GRASS}));
+                })).setAllowedBlocks(Blocks.GRASS));
             }
 
             if (ConfigGetter.getRuinedHouse1()) {
                 buildings.add((new Building(new ResourceLocation("sevendaystomine", "ruined_house_1"), 300)).setAllowedBiomes((Biome[])Utils.combine(new Set[]{BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST), BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)}).stream().toArray((x$0) -> {
                     return new Biome[x$0];
-                })).setAllowedBlocks(new Block[]{Blocks.GRASS}));
+                })).setAllowedBlocks(Blocks.GRASS));
             }
 
             if (ConfigGetter.getBanditCamp()) {
                 buildings.add((new Building(new ResourceLocation("sevendaystomine", "bandit_camp"), 80, 0, Blocks.STONE.getDefaultState())).setAllowedBiomes((Biome[])Utils.combine(new Set[]{BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST), BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)}).stream().toArray((x$0) -> {
                     return new Biome[x$0];
-                })).setAllowedBlocks(new Block[]{Blocks.GRASS}));
+                })).setAllowedBlocks(Blocks.GRASS));
             }
 
             if (ConfigGetter.getRuinedHouse2()) {
                 buildings.add((new Building(new ResourceLocation("sevendaystomine", "ruined_house_2"), 300)).setAllowedBiomes((Biome[])Utils.combine(new Set[]{BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST), BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)}).stream().toArray((x$0) -> {
                     return new Biome[x$0];
-                })).setAllowedBlocks(new Block[]{Blocks.GRASS}));
+                })).setAllowedBlocks(Blocks.GRASS));
             }
 
             if (ConfigGetter.getRuinedHouseIcy2()) {
@@ -124,13 +123,13 @@ public class MixinStructureGenerator implements IWorldGenerator {
             if (ConfigGetter.getObservatory()) {
                 buildings.add((new Building(new ResourceLocation("sevendaystomine", "observatory"), 150)).setAllowedBiomes((Biome[])Utils.combine(new Set[]{BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST), BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)}).stream().toArray((x$0) -> {
                     return new Biome[x$0];
-                })).setAllowedBlocks(new Block[]{Blocks.GRASS}));
+                })).setAllowedBlocks(Blocks.GRASS));
             }
 
             if (ConfigGetter.getWindTurbine()) {
                 buildings.add((new BuildingWindTurbine(200, 0, ModBlocks.MARBLE.getDefaultState())).setAllowedBiomes((Biome[])Utils.combine(new Set[]{BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST), BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)}).stream().toArray((x$0) -> {
                     return new Biome[x$0];
-                })).setAllowedBlocks(new Block[]{Blocks.GRASS}));
+                })).setAllowedBlocks(Blocks.GRASS));
             }
 
             if (ConfigGetter.getWellBunker()) {
@@ -142,7 +141,7 @@ public class MixinStructureGenerator implements IWorldGenerator {
             if (ConfigGetter.getSettlement()) {
                 buildings.add((new BuildingSettlement(25, -3)).setAllowedBiomes((Biome[])Utils.combine(new Set[]{BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST), BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)}).stream().toArray((x$0) -> {
                     return new Biome[x$0];
-                })).setAllowedBlocks(new Block[]{Blocks.GRASS}));
+                })).setAllowedBlocks(Blocks.GRASS));
             }
 
             if (ConfigGetter.getTank01()) {
@@ -160,32 +159,32 @@ public class MixinStructureGenerator implements IWorldGenerator {
             if (ConfigGetter.getCampsite()) {
                 buildings.add((new Building(new ResourceLocation("sevendaystomine", "campsite"), 70, -3)).setPedestal(Blocks.STONE.getDefaultState()).setAllowedBiomes((Biome[])Utils.combine(new Set[]{BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomes(BiomeDictionary.Type.SAVANNA)}).stream().toArray((x$0) -> {
                     return new Biome[x$0];
-                })).setAllowedBlocks(new Block[]{Blocks.GRASS}));
+                })).setAllowedBlocks(Blocks.GRASS));
             }
 
             if (ConfigGetter.getRuins0()) {
                 buildings.add((new Building(new ResourceLocation("sevendaystomine", "ruins_0"), 150, -1)).setAllowedBiomes((Biome[])Utils.combine(new Set[]{BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST), BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)}).stream().toArray((x$0) -> {
                     return new Biome[x$0];
-                })).setAllowedBlocks(new Block[]{Blocks.GRASS}));
+                })).setAllowedBlocks(Blocks.GRASS));
             }
 
             if (ConfigGetter.getRuins1()) {
                 buildings.add((new Building(new ResourceLocation("sevendaystomine", "ruins_1"), 200, -1)).setAllowedBiomes((Biome[])Utils.combine(new Set[]{BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST), BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)}).stream().toArray((x$0) -> {
                     return new Biome[x$0];
-                })).setAllowedBlocks(new Block[]{Blocks.GRASS}));
+                })).setAllowedBlocks(Blocks.GRASS));
             }
 
             if (!ModConfig.worldGen.smallStructuresOnly) {
                 if (ConfigGetter.getAirport()) {
                     buildings.add((new BuildingAirport(80)).setAllowedBiomes((Biome[])Utils.combine(new Set[]{BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST), BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)}).stream().toArray((x$0) -> {
                         return new Biome[x$0];
-                    })).setAllowedBlocks(new Block[]{Blocks.GRASS}));
+                    })).setAllowedBlocks(Blocks.GRASS));
                 }
 
                 if (ConfigGetter.getAbandonedSettlementFarm()) {
                     buildings.add((new BuildingSettlement(15, -3, new ResourceLocation("sevendaystomine", "abandoned_settlement_farm"), new ResourceLocation("sevendaystomine", "abandoned_settlement_houses"), new ResourceLocation("sevendaystomine", "abandoned_settlement_barracks"), new ResourceLocation("sevendaystomine", "abandoned_settlement_pub"))).setAllowedBiomes((Biome[])Utils.combine(new Set[]{BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST), BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)}).stream().toArray((x$0) -> {
                         return new Biome[x$0];
-                    })).setAllowedBlocks(new Block[]{Blocks.GRASS}));
+                    })).setAllowedBlocks(Blocks.GRASS));
                 }
 
                 if (ConfigGetter.getAirplaneTailDesert()) {
@@ -208,13 +207,13 @@ public class MixinStructureGenerator implements IWorldGenerator {
                 if (ConfigGetter.getLargeBanditCamp()) {
                     buildings.add((new BuildingLargeBanditCamp(20)).setAllowedBiomes((Biome[])Utils.combine(new Set[]{BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST), BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)}).stream().toArray((x$0) -> {
                         return new Biome[x$0];
-                    })).setAllowedBlocks(new Block[]{Blocks.GRASS}));
+                    })).setAllowedBlocks(Blocks.GRASS));
                 }
 
                 if (ConfigGetter.getMilitaryBase()) {
                     buildings.add((new BuildingMilitaryBase(20, -3)).setAllowedBiomes((Biome[])Utils.combine(new Set[]{BiomeDictionary.getBiomes(BiomeDictionary.Type.FOREST), BiomeDictionary.getBiomes(BiomeDictionary.Type.PLAINS), BiomeDictionary.getBiomes(BiomeDictionary.Type.LUSH)}).stream().toArray((x$0) -> {
                         return new Biome[x$0];
-                    })).setAllowedBlocks(new Block[]{Blocks.GRASS}));
+                    })).setAllowedBlocks(Blocks.GRASS));
                 }
             }
         }
@@ -244,7 +243,7 @@ public class MixinStructureGenerator implements IWorldGenerator {
         int blockX = chunkX * 16;
         int blockZ = chunkZ * 16;
         CitySavedData data = CitySavedData.get(world);
-        if (!Utils.isCityInArea(world, chunkX, chunkZ, ModConfig.worldGen.minScatteredDistanceFromCities) && !data.isScatteredNearby(new BlockPos(blockX, 128, blockZ), (long)ModConfig.worldGen.minScatteredDistanceSq)) {
+        if (!ConfigGetter.getDisableAllStructures() && !Utils.isCityInArea(world, chunkX, chunkZ, ModConfig.worldGen.minScatteredDistanceFromCities) && !data.isScatteredNearby(new BlockPos(blockX, 128, blockZ), ModConfig.worldGen.minScatteredDistanceSq)) {
             Building building = getRandomBuilding(rand);
             this.generateStructure(building, world, rand, blockX, blockZ, 20);
         }
@@ -257,25 +256,30 @@ public class MixinStructureGenerator implements IWorldGenerator {
     @Overwrite(remap = false)
     public static Building getRandomBuilding(Random rand) {
         int total = 0;
-
         Building building;
-        for(Iterator<Building> var2 = buildings.iterator(); var2.hasNext(); total += building.weight) {
-            building = var2.next();
-        }
 
-        int i = rand.nextInt(total);
-        Iterator<Building> var6 = buildings.iterator();
+        if (!ConfigGetter.getDisableAllStructures()) {
 
-        do {
-            if (!var6.hasNext()) {
-                return buildings.get(rand.nextInt(buildings.size()));
+            for (Iterator<Building> var2 = buildings.iterator(); var2.hasNext(); total += building.weight) {
+                building = var2.next();
             }
 
-            building = var6.next();
-            i -= building.weight;
-        } while(i > 0);
+            int i = rand.nextInt(total);
+            Iterator<Building> var6 = buildings.iterator();
 
-        return building;
+            do {
+                if (!var6.hasNext()) {
+                    return buildings.get(rand.nextInt(buildings.size()));
+                }
+
+                building = var6.next();
+                i -= building.weight;
+            } while (i > 0);
+
+            return building;
+        }
+
+        return null;
     }
 
     /**
@@ -285,7 +289,7 @@ public class MixinStructureGenerator implements IWorldGenerator {
     @Overwrite(remap = false)
     private boolean generateStructure(Building building, World world, Random rand, int blockX, int blockZ, int chance) {
         int c = (int)((double)chance * ModConfig.worldGen.scattereedStructureChanceModifier);
-        if (c != 0 && rand.nextInt(c) == 0) {
+        if (c != 0 && rand.nextInt(c) == 0 && !ConfigGetter.getDisableAllStructures()) {
             BlockPos pos = Utils.getTopGroundBlock(new BlockPos(blockX, 64, blockZ), world, true);
             if (pos.getY() >= 0) {
                 if (building.allowedBlocks == null || building.allowedBlocks.length == 0 || Arrays.asList(building.allowedBlocks).contains(world.getBlockState(pos).getBlock())) {
@@ -296,7 +300,7 @@ public class MixinStructureGenerator implements IWorldGenerator {
                         BlockPos dimensions = building.getDimensions(world, facing);
                         BlockPos end = pos.offset(facing, facing.getAxis() == EnumFacing.Axis.Z ? dimensions.getZ() : dimensions.getX()).offset(mirror ? facing.rotateY() : facing.rotateYCCW(), facing.getAxis() == EnumFacing.Axis.X ? dimensions.getZ() : dimensions.getX());
                         end = Utils.getTopGroundBlock(end, world, true);
-                        BlockPos pos2 = new BlockPos((double) pos.getX(), end.getY() < 0 ? (double) pos.getY() : MathUtils.lerp(pos.getY(), end.getY(), 0.5F), pos.getZ());
+                        BlockPos pos2 = new BlockPos(pos.getX(), end.getY() < 0 ? (double) pos.getY() : MathUtils.lerp(pos.getY(), end.getY(), 0.5F), pos.getZ());
                         building.generate(world, pos2, facing, mirror, rand);
                         CitySavedData.get(world).addScattered(pos);
                         return true;
