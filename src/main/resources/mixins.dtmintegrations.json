@@ -8,6 +8,7 @@
   "mixins": [
     "sevendaystomine.command.MixinCommandAirdrop",
     "sevendaystomine.crafting.forge.MixinForgeRecipeManager",
+    "sevendaystomine.entity.MixinEntityAirdrop",
     "sevendaystomine.events.MixinLivingEventHandler",
     "sevendaystomine.events.MixinPlayerEventHandler",
     "sevendaystomine.events.MixinTickHandler",

@@ -2,17 +2,14 @@ package github.xniter.dtmintegrations.mixin.sevendaystomine.entity;
 
 import github.xniter.dtmintegrations.handlers.config.ConfigGetter;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -75,78 +72,76 @@ public abstract class MixinEntityAirdrop extends Entity {
         this.onGround = !this.world.isAirBlock(bP1);
 
 
-        if (!this.onGround && !this.getLanded() && !dropped && intAge >= 0) {
-            this.Dropped();
-            this.markVelocityChanged();
-        }
-
-
-
-        if (dropped) {
-            if (ConfigGetter.getAirdropGlowingInAirEnabled()) {
-                this.glowing = true;
+        if (!this.world.isRemote) {
+            if (!this.onGround && !this.getLanded() && !dropped && intAge >= 0) {
+                this.Dropped();
+                this.markVelocityChanged();
             }
 
-            int dropTime = getDropTime();
 
-            float startPos = this.getStartPos();
+            if (dropped) {
+                if (ConfigGetter.getAirdropGlowingInAirEnabled()) {
+                    this.glowing = true;
+                }
 
-            this.motionY = -ConfigGetter.getAirdropFallingSpeed();
-            this.motionX = rand.nextDouble() - rand.nextDouble();
-            this.motionZ = rand.nextDouble() - rand.nextDouble();
-            this.markVelocityChanged();
+                int dropTime = getDropTime();
 
-            this.setPosition(this.getPosition().getX(), startPos - (Math.pow(getDropTime(), 1) / ConfigGetter.getAirdropFallingSpeed()), this.getPosition().getZ());
+                float startPos = this.getStartPos();
 
-            this.setDropTime(dropTime + 1);
-        }
+                this.motionY = -ConfigGetter.getAirdropFallingSpeed();
+                this.motionX = rand.nextDouble() - rand.nextDouble();
+                this.motionZ = rand.nextDouble() - rand.nextDouble();
+                this.markVelocityChanged();
 
-        if (this.onGround) {
-            this.glowing = ConfigGetter.getAirdropGlowingOnGroundEnabled();
+                this.setPosition(this.getPosition().getX(), startPos - (Math.pow(getDropTime(), 1) / ConfigGetter.getAirdropFallingSpeed()), this.getPosition().getZ());
 
-            this.age = 0;
-
-            this.setAge(0);
-
-            ++intAge;
-
-            this.motionY = 0.0;
-
-            this.setPosition(this.getPosition().getX(), this.getPosition().getY(), this.getPosition().getZ());
-
-            this.markVelocityChanged();
-
-            if (!this.getLanded()) {
-                this.setSmokeTime(ConfigGetter.getAirdropSmokeTime() * 20);
-                this.setDropped(false);
-                this.setLanded(true);
+                this.setDropTime(dropTime + 1);
             }
 
-            if (this.getLanded() && intAge >= 48000) {
-                this.setDead();
+            if (this.onGround) {
+                this.glowing = ConfigGetter.getAirdropGlowingOnGroundEnabled();
 
-                MinecraftServer server = Minecraft.getMinecraft().world.getMinecraftServer();
+                this.age = 0;
 
-                if (ConfigGetter.getAirdropChatMessageEnabled() && server != null && server.getPlayerList().getCurrentPlayerCount() != 0) {
-                    if (ConfigGetter.getUseLangConfig()) {
-                        if (ConfigGetter.getAirdropChatMessageWorldName()) {
-                            server.getPlayerList().sendMessage(new TextComponentTranslation(ConfigGetter.getAirdropDespawnMessage(), world.getWorldInfo().getWorldName(), this.getPosition().getX(), this.getPosition().getZ()));
-                        } else {
-                            server.getPlayerList().sendMessage(new TextComponentTranslation(ConfigGetter.getAirdropDespawnMessage(), String.valueOf(world.provider.getDimension()), this.getPosition().getX(), this.getPosition().getZ()));
-                        }
-                    } else {
-                        if (ConfigGetter.getAirdropChatMessageWorldName()) {
-                            server.getPlayerList().sendMessage(new TextComponentTranslation("airdrop.removed.message", world.getWorldInfo().getWorldName(), this.getPosition().getX(), this.getPosition().getZ()));
-                        } else {
-                            server.getPlayerList().sendMessage(new TextComponentTranslation("airdrop.removed.message", String.valueOf(world.provider.getDimension()), this.getPosition().getX(), this.getPosition().getZ()));
-                        }
-                    }
+                this.setAge(0);
+
+                ++intAge;
+
+                this.motionY = 0.0;
+
+                this.setPosition(this.getPosition().getX(), this.getPosition().getY(), this.getPosition().getZ());
+
+                this.markVelocityChanged();
+
+                if (!this.getLanded()) {
+                    this.setSmokeTime(ConfigGetter.getAirdropSmokeTime() * 20);
+                    this.setDropped(false);
+                    this.setLanded(true);
+                }
+
+                if (this.getLanded() && intAge >= 48000) {
+                    this.setDead();
+
+//                    MinecraftServer server = Minecraft.getMinecraft().world.getMinecraftServer();
+//
+//                    if (ConfigGetter.getAirdropChatMessageEnabled() && server != null && server.getPlayerList().getCurrentPlayerCount() != 0) {
+//                        if (ConfigGetter.getUseLangConfig()) {
+//                            if (ConfigGetter.getAirdropChatMessageWorldName()) {
+//                                server.getPlayerList().sendMessage(new TextComponentTranslation(ConfigGetter.getAirdropDespawnMessage(), world.getWorldInfo().getWorldName(), this.getPosition().getX(), this.getPosition().getZ()));
+//                            } else {
+//                                server.getPlayerList().sendMessage(new TextComponentTranslation(ConfigGetter.getAirdropDespawnMessage(), String.valueOf(world.provider.getDimension()), this.getPosition().getX(), this.getPosition().getZ()));
+//                            }
+//                        } else {
+//                            if (ConfigGetter.getAirdropChatMessageWorldName()) {
+//                                server.getPlayerList().sendMessage(new TextComponentTranslation("airdrop.removed.message", world.getWorldInfo().getWorldName(), this.getPosition().getX(), this.getPosition().getZ()));
+//                            } else {
+//                                server.getPlayerList().sendMessage(new TextComponentTranslation("airdrop.removed.message", String.valueOf(world.provider.getDimension()), this.getPosition().getX(), this.getPosition().getZ()));
+//                            }
+//                        }
+//                    }
                 }
             }
-
         }
-
-
 
         if (this.onGround && !dropped && this.getLanded() && this.getSmokeTime() > 0) {
             for (int i = 0; i < this.world.rand.nextInt(4) + 1; ++i) {
@@ -156,6 +151,7 @@ public abstract class MixinEntityAirdrop extends Entity {
 
             this.setSmokeTime(this.getSmokeTime() - 1);
         }
+
 
 
         //this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
