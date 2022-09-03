@@ -38,7 +38,7 @@ public class MixinCityWorldGenerator {
      */
     @Overwrite(remap = false)
     private void generateOverworld(World world, Random rand, int chunkX, int chunkZ) {
-        if (chunkX % 64 == 0 && chunkZ % 64 == 0) {
+        if (ConfigGetter.getGenerateCities() && chunkX % 64 == 0 && chunkZ % 64 == 0) {
             int blockX = chunkX * 16;
             int blockZ = chunkZ * 16;
             BlockPos pos = new BlockPos(blockX, 64, blockZ);
