@@ -40,9 +40,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
+import java.util.ArrayList;
 import java.util.Random;
-
-import static nuparu.sevendaystomine.events.TickHandler.handleExtendedPlayer;
 
 @Mixin({TickHandler.class})
 public class MixinTickHandler {
@@ -235,6 +234,69 @@ public class MixinTickHandler {
                 }
 
                 this.nextTorchCheck = System.currentTimeMillis() + 1000L;
+            }
+        }
+    }
+
+    /**
+     * @author X_Niter
+     * @reason Thirst and Stamina configurable changes
+     */
+    @Overwrite
+    public static void handleExtendedPlayer(EntityPlayer player, World world, IExtendedPlayer extendedPlayer) {
+        if (!world.isRemote) {
+            if (world.getDifficulty() == EnumDifficulty.PEACEFUL) {
+                extendedPlayer.setThirst(1000);
+                extendedPlayer.setStamina(1000);
+                extendedPlayer.setDrinkCounter(0);
+            } else {
+                if (ModConfig.players.thirstSystem) {
+                    PotionEffect effect;
+                    if (extendedPlayer.getDrinkCounter() >= 20) {
+                        extendedPlayer.setDrinkCounter(0);
+                        extendedPlayer.addThirst(35);
+                        extendedPlayer.addStamina(20);
+                        player.removePotionEffect(Potions.thirst);
+                        if (world.rand.nextInt(10) == 0) {
+                            effect = new PotionEffect(Potions.dysentery, world.rand.nextInt(4000) + 18000, 0, false, false);
+                            effect.setCurativeItems(new ArrayList<>());
+                            player.addPotionEffect(effect);
+                        }
+                    } else if (extendedPlayer.getDrinkCounter() > 0) {
+                        extendedPlayer.setDrinkCounter(extendedPlayer.getDrinkCounter() - 1);
+                    }
+
+                    if (extendedPlayer.getThirst() > 0 && world.rand.nextInt(ConfigGetter.getThirstDecreaseSpeed()) == 0) {
+                        extendedPlayer.consumeThirst(1);
+                    }
+
+                    if (extendedPlayer.getThirst() <= 0) {
+                        effect = new PotionEffect(Potions.thirst, 4, 4, false, false);
+                        effect.setCurativeItems(new ArrayList<>());
+                        player.addPotionEffect(effect);
+                    }
+                }
+
+                if (ModConfig.players.staminaSystem) {
+                    if (player.isSprinting()) {
+                        if (ModConfig.players.staminaSystem && extendedPlayer.getStamina() > 0) {
+                            if (world.rand.nextInt(ConfigGetter.getStaminaDecreaseSpeed()) == 0) {
+                                extendedPlayer.consumeStamina(2);
+                            }
+
+                            if (ModConfig.players.thirstSystem && world.rand.nextInt(ConfigGetter.getThirstDecreaseSpeed()) == 0) {
+                                extendedPlayer.consumeThirst(1);
+                            }
+                        }
+                    } else if ((extendedPlayer.getThirst() >= 100 || !ModConfig.players.thirstSystem) && world.rand.nextInt(8) == 0 && (double)(player.distanceWalkedModified - player.prevDistanceWalkedModified) <= 0.05) {
+                        extendedPlayer.addStamina(1);
+                    }
+
+                    if (extendedPlayer.getStamina() <= 0) {
+                        player.setSprinting(false);
+                    }
+                }
+
             }
         }
     }

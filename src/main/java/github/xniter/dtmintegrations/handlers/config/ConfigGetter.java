@@ -298,4 +298,12 @@ public class ConfigGetter extends ConfigHandler{
         return STAMINA_ON_WAKEUP;
     }
 
+    public static int getThirstDecreaseSpeed() {
+        return THIRST_DECREASE_SPEED;
+    }
+
+    public static int getStaminaDecreaseSpeed() {
+        return STAMINA_DECREASE_SPEED;
+    }
+
 }

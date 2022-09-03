@@ -231,6 +231,10 @@ public class ConfigHandler {
 
     protected static int STAMINA_ON_WAKEUP = 400;
 
+    protected static int THIRST_DECREASE_SPEED = 25;
+
+    protected static int STAMINA_DECREASE_SPEED = 25;
+
 
     public static void init(File file){
         config = new Configuration(file);
@@ -256,6 +260,9 @@ public class ConfigHandler {
         ADVANCED_BANDAGE_HEALTH_DURATION = config.getInt("Advanced Bandages healing duration", category, 300, 1, 1200, "The duration to heal the player when they use an Advanced Bandage");
         ADVANCED_BANDAGE_HEALTH_AMPLIFIER = config.getInt("Advanced Bandages healing amplifier", category, 3, 1, 3, "The healing effect amplifier for Advanced Bandages\nThis is equivalent to Potion of Regeneration 1, 2, or 3");
         STAMINA_ON_WAKEUP = config.getInt("Stamina on wakeup", category, 400, 0, 400, "[0 to disable stamina regen when player wakes up]\nHow much stamina a player regens when they wakeup from sleeping");
+        THIRST_DECREASE_SPEED = config.getInt("Thirst Decrease Speed", category, 25, 1, 128, "The speed of which thirst depletes, the higher the number, the slower thirst will deplete.");
+        STAMINA_DECREASE_SPEED = config.getInt("Stamina Decrease Speed", category, 3, 1, 32, "The speed of which stamina depletes, the higher the number, the slower stamina will deplete.");
+
 
 
         category = "Blood Moon & Horde control";
