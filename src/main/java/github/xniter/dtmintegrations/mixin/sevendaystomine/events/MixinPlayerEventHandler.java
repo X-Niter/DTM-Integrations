@@ -15,9 +15,16 @@ import nuparu.sevendaystomine.item.IQuality;
 import nuparu.sevendaystomine.util.Utils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.injection.Constant;
+import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
 @Mixin({PlayerEventHandler.class})
 public class MixinPlayerEventHandler {
+
+    @ModifyConstant(method = "onPlayerWakeUp", constant = @Constant(intValue = 400), remap = false)
+    public int addIteration(int constant) {
+        return ConfigGetter.getStaminaRegenOnPlayerWakeup();
+    }
 
 
     /**

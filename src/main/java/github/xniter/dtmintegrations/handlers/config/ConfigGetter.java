@@ -294,4 +294,8 @@ public class ConfigGetter extends ConfigHandler{
         return AIRDROP_OLDSCHOOL_MESSAGE;
     }
 
+    public static int getStaminaRegenOnPlayerWakeup() {
+        return STAMINA_ON_WAKEUP;
+    }
+
 }

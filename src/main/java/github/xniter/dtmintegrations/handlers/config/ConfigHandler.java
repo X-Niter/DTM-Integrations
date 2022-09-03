@@ -229,6 +229,8 @@ public class ConfigHandler {
 
     protected static String AIRDROP_OLDSCHOOL_MESSAGE = "Airdrop has been dropped around X:%1$s Z:%2$s.";
 
+    protected static int STAMINA_ON_WAKEUP = 400;
+
 
     public static void init(File file){
         config = new Configuration(file);
@@ -253,6 +255,7 @@ public class ConfigHandler {
         SHOULD_ADVANCED_BANDAGES_HEAL = config.getBoolean("Advanced Bandages heal", category, true, "[DEFAULT: TRUE(Advanced Bandages do heal player)]\nShould Advanced bandages heal the player on top of removing the bleeding effect");
         ADVANCED_BANDAGE_HEALTH_DURATION = config.getInt("Advanced Bandages healing duration", category, 300, 1, 1200, "The duration to heal the player when they use an Advanced Bandage");
         ADVANCED_BANDAGE_HEALTH_AMPLIFIER = config.getInt("Advanced Bandages healing amplifier", category, 3, 1, 3, "The healing effect amplifier for Advanced Bandages\nThis is equivalent to Potion of Regeneration 1, 2, or 3");
+        STAMINA_ON_WAKEUP = config.getInt("Stamina on wakeup", category, 400, 0, 400, "[0 to disable stamina regen when player wakes up]\nHow much stamina a player regens when they wakeup from sleeping");
 
 
         category = "Blood Moon & Horde control";
