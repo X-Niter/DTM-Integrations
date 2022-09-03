@@ -1,7 +1,7 @@
 package github.xniter.dtmintegrations.mixin.sevendaystomine.events;
 
 import github.xniter.dtmintegrations.handlers.config.ConfigGetter;
-import github.xniter.dtmintegrations.utils.IMixinUtils;
+import github.xniter.dtmintegrations.utils.GenericHordeUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
@@ -178,8 +178,9 @@ public class MixinTickHandler {
                         horde.addTarget(playerMP);
                         horde.start();
                         iep.setWolfHorde(day);
-                        Utils utils = new Utils();
-                    } else if (!iep.hasHorde(world) && ((IMixinUtils) utils).isGenericHorde(world)) {
+
+                    } else if (!iep.hasHorde(world) && GenericHordeUtils.isGenericHorde(world)) {
+
                         CitySavedData csd = CitySavedData.get(world);
                         CityData city = csd.getClosestCity(new BlockPos(player), 100.0);
                         GenericHorde horde = new GenericHorde(new BlockPos(player), world, player);

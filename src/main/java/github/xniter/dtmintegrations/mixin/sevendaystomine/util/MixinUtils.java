@@ -1,11 +1,9 @@
 package github.xniter.dtmintegrations.mixin.sevendaystomine.util;
 
 import github.xniter.dtmintegrations.handlers.config.ConfigGetter;
-import github.xniter.dtmintegrations.utils.IMixinUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import nuparu.sevendaystomine.config.ModConfig;
 import nuparu.sevendaystomine.util.Utils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -13,10 +11,8 @@ import org.spongepowered.asm.mixin.Overwrite;
 import java.util.List;
 import java.util.Random;
 
-import static nuparu.sevendaystomine.util.Utils.getDay;
-
 @Mixin({Utils.class})
-public class MixinUtils implements IMixinUtils {
+public class MixinUtils {
 
 
     /**
@@ -80,14 +76,5 @@ public class MixinUtils implements IMixinUtils {
             return new BlockPos(x, ConfigGetter.getAirdropMaxHeight(), z);
         }
         return null;
-    }
-
-
-    @Override
-    public boolean isGenericHorde(World world) {
-
-        //return world.rand.nextDouble() < ModConfig.world.genericHordeChance + (float)(10 * city.getZombieLevel()) / 1024.0F;
-        return ModConfig.world.genericHordeChance >= 0.1 && getDay(world) % (world.rand.nextDouble() + ModConfig.world.genericHordeChance) == 0 && !Utils.isBloodmoon(world) && !Utils.isWolfHorde(world);
-
     }
 }
