@@ -25,9 +25,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
-import javax.annotation.ParametersAreNonnullByDefault;
-
-@Mixin(value = EntityAirdrop.class, remap = false)
+@Mixin(value = EntityAirdrop.class)
 public abstract class MixinEntityAirdrop extends Entity {
 
     @Shadow
@@ -56,8 +54,6 @@ public abstract class MixinEntityAirdrop extends Entity {
     @Final
     private static DataParameter<Integer> HEALTH;
 
-    private static EntityAirdrop airDrop;
-
     public MixinEntityAirdrop(World worldIn) {
         super(worldIn);
     }
@@ -66,7 +62,7 @@ public abstract class MixinEntityAirdrop extends Entity {
      * @author X_Niter
      * @reason Airdrop Modifications
      */
-    @Overwrite(remap = false)
+    @Overwrite
     public void onUpdate() {
         ignoreFrustumCheck = true;
         super.onUpdate();
@@ -154,8 +150,8 @@ public abstract class MixinEntityAirdrop extends Entity {
 
         if (this.onGround && !dropped && this.getLanded() && this.getSmokeTime() > 0) {
             for (int i = 0; i < this.world.rand.nextInt(4) + 1; ++i) {
-                this.world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, this.posX, this.posY + (double) this.height, this.posZ, (double) MathUtils.getFloatInRange(-0.1F, 0.1F), (double) MathUtils.getFloatInRange(0.2F, 0.5F), (double) MathUtils.getFloatInRange(-0.1F, 0.1F));
-                this.world.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, this.posX, this.posY + (double) this.height, this.posZ, (double) MathUtils.getFloatInRange(-0.1F, 0.1F), (double) MathUtils.getFloatInRange(0.2F, 0.5F), (double) MathUtils.getFloatInRange(-0.1F, 0.1F));
+                this.world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, this.posX, this.posY + (double) this.height, this.posZ, MathUtils.getFloatInRange(-0.1F, 0.1F), MathUtils.getFloatInRange(0.2F, 0.5F), MathUtils.getFloatInRange(-0.1F, 0.1F));
+                this.world.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, this.posX, this.posY + (double) this.height, this.posZ, MathUtils.getFloatInRange(-0.1F, 0.1F), MathUtils.getFloatInRange(0.2F, 0.5F), MathUtils.getFloatInRange(-0.1F, 0.1F));
             }
 
             this.setSmokeTime(this.getSmokeTime() - 1);
@@ -171,7 +167,7 @@ public abstract class MixinEntityAirdrop extends Entity {
      * @author X_Niter
      * @reason Update Initialized data
      */
-    @Overwrite(remap = false)
+    @Overwrite
     protected void entityInit() {
         this.dataManager.register(intAge, 0);
         this.dataManager.register(LANDED, false);
@@ -248,7 +244,7 @@ public abstract class MixinEntityAirdrop extends Entity {
      * @author X_Niter
      * @reason Update Initialized data
      */
-    @Overwrite(remap = false)
+    @Overwrite
     public void readEntityFromNBT(NBTTagCompound compound) {
         this.inventory.deserializeNBT(compound.getCompoundTag("inventory"));
 
@@ -272,8 +268,7 @@ public abstract class MixinEntityAirdrop extends Entity {
      * @author X_Niter
      * @reason Update Initialized data
      */
-    @Overwrite(remap = false)
-    @ParametersAreNonnullByDefault
+    @Overwrite
     public void writeEntityToNBT(NBTTagCompound compound) {
         if (this.inventory != null) {
             compound.setTag("inventory", this.inventory.serializeNBT());
@@ -292,8 +287,8 @@ public abstract class MixinEntityAirdrop extends Entity {
      * @author X_Niter
      * @reason Render Changes
      */
-    @Overwrite(remap = false)
     @SideOnly(Side.CLIENT)
+    @Overwrite
     public boolean isInRangeToRenderDist(double distance) {
         double d0 = this.getEntityBoundingBox().getAverageEdgeLength();
         if (Double.isNaN(d0)) {
@@ -316,11 +311,21 @@ public abstract class MixinEntityAirdrop extends Entity {
                 return;
             } else {
                 if (this.onGround && this.getLanded()) {
-                    this.setAge(48000);
+                    this.setAge(47000);
                 }
             }
         }
 
         age = MathUtils.clamp(age, 42000, 48000);
+    }
+
+    @Shadow
+    public void setHealth(int health) {
+        this.dataManager.set(HEALTH, health);
+    }
+
+    @Shadow
+    public int getInventorySize() {
+        return 9;
     }
 }
