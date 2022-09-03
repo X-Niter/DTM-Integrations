@@ -1,6 +1,5 @@
 package github.xniter.dtmintegrations.mixin.sevendaystomine.client.gui;
 
-import github.xniter.dtmintegrations.DTMIntegrations;
 import github.xniter.dtmintegrations.handlers.config.ConfigGetter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
@@ -71,8 +70,8 @@ public class MixinGuiPlayerUI {
             mc.renderEngine.bindTexture(UI_TEX);
             EnumHudPosition pos = ModConfig.client.hudPosition;
             ScaledResolution resolution = event.getResolution();
-            double width = (double)resolution.getScaledWidth();
-            double height = (double)resolution.getScaledHeight();
+            double width = resolution.getScaledWidth();
+            double height = resolution.getScaledHeight();
             boolean showFuel = player.getRidingEntity() instanceof EntityMinibike;
             int x = (int)(width * pos.getX()) + pos.getXOffset();
             int y = (int)(height * pos.getY()) + pos.getYOffset() + (pos.isTop() && showFuel ? 10 : 0);
@@ -81,12 +80,12 @@ public class MixinGuiPlayerUI {
                 if (!ConfigGetter.getTanIntegration() && !ConfigGetter.getSimpleDifficultyIntegration()) {
 
                     if (ModConfig.players.thirstSystem) {
-                        mc.ingameGUI.drawTexturedModalRect(x + 1, y - 9, 0, player.isPotionActive(Potions.dysentery) ? 29 : 8, (int) Math.floor((double) ((float) extendedPlayer.getThirst() / (10.0F * ((float) extendedPlayer.getMaximumThirst() / 780.0F)))), 6);
+                        mc.ingameGUI.drawTexturedModalRect(x + 1, y - 9, 0, player.isPotionActive(Potions.dysentery) ? 29 : 8, (int) Math.floor((float) extendedPlayer.getThirst() / (10.0F * ((float) extendedPlayer.getMaximumThirst() / 780.0F))), 6);
                         mc.ingameGUI.drawTexturedModalRect(x, y - 10, 0, 0, 81, 8);
                     }
 
                     if (ModConfig.players.staminaSystem) {
-                        mc.ingameGUI.drawTexturedModalRect(x + 1, y - 0, 0, 15, (int) Math.floor((double) ((float) extendedPlayer.getStamina() / (10.0F * ((float) extendedPlayer.getMaximumStamina() / 780.0F)))), 6);
+                        mc.ingameGUI.drawTexturedModalRect(x + 1, y, 0, 15, (int) Math.floor((float) extendedPlayer.getStamina() / (10.0F * ((float) extendedPlayer.getMaximumStamina() / 780.0F))), 6);
                         mc.ingameGUI.drawTexturedModalRect(x, y - 1, 0, 0, 81, 8);
                     }
                 }
@@ -95,7 +94,7 @@ public class MixinGuiPlayerUI {
             if (showFuel) {
                 EntityMinibike minibike = (EntityMinibike)player.getRidingEntity();
                 float fuel = minibike.getFuel();
-                mc.ingameGUI.drawTexturedModalRect(x + 1, y - 18, 0, 22, (int)Math.floor((double)((fuel == 0.0F ? this.minibikeFuelPrev : fuel) / 64.10256F)), 6);
+                mc.ingameGUI.drawTexturedModalRect(x + 1, y - 18, 0, 22, (int)Math.floor((fuel == 0.0F ? this.minibikeFuelPrev : fuel) / 64.10256F), 6);
                 mc.ingameGUI.drawTexturedModalRect(x, y - 19, 0, 0, 81, 8);
                 this.minibikeFuelPrev = minibike.getFuel();
             }
@@ -128,10 +127,10 @@ public class MixinGuiPlayerUI {
                 Tessellator tessellator = Tessellator.getInstance();
                 BufferBuilder bufferbuilder = tessellator.getBuffer();
                 bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
-                bufferbuilder.pos((double)(w / 2 - 2 * h), (double)h, -90.0).tex(0.0, 1.0).endVertex();
-                bufferbuilder.pos((double)(w / 2 + 2 * h), (double)h, -90.0).tex(1.0, 1.0).endVertex();
-                bufferbuilder.pos((double)(w / 2 + 2 * h), 0.0, -90.0).tex(1.0, 0.0).endVertex();
-                bufferbuilder.pos((double)(w / 2 - 2 * h), 0.0, -90.0).tex(0.0, 0.0).endVertex();
+                bufferbuilder.pos(w / 2 - 2 * h, h, -90.0).tex(0.0, 1.0).endVertex();
+                bufferbuilder.pos(w / 2 + 2 * h, h, -90.0).tex(1.0, 1.0).endVertex();
+                bufferbuilder.pos(w / 2 + 2 * h, 0.0, -90.0).tex(1.0, 0.0).endVertex();
+                bufferbuilder.pos(w / 2 - 2 * h, 0.0, -90.0).tex(0.0, 0.0).endVertex();
                 tessellator.draw();
                 GlStateManager.depthMask(true);
                 GlStateManager.enableDepth();

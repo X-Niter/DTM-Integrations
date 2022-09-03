@@ -1,9 +1,9 @@
 package github.xniter.dtmintegrations.mixin.sevendaystomine.item;
 
-import github.xniter.dtmintegrations.handlers.integrations.SimpleDifficulty;
-import github.xniter.dtmintegrations.utils.ModGetter;
 import github.xniter.dtmintegrations.handlers.config.ConfigGetter;
+import github.xniter.dtmintegrations.handlers.integrations.SimpleDifficulty;
 import github.xniter.dtmintegrations.handlers.integrations.ToughAsNails;
+import github.xniter.dtmintegrations.utils.ModGetter;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;

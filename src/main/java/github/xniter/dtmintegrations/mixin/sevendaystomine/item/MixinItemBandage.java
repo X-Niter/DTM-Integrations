@@ -6,7 +6,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import nuparu.sevendaystomine.item.ItemBandage;
 import nuparu.sevendaystomine.potions.Potions;

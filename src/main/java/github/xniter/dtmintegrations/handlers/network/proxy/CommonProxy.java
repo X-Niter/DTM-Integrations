@@ -4,9 +4,9 @@ import github.xniter.dtmintegrations.DTMIntegrations;
 import github.xniter.dtmintegrations.features.FMLAutoConfig;
 import github.xniter.dtmintegrations.handlers.SoundHandler;
 import github.xniter.dtmintegrations.handlers.events.AttackEvent;
-import github.xniter.dtmintegrations.handlers.events.UseHoeEvent;
-import github.xniter.dtmintegrations.handlers.events.SpawnDuringHordeEvent;
 import github.xniter.dtmintegrations.handlers.events.PlayerBreakEvent;
+import github.xniter.dtmintegrations.handlers.events.SpawnDuringHordeEvent;
+import github.xniter.dtmintegrations.handlers.events.UseHoeEvent;
 import net.minecraftforge.common.MinecraftForge;
 
 public class CommonProxy {

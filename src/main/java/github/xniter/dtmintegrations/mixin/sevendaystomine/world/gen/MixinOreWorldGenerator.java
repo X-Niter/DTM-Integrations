@@ -24,9 +24,10 @@ import java.util.Random;
 @Mixin(value = OreWorldGenerator.class, remap = false)
 public class MixinOreWorldGenerator {
 
+
     @Final
     @Shadow
-    private final Predicate<IBlockState> stonePredicate = new Predicate<IBlockState>() {
+    private Predicate<IBlockState> stonePredicate = new Predicate<IBlockState>() {
         public boolean apply(IBlockState state) {
             return state.getBlock() == Blocks.STONE && state.getValue(BlockStone.VARIANT) != BlockStone.EnumType.ANDESITE_SMOOTH && state.getValue(BlockStone.VARIANT) != BlockStone.EnumType.DIORITE_SMOOTH && state.getValue(BlockStone.VARIANT) != BlockStone.EnumType.GRANITE_SMOOTH;
         }
