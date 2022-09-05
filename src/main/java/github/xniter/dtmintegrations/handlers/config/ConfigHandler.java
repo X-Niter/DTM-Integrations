@@ -352,8 +352,8 @@ public class ConfigHandler {
         TOOLTIP_NOTUSABLE = config.getString("Tooltip Not Usable", category, "%sThis item is not usable by players!%s", "Tooltip shown on all disabled 7DTM items/blocks");
         TOOLTIP_CRAFTINGONLY = config.getString("Tooltip Crafting Only", category, "%sThis can only be used for crafting.%s" , "Tooltip shown on 7DTM Item/blocks that have the usage disabled");
         TOOLTIP_RECIPE_DISABLED = config.getString("Tooltip Recipe Disabled", category, "%sThis recipe is disabled!%s", "Tooltip shown on 7DTM Item/blocks that have the recipe disabled");
-        AIRDROP_MESSAGE = config.getString("Airdrop Spawned/Dropped Message", category, "Airdrop has been dropped in world: %1$s, around X:%2$s Z:%4$s!", "The message sent to chat when the AirDrop spawns/dops.");
-        AIRDROP_OLDSCHOOL_MESSAGE = config.getString("Airdrop Original 7DTM Message", category, "Airdrop has been dropped around X:%2$s Z:%4$s!", "7DTM Original message sent to chat when the AirDrop spawn/drops.");
+        AIRDROP_MESSAGE = config.getString("Airdrop Spawned/Dropped Message", category, "Airdrop has been dropped in world: %1$s, around X:%2$s Z:%3$s!", "The message sent to chat when the AirDrop spawns/dops.");
+        AIRDROP_OLDSCHOOL_MESSAGE = config.getString("Airdrop Original 7DTM Message", category, "Airdrop has been dropped around X:%1$s Z:%2$s!", "7DTM Original message sent to chat when the AirDrop spawn/drops.");
 
 
 

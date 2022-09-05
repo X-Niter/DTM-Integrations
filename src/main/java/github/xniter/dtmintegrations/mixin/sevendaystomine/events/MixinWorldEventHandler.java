@@ -26,14 +26,14 @@ public class MixinWorldEventHandler{
     @SubscribeEvent(priority = EventPriority.NORMAL, receiveCanceled = true)
     @Overwrite(remap = false)
     public void replaceTorchs(PopulateChunkEvent.Post event) {
-        if (ConfigGetter.getChangeTorches()) {
-            World world = event.getWorld();
-            Chunk chunk = world.getChunk(event.getChunkX(), event.getChunkZ());
-            Block fromBlock = Blocks.TORCH;
-            Block toBlock = ModBlocks.TORCH_LIT;
-            int i = chunk.x * 16;
-            int j = chunk.z * 16;
+        World world = event.getWorld();
+        Chunk chunk = world.getChunk(event.getChunkX(), event.getChunkZ());
+        Block fromBlock = Blocks.TORCH;
+        Block toBlock = ModBlocks.TORCH_LIT;
+        int i = chunk.x * 16;
+        int j = chunk.z * 16;
 
+        if (ConfigGetter.getChangeTorches()) {
             for (int x = 0; x < 16; ++x) {
                 for (int y = 0; y < 256; ++y) {
                     for (int z = 0; z < 16; ++z) {
@@ -42,6 +42,20 @@ public class MixinWorldEventHandler{
                         Block oldBlock = oldState.getBlock();
                         if (oldBlock == fromBlock) {
                             world.setBlockState(pos, toBlock.getDefaultState().withProperty(BlockTorch.FACING, oldState.getValue(BlockTorch.FACING)));
+                            chunk.markDirty();
+                        }
+                    }
+                }
+            }
+        } else {
+            for (int x = 0; x < 16; ++x) {
+                for (int y = 0; y < 256; ++y) {
+                    for (int z = 0; z < 16; ++z) {
+                        BlockPos pos = new BlockPos(x + i, y, z + j);
+                        IBlockState oldState = world.getBlockState(pos);
+                        Block oldBlock = oldState.getBlock();
+                        if (oldBlock == toBlock) {
+                            world.setBlockState(pos, fromBlock.getDefaultState().withProperty(BlockTorch.FACING, oldState.getValue(BlockTorch.FACING)));
                             chunk.markDirty();
                         }
                     }
