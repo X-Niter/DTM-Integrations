@@ -86,13 +86,13 @@ public class MixinCommandAirdrop{
                             if (ConfigGetter.getUseLangConfig()) {
                                 sender.sendMessage(new TextComponentTranslation(ConfigGetter.getAirdropOldSchoolMessage(), pos.getX(), pos.getZ()));
                             } else {
-                                sender.sendMessage(new TextComponentTranslation("airdrop.message", pos.getX(), pos.getZ()));
+                                sender.sendMessage(new TextComponentTranslation("airdrop.oldschool.message", pos.getX(), pos.getZ()));
                             }
                         } else {
                             if (ConfigGetter.getUseLangConfig()) {
                                 sender.sendMessage(new TextComponentTranslation(ConfigGetter.getAirdropOldSchoolMessage(), pos.getX() + rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation()) - rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation()), pos.getZ() + rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation()) - rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation())));
                             } else {
-                                sender.sendMessage(new TextComponentTranslation("airdrop.message", pos.getX() + rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation()) - rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation()), pos.getZ() + rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation()) - rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation())));
+                                sender.sendMessage(new TextComponentTranslation("airdrop.oldschool.message", pos.getX() + rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation()) - rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation()), pos.getZ() + rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation()) - rand.nextInt(ConfigGetter.getAirdropChatMessageGeneralLocation())));
                             }
                         }
                     }
